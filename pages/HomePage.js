@@ -1,17 +1,35 @@
 import React from 'react';
-import {View, Text, ImageBackground, StyleSheet, TextInput, ScrollView} from "react-native";
+import {View, Text, ImageBackground, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity} from "react-native";
 import { Modalize } from 'react-native-modalize'
 import { Ionicons } from '@expo/vector-icons';
 import JobItem from "../components/JobItem";
 import JobItemHorizontal from "../components/JobItemHorizontal";
 
 export default class Home extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
+        const {navigation} = this.props;
+
         return (
             <ImageBackground
                 source={require('../assets/images/banner.png')}
                 style={styles.imageBackground}
             >
+                <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+                    <Image
+                        source={require('../assets/images/menu.png')}
+                        style={{
+                            height:25,
+                            width:20,
+                            marginTop:60,
+                            marginLeft: 25
+                        }}
+                    />
+                </TouchableOpacity>
+
                 <Text style={styles.welcomeText}>
                     Bentornato Enrico,
                 </Text>
@@ -65,7 +83,7 @@ export default class Home extends React.Component {
                         <JobItemHorizontal
                             src={require('../assets/images/asana.png')}
                             name="Docker Developer"
-                            // onPress={()=>this.props.navigation.navigate('Detail')}
+                            onPress={()=>navigation.navigate('JobDetails')}
 
                         />
                         <JobItemHorizontal
@@ -132,7 +150,7 @@ const styles = StyleSheet.create({
     welcomeText: {
         paddingHorizontal: 20,
         fontSize: 14,
-        marginTop: 80,
+        marginTop: 30,
         fontFamily: 'MS-Medium',
         color: 'white'
     },
@@ -148,7 +166,7 @@ const styles = StyleSheet.create({
         alignItems:"center",
         width:"100%",
         padding: 20,
-        marginVertical:30
+        marginVertical:20
     },
     searchInputBox: {
         flexDirection:"row",
@@ -182,6 +200,6 @@ const styles = StyleSheet.create({
     modalList: {
         borderTopLeftRadius:60,
         borderTopRightRadius:60,
-        paddingTop: 60
+        paddingTop: 65
     }
 })
