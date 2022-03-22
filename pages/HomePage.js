@@ -1,143 +1,150 @@
 import React from 'react';
-import {View, Text, ImageBackground, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity} from "react-native";
+import {
+    View,
+    Text,
+    ImageBackground,
+    StyleSheet,
+    TextInput,
+    ScrollView,
+    TouchableOpacity,
+    SafeAreaView
+} from "react-native";
 import { Modalize } from 'react-native-modalize'
 import { Ionicons } from '@expo/vector-icons';
 import JobItem from "../components/JobItem";
 import JobItemHorizontal from "../components/JobItemHorizontal";
+import Hamburger from "../components/Hamburger";
 
 export default class Home extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            searchInput: ''
+        }
     }
 
     render() {
         const {navigation} = this.props;
 
+        function searchInputHandler(enteredText) {
+            this.setState({searchInput: enteredText});
+        }
+
+        function locationButtonHandler() {
+            console.log("press location");
+        }
+
         return (
-            <ImageBackground
-                source={require('../assets/images/banner.png')}
-                style={styles.imageBackground}
-            >
-                <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                    <Image
-                        source={require('../assets/images/menu.png')}
-                        style={{
-                            height:25,
-                            width:20,
-                            marginTop:60,
-                            marginLeft: 25
-                        }}
-                    />
-                </TouchableOpacity>
 
-                <Text style={styles.welcomeText}>
-                    Bentornato Enrico,
-                </Text>
-
-                <Text style={styles.welcomeWorkText}>
-                    Trova il lavoro perfetto
-                </Text>
-
-                <View style={styles.searchBox}>
-                    <View style={styles.searchInputBox}>
-                        <Ionicons name="ios-search" size={24} color="grey" />
-                        <TextInput
-                            placeholder="Cerca un nuovo lavoro..."
-                            placeholderTextColor="gray"
-                            style={styles.searchInput}
-                        />
-                    </View>
-
-                    <View style={styles.location}>
-                        <Ionicons name="location-outline" size={24} color="black" />
-                    </View>
-                </View>
-
-                <Modalize
-                    handleStyle={styles.modalButton}
-                    modalStyle={styles.modalList}
-                    alwaysOpen={550}
-                    scrollViewProps={{showsVerticalScrollIndicator:false}}
+                <ImageBackground
+                    source={require('../assets/images/banner.png')}
+                    style={styles.imageBackground}
                 >
+                    <SafeAreaView>
+                    <Hamburger navigation={navigation}/>
 
-                    <View style={{
-                        flexDirection:"row",
-                        width:"100%",
-                        alignItems:"center",
-                        paddingLeft:20,
-                    }}>
-                        <Text style={{
-                            fontFamily:"MS-Bold",
-                            fontSize:18,
-                            color:"#4f4a4a"
-                        }}>
-                            Modern
-                        </Text>
+                    <Text style={styles.welcomeText}>
+                        Bentornato Enrico,
+                    </Text>
+
+                    <Text style={styles.welcomeWorkText}>
+                        Trova il lavoro perfetto
+                    </Text>
+
+                    <View style={styles.searchBox}>
+                        <View style={styles.searchInputBox}>
+                            <Ionicons name="ios-search" size={24} color="grey" />
+                            <TextInput
+                                placeholder="Cerca un nuovo lavoro..."
+                                placeholderTextColor="gray"
+                                style={styles.searchInput}
+                                onChangeText={searchInputHandler}
+                            />
+                        </View>
+
+                        <TouchableOpacity style={styles.location} onPress={locationButtonHandler}>
+                            <Ionicons name="location-outline" size={24} color="black" />
+                        </TouchableOpacity>
                     </View>
+                    </SafeAreaView>
 
-                    <ScrollView
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        style={{paddingLeft:20}}
+                    <Modalize
+                        handleStyle={styles.modalButton}
+                        modalStyle={styles.modalList}
+                        alwaysOpen={550}
+                        scrollViewProps={{showsVerticalScrollIndicator:false}}
                     >
-                        <JobItemHorizontal
-                            src={require('../assets/images/asana.png')}
-                            name="Docker Developer"
-                            onPress={()=>navigation.navigate('JobDetails')}
+                        <Text style={styles.textList}>
+                            Popolari
+                        </Text>
 
-                        />
-                        <JobItemHorizontal
-                            src={require('../assets/images/asana.png')}
-                            name="AWS Architect"
-                        />
-                        <JobItemHorizontal
-                            src={require('../assets/images/asana.png')}
-                            name="Flutter Dev"
-                        />
+                        <ScrollView
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            style={styles.popularJob}
+                        >
+                            <JobItemHorizontal
+                                img={require('../assets/images/asana.png')}
+                                name="Docker Developer"
+                                onPress={()=>navigation.navigate('JobDetails')}
 
-                    </ScrollView>
+                            />
+                            <JobItemHorizontal
+                                img={require('../assets/images/asana.png')}
+                                name="AWS Architect"
+                            />
+                            <JobItemHorizontal
+                                img={require('../assets/images/asana.png')}
+                                name="Flutter Dev"
+                            />
 
-                    <View style={{marginTop:40}}>
-                        <JobItem
-                            // onPress={()=>this.props.navigation.navigate("Xd")}
-                            img={require('../assets/images/asana.png')}
-                            title="Software Developer"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="Devops Engineer"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="Flutter Developer"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="UI Designer"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="Java Architect"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="AWS Engineer"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="DB Administrator"
-                            bg="white"
-                        />
-                    </View>
-                </Modalize>
+                        </ScrollView>
 
-            </ImageBackground>
+                        <View style={styles.recentJob}>
+                            <Text style={styles.textList}>
+                                Recenti
+                            </Text>
+
+                            <JobItem
+                                // onPress={()=>this.props.navigation.navigate("Xd")}
+                                img={require('../assets/images/asana.png')}
+                                title="Software Developer"
+                                bg="white"
+                            />
+                            <JobItem
+                                img={require('../assets/images/asana.png')}
+                                title="Devops Engineer"
+                                bg="white"
+                            />
+                            <JobItem
+                                img={require('../assets/images/asana.png')}
+                                title="Flutter Developer"
+                                bg="white"
+                            />
+                            <JobItem
+                                img={require('../assets/images/asana.png')}
+                                title="UI Designer"
+                                bg="white"
+                            />
+                            <JobItem
+                                img={require('../assets/images/asana.png')}
+                                title="Java Architect"
+                                bg="white"
+                            />
+                            <JobItem
+                                img={require('../assets/images/asana.png')}
+                                title="AWS Engineer"
+                                bg="white"
+                            />
+                            <JobItem
+                                img={require('../assets/images/asana.png')}
+                                title="DB Administrator"
+                                bg="white"
+                            />
+                        </View>
+                    </Modalize>
+
+                </ImageBackground>
         )
     }
 }
@@ -201,5 +208,13 @@ const styles = StyleSheet.create({
         borderTopLeftRadius:60,
         borderTopRightRadius:60,
         paddingTop: 65
-    }
+    },
+    textList: {
+        fontFamily:"MS-Bold",
+        fontSize:18,
+        color:"#4f4a4a",
+        paddingLeft:22,
+    },
+    popularJob: {paddingLeft:20},
+    recentJob: {marginTop:25}
 })

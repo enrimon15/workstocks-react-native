@@ -1,5 +1,7 @@
 import React from 'react'
 import {Text,TouchableOpacity, View,Image} from 'react-native'
+import CompanyAvatar from "./CompanyAvatar";
+import {Ionicons} from "@expo/vector-icons";
 
 
 export default class JobItem extends React.Component{
@@ -23,41 +25,67 @@ export default class JobItem extends React.Component{
                     marginHorizontal:20,
                     borderRadius:15,
                     alignItems:"center",
-                    marginTop:10
+                    justifyContent: "space-between",
+                    marginTop:20
                 }}
             >
-                <Image
-                    source={img}
-                    style={{width:40,height:40}}
-                    resizeMode="contain"
-                />
+                <CompanyAvatar img={img} />
 
-                <View>
+                <View style={{paddingHorizontal:20,}}>
                     <Text style={{
-                        color:"#345c74",
+                        color:"#4f4a4a",
                         fontFamily:"MS-Bold",
                         fontSize:13,
-                        paddingHorizontal:20,
                         width:170
                     }}>{title}</Text>
+
+                    <View style={{flexDirection: "row", marginTop: 3}}>
+                        <Ionicons name="location-outline" size={11} color="#f58084" />
+                        <Text style={{
+                            fontSize:11,
+                            color:"#f58084",
+                            fontFamily:"MS-Medium",
+                            marginLeft: 4
+                        }}>
+                            Vasto, IT
+                        </Text>
+                    </View>
+
                     <Text style={{
-                        color:"#f58084",
+                        fontSize:15,
+                        marginTop: 5,
+                        fontFamily:"MS-Bold"
+                    }}>Asana Inc.</Text>
+                </View>
+
+                <View style={{justifyContent: "flex-end"}}>
+                    <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
+                        <View style={{
+                            height:4,
+                            width:4,
+                            borderRadius:4,
+                            backgroundColor:"red",
+                            marginHorizontal:4
+                        }}>
+
+                        </View>
+                        <Text style={{
+                            color:"red",
+                            fontSize:9,
+                            fontFamily:"MS-Bold"
+                        }}>
+                            Nuova
+                        </Text>
+                    </View>
+
+                    <Text style={{
+                        color:"#345c74",
                         fontFamily:"MS-Medium",
-                        fontSize:12,
-                        paddingHorizontal:20
+                        fontSize:10
                     }}>
-                        10 hours, 19 lessons
+                        12-03-2022
                     </Text>
                 </View>
-                <Text style={{
-                    color:"#345c74",
-                    fontFamily:"MS-Medium",
-                    fontSize:13,
-                    paddingLeft:10,
-                    paddingRight:10
-                }}>
-                    25%
-                </Text>
 
             </TouchableOpacity>
         )
