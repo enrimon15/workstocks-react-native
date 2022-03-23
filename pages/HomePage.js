@@ -14,17 +14,19 @@ import { Ionicons } from '@expo/vector-icons';
 import JobItem from "../components/JobItem";
 import JobItemHorizontal from "../components/JobItemHorizontal";
 import Hamburger from "../components/Hamburger";
+import {connect} from "react-redux";
 
-export default class Home extends React.Component {
+class Home extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
             searchInput: ''
         }
     }
 
     render() {
-        const {navigation} = this.props;
+        const {navigation, recentJobs} = this.props;
 
         function searchInputHandler(enteredText) {
             this.setState({searchInput: enteredText});
@@ -32,15 +34,15 @@ export default class Home extends React.Component {
 
         function locationButtonHandler() {
             console.log("press location");
+            console.log(recentJobs);
         }
 
         return (
-
                 <ImageBackground
                     source={require('../assets/images/banner.png')}
                     style={styles.imageBackground}
                 >
-                    <SafeAreaView>
+                <SafeAreaView>
                     <Hamburger navigation={navigation}/>
 
                     <Text style={styles.welcomeText}>
@@ -66,88 +68,99 @@ export default class Home extends React.Component {
                             <Ionicons name="location-outline" size={24} color="black" />
                         </TouchableOpacity>
                     </View>
-                    </SafeAreaView>
+                </SafeAreaView>
 
-                    <Modalize
-                        handleStyle={styles.modalButton}
-                        modalStyle={styles.modalList}
-                        alwaysOpen={550}
-                        scrollViewProps={{showsVerticalScrollIndicator:false}}
+                <Modalize
+                    handleStyle={styles.modalButton}
+                    modalStyle={styles.modalList}
+                    alwaysOpen={550}
+                    scrollViewProps={{showsVerticalScrollIndicator:false}}
+                >
+                    <Text style={styles.textList}>
+                        Popolari
+                    </Text>
+
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        style={styles.popularJob}
                     >
+                        <JobItemHorizontal
+                            img={require('../assets/images/asana.png')}
+                            name="Docker Developer"
+                            onPress={()=>navigation.navigate('JobDetails')}
+
+                        />
+                        <JobItemHorizontal
+                            img={require('../assets/images/asana.png')}
+                            name="AWS Architect"
+                        />
+                        <JobItemHorizontal
+                            img={require('../assets/images/asana.png')}
+                            name="Flutter Dev"
+                        />
+
+                    </ScrollView>
+
+                    <View style={styles.recentJob}>
                         <Text style={styles.textList}>
-                            Popolari
+                            Recenti
                         </Text>
 
-                        <ScrollView
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            style={styles.popularJob}
-                        >
-                            <JobItemHorizontal
-                                img={require('../assets/images/asana.png')}
-                                name="Docker Developer"
-                                onPress={()=>navigation.navigate('JobDetails')}
+                        <JobItem
+                            // onPress={()=>this.props.navigation.navigate("Xd")}
+                            img={require('../assets/images/asana.png')}
+                            title="Software Developer"
+                            bg="white"
+                        />
+                        <JobItem
+                            img={require('../assets/images/asana.png')}
+                            title="Devops Engineer"
+                            bg="white"
+                        />
+                        <JobItem
+                            img={require('../assets/images/asana.png')}
+                            title="Flutter Developer"
+                            bg="white"
+                        />
+                        <JobItem
+                            img={require('../assets/images/asana.png')}
+                            title="UI Designer"
+                            bg="white"
+                        />
+                        <JobItem
+                            img={require('../assets/images/asana.png')}
+                            title="Java Architect"
+                            bg="white"
+                        />
+                        <JobItem
+                            img={require('../assets/images/asana.png')}
+                            title="AWS Engineer"
+                            bg="white"
+                        />
+                        <JobItem
+                            img={require('../assets/images/asana.png')}
+                            title="DB Administrator"
+                            bg="white"
+                        />
+                    </View>
+                </Modalize>
 
-                            />
-                            <JobItemHorizontal
-                                img={require('../assets/images/asana.png')}
-                                name="AWS Architect"
-                            />
-                            <JobItemHorizontal
-                                img={require('../assets/images/asana.png')}
-                                name="Flutter Dev"
-                            />
-
-                        </ScrollView>
-
-                        <View style={styles.recentJob}>
-                            <Text style={styles.textList}>
-                                Recenti
-                            </Text>
-
-                            <JobItem
-                                // onPress={()=>this.props.navigation.navigate("Xd")}
-                                img={require('../assets/images/asana.png')}
-                                title="Software Developer"
-                                bg="white"
-                            />
-                            <JobItem
-                                img={require('../assets/images/asana.png')}
-                                title="Devops Engineer"
-                                bg="white"
-                            />
-                            <JobItem
-                                img={require('../assets/images/asana.png')}
-                                title="Flutter Developer"
-                                bg="white"
-                            />
-                            <JobItem
-                                img={require('../assets/images/asana.png')}
-                                title="UI Designer"
-                                bg="white"
-                            />
-                            <JobItem
-                                img={require('../assets/images/asana.png')}
-                                title="Java Architect"
-                                bg="white"
-                            />
-                            <JobItem
-                                img={require('../assets/images/asana.png')}
-                                title="AWS Engineer"
-                                bg="white"
-                            />
-                            <JobItem
-                                img={require('../assets/images/asana.png')}
-                                title="DB Administrator"
-                                bg="white"
-                            />
-                        </View>
-                    </Modalize>
-
-                </ImageBackground>
+            </ImageBackground>
         )
     }
 }
+
+// mappa lo stato come props del componente wrappato dal container
+function mapStateToProps() {
+    return {
+        recentJobs: ["test recents"]
+    }
+}
+
+// componente che permette la connessione tra un componente react e redux
+const HomeContainer = connect(mapStateToProps)(Home);
+export default HomeContainer;
 
 const styles = StyleSheet.create({
     imageBackground: {

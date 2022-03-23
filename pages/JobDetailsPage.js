@@ -3,7 +3,6 @@ import {View,ImageBackground, Image,Text, SafeAreaView,  TouchableOpacity} from 
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/colors';
 import {StatusBar} from "expo-status-bar";
-import Hamburger from "../components/Hamburger";
 import Back from "../components/Back";
 
 export default class JobDetail extends React.Component {
@@ -17,30 +16,15 @@ export default class JobDetail extends React.Component {
         return(
             <>
                 <StatusBar style="dark"/>
-                    <View style={{
-                        backgroundColor:"white",
-                        height:"100%",
-                        paddingHorizontal:20
-                    }}>
-                        <SafeAreaView style={{flex: 1}}>
+                <View style={{
+                    backgroundColor:"white",
+                    height:"100%",
+                    paddingHorizontal:20
+                }}>
+                    <SafeAreaView style={{flex: 1}}>
                         <ImageBackground source={require('../assets/images/detail.png')}
                                          style={{width:"100%",height:250}}>
-                            <Back navigation={navigation} color={"black"} />
-                            {/*<View style={{
-                                backgroundColor:"#000",
-                                height:30,
-                                width:40,
-                                marginLeft:-50,
-                                marginTop:70,
-                                borderRadius:8,
-                                alignItems:"center",
-                                justifyContent:"center"
-                            }}>
-                                <TouchableOpacity onPress={()=>this.props.navigation.goBack()}>
-                                    <Image source={require('../images/back.png')} style={{width:25,height:10}}/>
-                                </TouchableOpacity>
-
-                            </View>*/}
+                            <Back navigation={navigation} iconColor={"black"} />
                         </ImageBackground>
                         <View style={{
                             backgroundColor:"white",
@@ -240,9 +224,8 @@ export default class JobDetail extends React.Component {
 
 
                         </View>
-                        </SafeAreaView>
-                    </View>
-
+                    </SafeAreaView>
+                </View>
             </>
         )
     }

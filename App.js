@@ -1,9 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
+import {Provider} from "react-redux";
+import {useState} from "react";
 import 'react-native-gesture-handler';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
-import {useState} from "react";
 import RootNavigator from "./navigation/DrawerNavigator";
+import createStore from './store/index'
+
+
+const {store} = createStore();
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -27,7 +32,9 @@ export default function App() {
   return (
     <>
       <StatusBar style="light"/>
-      <RootNavigator/>
+      <Provider store={store}>
+        <RootNavigator/>
+      </Provider>
     </>
   );
 }
