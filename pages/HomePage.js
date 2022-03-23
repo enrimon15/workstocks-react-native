@@ -15,6 +15,8 @@ import JobItem from "../components/JobItem";
 import JobItemHorizontal from "../components/JobItemHorizontal";
 import Hamburger from "../components/Hamburger";
 import {connect} from "react-redux";
+import {testChangeRecentJobs} from "../store/actions/AppAction";
+import {sAppRecentJobs} from "../store/reducers/AppReducers";
 
 class Home extends React.Component {
     constructor(props) {
@@ -156,7 +158,7 @@ class Home extends React.Component {
 // mappa lo stato come props del componente wrappato dal container
 function mapStateToProps(state) {
     return {
-        recentJobs: state.app.recentJobs
+        recentJobs: sAppRecentJobs(state)
     }
 }
 
@@ -164,10 +166,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         testChangeRecentJobs() {
-            dispatch({
-                type: 'LOAD_RECENT_JOBS',
-                payload: ['test recent modificato']
-            });
+            dispatch(testChangeRecentJobs(['test recent modificato']));
         }
     }
 }

@@ -1,0 +1,1 @@
+export const LOAD_RECENT_JOBS = 'LOAD_RECENT_JOBS';
