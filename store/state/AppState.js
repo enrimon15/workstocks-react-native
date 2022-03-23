@@ -1,5 +1,5 @@
 export const INITIAL_STATE = {
-    recentJobs: [],
+    recentJobs: ['test recent init'],
     loadingRecentJobs: false,
     popularJobs: [],
     loadingPopularJobs: false,

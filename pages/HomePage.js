@@ -26,7 +26,7 @@ class Home extends React.Component {
     }
 
     render() {
-        const {navigation, recentJobs} = this.props;
+        const {navigation, recentJobs, testChangeRecentJobs} = this.props;
 
         function searchInputHandler(enteredText) {
             this.setState({searchInput: enteredText});
@@ -35,6 +35,8 @@ class Home extends React.Component {
         function locationButtonHandler() {
             console.log("press location");
             console.log(recentJobs);
+
+            testChangeRecentJobs();
         }
 
         return (
@@ -152,14 +154,26 @@ class Home extends React.Component {
 }
 
 // mappa lo stato come props del componente wrappato dal container
-function mapStateToProps() {
+function mapStateToProps(state) {
     return {
-        recentJobs: ["test recents"]
+        recentJobs: state.app.recentJobs
+    }
+}
+
+// mappa lo stato come props del componente wrappato dal container
+function mapDispatchToProps(dispatch) {
+    return {
+        testChangeRecentJobs() {
+            dispatch({
+                type: 'LOAD_RECENT_JOBS',
+                payload: ['test recent modificato']
+            });
+        }
     }
 }
 
 // componente che permette la connessione tra un componente react e redux
-const HomeContainer = connect(mapStateToProps)(Home);
+const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(Home);
 export default HomeContainer;
 
 const styles = StyleSheet.create({
