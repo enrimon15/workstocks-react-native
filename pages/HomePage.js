@@ -7,7 +7,8 @@ import {
     TextInput,
     ScrollView,
     TouchableOpacity,
-    SafeAreaView
+    SafeAreaView,
+    ActivityIndicator
 } from "react-native";
 import { Modalize } from 'react-native-modalize'
 import { Ionicons } from '@expo/vector-icons';
@@ -15,20 +16,36 @@ import JobItem from "../components/JobItem";
 import JobItemHorizontal from "../components/JobItemHorizontal";
 import Hamburger from "../components/Hamburger";
 import {connect} from "react-redux";
-import {testChangeRecentJobs} from "../store/actions/AppAction";
-import {sAppRecentJobs} from "../store/reducers/AppReducers";
+import {
+    sError,
+    sLoading,
+    sPopularError,
+    sPopularJobs,
+    sPopularLoading, sRecentError, sRecentJobs,
+    sRecentLoading
+} from "../store/selectors/AppSelector";
+import {loadPopularJobs, loadRecentJobs} from "../store/actions/AppAction";
 
 class Home extends React.Component {
+
     constructor(props) {
         super(props);
-        console.log(props);
+
         this.state = {
             searchInput: ''
         }
     }
 
+    componentDidMount() {
+        this.props.loadPopularJobs();
+        this.props.loadRecentJobs();
+    }
+
     render() {
-        const {navigation, recentJobs, testChangeRecentJobs} = this.props;
+        const {navigation, popularJobs, popularLoading, popularError, recentJobs, recentLoading, recentError} = this.props;
+
+        const isError = popularError || recentError;
+        const isLoading = popularLoading || recentLoading;
 
         function searchInputHandler(enteredText) {
             this.setState({searchInput: enteredText});
@@ -36,9 +53,6 @@ class Home extends React.Component {
 
         function locationButtonHandler() {
             console.log("press location");
-            console.log(recentJobs);
-
-            testChangeRecentJobs();
         }
 
         return (
@@ -74,12 +88,14 @@ class Home extends React.Component {
                     </View>
                 </SafeAreaView>
 
+                {!isLoading && !isError && (
                 <Modalize
                     handleStyle={styles.modalButton}
                     modalStyle={styles.modalList}
                     alwaysOpen={550}
                     scrollViewProps={{showsVerticalScrollIndicator:false}}
                 >
+
                     <Text style={styles.textList}>
                         Popolari
                     </Text>
@@ -148,7 +164,11 @@ class Home extends React.Component {
                             bg="white"
                         />
                     </View>
-                </Modalize>
+                </Modalize> )}
+
+                {isLoading && !isError && (<ActivityIndicator size="large"/>)}
+
+                {isError && (<ActivityIndicator size="large"/>)}
 
             </ImageBackground>
         )
@@ -158,15 +178,23 @@ class Home extends React.Component {
 // mappa lo stato come props del componente wrappato dal container
 function mapStateToProps(state) {
     return {
-        recentJobs: sAppRecentJobs(state)
+        popularJobs: sPopularJobs(state),
+        popularLoading: sPopularLoading(state),
+        popularError: sPopularError(state),
+        recentJobs: sRecentJobs(state),
+        recentLoading: sRecentLoading(state),
+        recentError: sRecentError(state)
     }
 }
 
 // mappa lo stato come props del componente wrappato dal container
 function mapDispatchToProps(dispatch) {
     return {
-        testChangeRecentJobs() {
-            dispatch(testChangeRecentJobs(['test recent modificato']));
+        loadPopularJobs() {
+            dispatch(loadPopularJobs());
+        },
+        loadRecentJobs() {
+            dispatch(loadRecentJobs());
         }
     }
 }

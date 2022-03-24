@@ -1,9 +1,20 @@
-import {LOAD_RECENT_JOBS} from "./ActionType";
+import {LOAD_POPULAR_JOBS, LOAD_RECENT_JOBS} from "./ActionType";
+import HttpApi from "../../util/HttpApi";
 
+export function loadPopularJobs() {
+    return function(dispatch, getState) {
+        dispatch({
+            type: LOAD_POPULAR_JOBS,
+            payload: HttpApi.popularJobs()
+        })
+    };
+}
 
-export function testChangeRecentJobs(recentJobs) {
-    return {
-        type: LOAD_RECENT_JOBS,
-        payload: recentJobs
+export function loadRecentJobs() {
+    return function(dispatch, getState) {
+        dispatch({
+            type: LOAD_RECENT_JOBS,
+            payload: HttpApi.recentJobs()
+        })
     };
 }
