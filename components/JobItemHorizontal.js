@@ -5,13 +5,15 @@ import {Ionicons} from "@expo/vector-icons";
 
 export default class JobItemHorizontal extends React.Component{
     render(){
+        const {title, img, onPress, companyName, address} = this.props;
+
         return(
 
             <TouchableOpacity
-                onPress={this.props.onPress}
+                onPress={onPress}
                 style={styles.card}
             >
-                <CompanyAvatar img={this.props.img} />
+                <CompanyAvatar img={img} />
 
                 <Text style={{
                     fontFamily:"MS-Bold",
@@ -19,7 +21,7 @@ export default class JobItemHorizontal extends React.Component{
                     fontSize:13,
                     marginVertical: 5
                 }}>
-                    {this.props.name}
+                    {title}
                 </Text>
 
                 <View style={{flexDirection: "row"}}>
@@ -30,7 +32,7 @@ export default class JobItemHorizontal extends React.Component{
                         fontFamily:"MS-Regular",
                         marginLeft: 4
                     }}>
-                        Vasto, IT
+                        {address.city + ', ' + address.country}
                     </Text>
                 </View>
 
@@ -39,7 +41,7 @@ export default class JobItemHorizontal extends React.Component{
                     fontSize:15,
                     marginTop: 5,
                     fontFamily:"MS-Bold"
-                }}>Asana Inc.</Text>
+                }}>{companyName}</Text>
 
             </TouchableOpacity>
         );

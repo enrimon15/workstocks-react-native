@@ -10,33 +10,34 @@ import {
     SafeAreaView,
     ActivityIndicator
 } from "react-native";
+import {connect} from "react-redux";
 import { Modalize } from 'react-native-modalize'
 import { Ionicons } from '@expo/vector-icons';
 import JobItem from "../components/JobItem";
 import JobItemHorizontal from "../components/JobItemHorizontal";
 import Hamburger from "../components/Hamburger";
-import {connect} from "react-redux";
 import {
-    sError,
-    sLoading,
     sPopularError,
     sPopularJobs,
     sPopularLoading, sRecentError, sRecentJobs,
     sRecentLoading
 } from "../store/selectors/AppSelector";
 import {loadPopularJobs, loadRecentJobs} from "../store/actions/AppAction";
+import Colors from "../constants/colors";
+import ShowAlert from "../components/Alert";
 
 class Home extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {
+        /*this.state = {
             searchInput: ''
-        }
+        }*/
     }
 
     componentDidMount() {
+        console.log("componentDidMount home page");
         this.props.loadPopularJobs();
         this.props.loadRecentJobs();
     }
@@ -44,16 +45,27 @@ class Home extends React.Component {
     render() {
         const {navigation, popularJobs, popularLoading, popularError, recentJobs, recentLoading, recentError} = this.props;
 
+        console.log("render home page");
+
         const isError = popularError || recentError;
         const isLoading = popularLoading || recentLoading;
 
         function searchInputHandler(enteredText) {
-            this.setState({searchInput: enteredText});
+            //this.setState({searchInput: enteredText});
         }
 
         function locationButtonHandler() {
             console.log("press location");
+            //ShowAlert('test', 'testMsg', 'cancel', 'ok', () => console.log('cancel'), () => console.log('ok'));
         }
+
+        const  handleSearch = ({ nativeEvent: { key: keyValue } }) => {
+            console.log(keyValue);
+            if(keyValue === 'Enter')
+            {
+                console.log("enter");
+            }
+        };
 
         return (
                 <ImageBackground
@@ -78,6 +90,9 @@ class Home extends React.Component {
                                 placeholder="Cerca un nuovo lavoro..."
                                 placeholderTextColor="gray"
                                 style={styles.searchInput}
+                                maxLength={30}
+                                autoCorrect={false}
+                                onSubmitEditing={(event) => console.log('fire')}
                                 onChangeText={searchInputHandler}
                             />
                         </View>
@@ -88,7 +103,6 @@ class Home extends React.Component {
                     </View>
                 </SafeAreaView>
 
-                {!isLoading && !isError && (
                 <Modalize
                     handleStyle={styles.modalButton}
                     modalStyle={styles.modalList}
@@ -96,79 +110,58 @@ class Home extends React.Component {
                     scrollViewProps={{showsVerticalScrollIndicator:false}}
                 >
 
-                    <Text style={styles.textList}>
-                        Popolari
-                    </Text>
+                    {!isLoading && !isError && (
+                        <>
+                            <Text style={styles.textList}>
+                                Popolari
+                            </Text>
 
-                    <ScrollView
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        style={styles.popularJob}
-                    >
-                        <JobItemHorizontal
-                            img={require('../assets/images/asana.png')}
-                            name="Docker Developer"
-                            onPress={()=>navigation.navigate('JobDetails')}
+                            <ScrollView
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                style={styles.popularJob}
+                            >
+                                {popularJobs && popularJobs?.data?.map((job, i) => (
+                                    <JobItemHorizontal
+                                        key={i}
+                                        img={job.company.photo}
+                                        title={job.title}
+                                        address={job.address}
+                                        companyName={job.company.name}
+                                        onPress={ () => navigation.navigate('JobDetails', {
+                                            jobId: job.id
+                                        }) }
 
-                        />
-                        <JobItemHorizontal
-                            img={require('../assets/images/asana.png')}
-                            name="AWS Architect"
-                        />
-                        <JobItemHorizontal
-                            img={require('../assets/images/asana.png')}
-                            name="Flutter Dev"
-                        />
+                                    />
+                                ))}
+                            </ScrollView>
 
-                    </ScrollView>
+                            <View style={styles.recentJob}>
+                                <Text style={styles.textList}>
+                                    Recenti
+                                </Text>
 
-                    <View style={styles.recentJob}>
-                        <Text style={styles.textList}>
-                            Recenti
-                        </Text>
+                                {recentJobs && recentJobs?.data?.elements?.map((job, i) => (
+                                    <JobItem
+                                        key={i}
+                                        img={job.company.photo}
+                                        title={job.title}
+                                        address={job.address}
+                                        companyName={job.company.name}
+                                        createdAt={job.createdAt}
+                                        onPress={ () => navigation.navigate('JobDetails', {
+                                            jobId: job.id
+                                        }) }
+                                    />
+                                ))}
+                            </View>
 
-                        <JobItem
-                            // onPress={()=>this.props.navigation.navigate("Xd")}
-                            img={require('../assets/images/asana.png')}
-                            title="Software Developer"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="Devops Engineer"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="Flutter Developer"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="UI Designer"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="Java Architect"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="AWS Engineer"
-                            bg="white"
-                        />
-                        <JobItem
-                            img={require('../assets/images/asana.png')}
-                            title="DB Administrator"
-                            bg="white"
-                        />
-                    </View>
-                </Modalize> )}
+                        </>
+                    )}
 
-                {isLoading && !isError && (<ActivityIndicator size="large"/>)}
-
-                {isError && (<ActivityIndicator size="large"/>)}
+                    {isLoading && !isError && (<ActivityIndicator color={Colors.primary} size="large"/>)}
+                    {isError && (<Text>Oops.. Qualcosa è andato storto!</Text>)}
+                </Modalize>
 
             </ImageBackground>
         )

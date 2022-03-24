@@ -6,7 +6,7 @@ export default function CompanyAvatar(props) {
 
     return (
         <Image
-            source={img}
+            source={{uri: `data:image/jpeg;base64,${img}`}}
             style={styles.avatar}
             resizeMode="contain"
         />
