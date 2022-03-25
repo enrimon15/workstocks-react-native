@@ -8,4 +8,12 @@ export class StringUtils {
     static capitalize(word) {
         return word[0].toUpperCase() + word.slice(1).toLowerCase();
     }
+
+    static validateEmail(email) {
+        return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email));
+    }
+
+    static validatePassword(pw) {
+        return (/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/.test(pw));
+    }
 }

@@ -6,13 +6,15 @@ import CustomDrawer from "../components/CustomDrawer";
 import Colors from "../constants/colors";
 import { Ionicons } from '@expo/vector-icons';
 import {HomeNavigator} from "./HomeNavigator";
+import {AuthNavigator} from "./AuthNavigator";
 
 const Drawer = createDrawerNavigator();
 
 const RootNavigator = props => {
     return(
         <NavigationContainer>
-            <Drawer.Navigator
+            <AuthNavigator/>
+            {/*<Drawer.Navigator
                 initialRouteName="Home"
                 drawerContent={props => <CustomDrawer {...props} />}
                 screenOptions={{
@@ -59,7 +61,7 @@ const RootNavigator = props => {
                         ),
                     }}
                 />
-            </Drawer.Navigator>
+            </Drawer.Navigator>*/}
         </NavigationContainer>
     )
 }

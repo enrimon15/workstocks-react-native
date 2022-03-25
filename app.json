@@ -1,14 +1,15 @@
 {
   "expo": {
     "name": "workstocks-react-native",
+    "description": "App that helps you find the perfect job",
     "slug": "workstocks-react-native",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/icona_app.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/icona_app_white.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0078ff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,8 +22,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/images/icona_app_white.png",
+        "backgroundColor": "#0078ff"
       }
     },
     "web": {
