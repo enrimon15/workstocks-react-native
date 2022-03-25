@@ -16,4 +16,12 @@ export class StringUtils {
     static validatePassword(pw) {
         return (/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/.test(pw));
     }
+
+    static isLengthInRange(text, min, max) {
+        return (text.length >= min && text.length <= max);
+    }
+
+    static validateConfirmPassword(pw, pwToMatch) {
+        return (pw === pwToMatch);
+    }
 }
