@@ -31,9 +31,9 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
 
-        /*this.state = {
+        this.state = {
             searchInput: ''
-        }*/
+        }
     }
 
     componentDidMount() {
@@ -50,23 +50,23 @@ class Home extends React.Component {
         const isError = popularError || recentError;
         const isLoading = popularLoading || recentLoading;
 
-        function searchInputHandler(enteredText) {
-            //this.setState({searchInput: enteredText});
+        const searchInputHandler = (enteredText) => {
+            console.log(enteredText);
+            this.setState({searchInput: enteredText});
         }
 
-        function locationButtonHandler() {
-            console.log("press location");
-            navigation.navigate('JobList', {
-                city: 'Pescara'
-            });
-            //ShowAlert('test', 'testMsg', 'cancel', 'ok', () => console.log('cancel'), () => console.log('ok'));
+        const locationButtonHandler = () => {
+
         }
 
-        const  handleSearch = ({ nativeEvent: { key: keyValue } }) => {
-            console.log(keyValue);
-            if(keyValue === 'Enter')
-            {
-                console.log("enter");
+        const handleSearch = (event) => {
+            if (this.state.searchInput) {
+                navigation.navigate('JobList', {
+                    city: this.state.searchInput
+                });
+            } else {
+                ShowAlert('Attenzione', 'Ricerca non valida. Inserire un testo valido!', 'Ok',
+                    () => console.log('wrong search'));
             }
         };
 
@@ -95,7 +95,7 @@ class Home extends React.Component {
                                 style={styles.searchInput}
                                 maxLength={30}
                                 autoCorrect={false}
-                                onSubmitEditing={(event) => console.log('fire')}
+                                onSubmitEditing={handleSearch}
                                 onChangeText={searchInputHandler}
                             />
                         </View>

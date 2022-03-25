@@ -8,6 +8,7 @@ import {useNavigation, useRoute} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
 import {sSearch, sSearchError, sSearchLoading} from "../store/selectors/AppSelector";
 import {loadSearchJobs} from "../store/actions/AppAction";
+import {StringUtils} from "../util/StringUtils";
 
 const Search = () => {
     const navigation = useNavigation();
@@ -74,7 +75,7 @@ const Search = () => {
                             color:"#FFF",
                             marginLeft: 5,
                             fontFamily:"MS-Medium"
-                        }}>{city}</Text>
+                        }}>{StringUtils.capitalize(city)}</Text>
                     </View>
                     <View style={{width:"50%",alignItems:"flex-end"}}>
                         <Image
