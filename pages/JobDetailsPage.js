@@ -257,7 +257,7 @@ class JobDetail extends React.Component {
                             </>
                         )}
 
-                        {jobLoading && !jobError && (<ActivityIndicator color={Colors.primary} size="large"/>)}
+                        {jobLoading && !jobError && (<ActivityIndicator style={{marginTop: 50}} color={Colors.primary} size="large"/>)}
                         {jobError && (<Text>Oops.. Qualcosa è andato storto!</Text>)}
                     </SafeAreaView>
                 </View>

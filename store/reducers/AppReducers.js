@@ -1,9 +1,16 @@
 import {INITIAL_STATE} from "../state/AppState"
 import {
     LOAD_JOB_BY_ID_ERROR,
-    LOAD_JOB_BY_ID_LOADING, LOAD_JOB_BY_ID_SUCCESS,
-    LOAD_POPULAR_JOBS_ERROR, LOAD_POPULAR_JOBS_LOADING, LOAD_POPULAR_JOBS_SUCCESS,
-    LOAD_RECENT_JOBS_ERROR, LOAD_RECENT_JOBS_LOADING, LOAD_RECENT_JOBS_SUCCESS
+    LOAD_JOB_BY_ID_LOADING,
+    LOAD_JOB_BY_ID_SUCCESS,
+    LOAD_POPULAR_JOBS_ERROR,
+    LOAD_POPULAR_JOBS_LOADING,
+    LOAD_POPULAR_JOBS_SUCCESS,
+    LOAD_RECENT_JOBS_ERROR,
+    LOAD_RECENT_JOBS_LOADING,
+    LOAD_RECENT_JOBS_SUCCESS,
+    LOAD_SEARCH_JOBS_ERROR, LOAD_SEARCH_JOBS_LOADING,
+    LOAD_SEARCH_JOBS_SUCCESS
 } from "../actions/ActionType";
 
 export default function AppReducers(state = INITIAL_STATE, action) {
@@ -64,6 +71,25 @@ export default function AppReducers(state = INITIAL_STATE, action) {
                 ...state,
                 loadingJob: false,
                 errorJob: true
+            };
+        case LOAD_SEARCH_JOBS_LOADING:
+            return {
+                ...state,
+                loadingSearchJobs: true,
+                errorSearchJob: false
+            };
+        case LOAD_SEARCH_JOBS_SUCCESS:
+            return {
+                ...state,
+                searchJob: action.payload,
+                loadingSearchJobs: false,
+                errorSearchJob: false
+            };
+        case LOAD_SEARCH_JOBS_ERROR:
+            return {
+                ...state,
+                loadingSearchJobs: false,
+                errorSearchJob: true
             };
         default:
             return state

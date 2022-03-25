@@ -5,7 +5,7 @@ export const INITIAL_STATE = {
     popularJobs: [],
     errorPopularJobs: false,
     loadingPopularJobs: false,
-    searchJob: [],
+    searchJob: {},
     errorSearchJobs: false,
     loadingSearchJobs: false,
     job: {},

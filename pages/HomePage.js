@@ -56,6 +56,9 @@ class Home extends React.Component {
 
         function locationButtonHandler() {
             console.log("press location");
+            navigation.navigate('JobList', {
+                city: 'Pescara'
+            });
             //ShowAlert('test', 'testMsg', 'cancel', 'ok', () => console.log('cancel'), () => console.log('ok'));
         }
 
@@ -107,7 +110,9 @@ class Home extends React.Component {
                     handleStyle={styles.modalButton}
                     modalStyle={styles.modalList}
                     alwaysOpen={550}
-                    scrollViewProps={{showsVerticalScrollIndicator:false}}
+                    scrollViewProps={{
+                        showsVerticalScrollIndicator:false,
+                    }}
                 >
 
                     {!isLoading && !isError && (
@@ -149,6 +154,7 @@ class Home extends React.Component {
                                         address={job.address}
                                         companyName={job.company.name}
                                         createdAt={job.createdAt}
+                                        isNew={true}
                                         onPress={ () => navigation.navigate('JobDetails', {
                                             jobId: job.id
                                         }) }

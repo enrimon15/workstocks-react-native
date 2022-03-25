@@ -7,7 +7,7 @@ import DateUtil from "../util/DateUtil";
 
 export default class JobItem extends React.Component{
     render(){
-        const {title, img, onPress, companyName, address, createdAt} = this.props;
+        const {title, img, onPress, companyName, address, createdAt, isNew} = this.props;
 
         return(
             <TouchableOpacity
@@ -61,12 +61,12 @@ export default class JobItem extends React.Component{
                         fontSize:15,
                         marginTop: 5,
                         fontFamily:"MS-Bold"
-                    }}
-                          numberOfLines={2}>{companyName}</Text>
+                    }}>{companyName}</Text>
                 </View>
                 </View>
 
                 <View style={{justifyContent: "flex-end", width: "30%", alignItems: "flex-end"}}>
+                    {isNew && (
                     <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
                         <View style={{
                             height:4,
@@ -85,6 +85,7 @@ export default class JobItem extends React.Component{
                             Nuova
                         </Text>
                     </View>
+                    )}
 
                     <Text style={{
                         color:"#345c74",
