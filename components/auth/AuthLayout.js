@@ -9,9 +9,10 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Colors from "../../constants/colors";
+import ErrorForm from "./ErrorForm";
 
 const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bottomButtonTitle, bottomButtonHandler,
-                        loading}) => {
+                        loading, error, errorText}) => {
 
     return (
         <View style={styles.container}>
@@ -25,40 +26,43 @@ const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bott
                 }]}
             >
                 <ScrollView showsVerticalScrollIndicator={false}>
-                {children}
 
-                <View style={styles.button}>
-                    <TouchableOpacity
-                        style={[styles.signIn, {
-                            backgroundColor: Colors.primary,
-                            marginTop: 15
-                        }]}
-                        onPress={!loading ? topButtonHandler: null}
-                    >
-                        {!loading ? (
-                            <View style={{color: Colors.primary}}>
-                                <Text style={[styles.textSign, {
-                                    color:"white"
-                                }]}>{topButtonTitle}</Text>
-                            </View>
-                        ) : (
-                            <ActivityIndicator color="white"/>
-                        )}
-                    </TouchableOpacity>
+                    {error && <ErrorForm text={errorText} />}
 
-                    {bottomButtonTitle && <TouchableOpacity
-                        onPress={bottomButtonHandler}
-                        style={[styles.signIn, {
-                            borderColor: Colors.primary,
-                            borderWidth: 1,
-                            marginTop: 15
-                        }]}
-                    >
-                        <Text style={[styles.textSign, {
-                            color: Colors.primary
-                        }]}>{bottomButtonTitle}</Text>
-                    </TouchableOpacity>}
-                </View>
+                    {children}
+
+                    <View style={styles.button}>
+                        <TouchableOpacity
+                            style={[styles.signIn, {
+                                backgroundColor: Colors.primary,
+                                marginTop: 15
+                            }]}
+                            onPress={!loading ? topButtonHandler: null}
+                        >
+                            {!loading ? (
+                                <View style={{color: Colors.primary}}>
+                                    <Text style={[styles.textSign, {
+                                        color:"white"
+                                    }]}>{topButtonTitle}</Text>
+                                </View>
+                            ) : (
+                                <ActivityIndicator color="white"/>
+                            )}
+                        </TouchableOpacity>
+
+                        {bottomButtonTitle && <TouchableOpacity
+                            onPress={bottomButtonHandler}
+                            style={[styles.signIn, {
+                                borderColor: Colors.primary,
+                                borderWidth: 1,
+                                marginTop: 15
+                            }]}
+                        >
+                            <Text style={[styles.textSign, {
+                                color: Colors.primary
+                            }]}>{bottomButtonTitle}</Text>
+                        </TouchableOpacity>}
+                    </View>
 
                 </ScrollView>
             </Animatable.View>

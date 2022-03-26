@@ -5,12 +5,13 @@ import AuthLayout from "../components/auth/AuthLayout";
 import InputForm from "../components/auth/InputForm";
 import {useDispatch, useSelector} from "react-redux";
 import {register} from "../store/actions/UserAction";
-import {sUserLoading} from "../store/selectors/UserSelector";
+import {sUserError, sUserLoading} from "../store/selectors/UserSelector";
 
 const Register = () => {
 
     const dispatch = useDispatch();
     const loading = useSelector(sUserLoading);
+    const error = useSelector(sUserError);
 
     const [data, setData] = useState({
         email: '',
@@ -123,7 +124,7 @@ const Register = () => {
 
     const registerHandle = () => {
         console.log("register: " + data.email + " - " + data.password + " - " + data.confirmPassword + " - " + data.surname + " - " + data.name );
-        dispatch(register(data.email, data.name, data.surname, data.password));
+        dispatch(register(data.email, data.name, data.surname, data.password, data.confirmPassword));
     }
 
     return (
@@ -132,6 +133,8 @@ const Register = () => {
             topButtonTitle={"Registrati"}
             topButtonHandler={registerHandle}
             loading={loading}
+            error={error}
+            errorText={'Registrazione non riuscita, riprova!'}
         >
             <InputForm
                 title={'Email'}

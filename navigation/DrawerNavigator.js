@@ -8,17 +8,21 @@ import { Ionicons } from '@expo/vector-icons';
 import {HomeNavigator} from "./HomeNavigator";
 import {AuthNavigator} from "./AuthNavigator";
 import {useSelector} from "react-redux";
-import {sUserData} from "../store/selectors/UserSelector";
+import {sUserData, sUserError, sUserLoading} from "../store/selectors/UserSelector";
 import {ObjectUtils} from "../util/ObjectUtils";
 
 const Drawer = createDrawerNavigator();
 
 const RootNavigator = () => {
     const userLogged = useSelector(sUserData);
+    const userLoading = useSelector(sUserLoading);
+    const userError = useSelector(sUserError);
+
+    const conditionAuthNavigation = (ObjectUtils.isEmpty(userLogged) || userLoading || userError);
 
     return(
         <NavigationContainer>
-            {ObjectUtils.isEmpty(userLogged) ? (
+            {conditionAuthNavigation  ? (
                     <AuthNavigator/>
                 ) :
                 (<Drawer.Navigator

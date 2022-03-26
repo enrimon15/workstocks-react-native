@@ -6,13 +6,14 @@ import AuthLayout from "../components/auth/AuthLayout";
 import InputForm from "../components/auth/InputForm";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../store/actions/UserAction";
-import {sUserLoading} from "../store/selectors/UserSelector";
+import {sUserError, sUserLoading} from "../store/selectors/UserSelector";
 
 const Login = () => {
 
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const loading = useSelector(sUserLoading);
+    const error = useSelector(sUserError);
 
     const [data, setData] = useState({
         email: '',
@@ -63,6 +64,8 @@ const Login = () => {
             bottomButtonTitle={'Registrati'}
             bottomButtonHandler={() => navigation.navigate('Register')}
             loading={loading}
+            error={error}
+            errorText={'Credenziali non valide, riprova!'}
         >
 
             <InputForm

@@ -1,18 +1,20 @@
 import axios from 'axios';
+import createStore from "../store";
+import {ObjectUtils} from "./ObjectUtils";
+const {store} = createStore();
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:9100/workstocks/rest/v1'
 });
 
 axiosInstance.interceptors.request.use(async (req) => {
-    const access_token = await AsyncStorage.getItem("@access_token");
-    req.headers.Authorization = `Bearer ${access_token}`;
+    const userLogged = store.getState().user.user;
+    if (!ObjectUtils.isEmpty(userLogged) && userLogged.token) {
+        req.headers.Authorization = `Bearer ${userLogged.token}`;
+    }
+
     return req;
 });
-
-const getState = () => {
-    store
-};
 
 const jobBaseHref = '/job-offers';
 const authBaseHref = '/auth';

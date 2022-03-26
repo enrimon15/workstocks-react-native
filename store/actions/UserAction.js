@@ -14,14 +14,14 @@ export function login(email, password) {
     };
 }
 
-export function register(email, name, surname, password) {
+export function register(email, name, surname, password, passwordConfirmation) {
     return async function(dispatch, getState) {
         dispatch({
             type:USER_LOADING,
         })
 
         try{
-            const registrationRequest = new RegisterRequest(email, name, surname, password);
+            const registrationRequest = new RegisterRequest(email, name, surname, password, passwordConfirmation);
             await HttpApi.register(registrationRequest);
 
             const loginRequest = new LoginRequest(email, password);

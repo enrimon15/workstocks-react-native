@@ -25,7 +25,9 @@ export default function UserReducers(state = INITIAL_STATE, action) {
         case USER_LOGOUT:
             return {
                 ...state,
-                user: {}
+                user: {},
+                error: false,
+                loading: false
             };
         default:
             return state
