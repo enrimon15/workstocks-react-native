@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react';
-import {View, Text, Image, SafeAreaView, FlatList, ActivityIndicator, StyleSheet} from 'react-native';
-import {Ionicons} from "@expo/vector-icons";
+import {FlatList, ActivityIndicator, StyleSheet} from 'react-native';
 import Colors from "../constants/colors";
-import Back from "../components/Back";
 import JobItem from "../components/JobItem";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
 import {sSearch, sSearchError, sSearchLoading} from "../store/selectors/AppSelector";
 import {loadSearchJobs} from "../store/actions/AppAction";
 import {StringUtils} from "../util/StringUtils";
+import {ListOutline} from "../components/ListOutline";
+import Error from "../components/Error";
 
 const Search = () => {
     const navigation = useNavigation();
@@ -22,9 +22,12 @@ const Search = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log("dispatch");
-        dispatch(loadSearchJobs(city));
+        fetchData();
     }, []);
+
+    const fetchData = () => {
+        dispatch(loadSearchJobs(city));
+    }
 
 
     const renderItem = ({ item }) => (
@@ -41,54 +44,11 @@ const Search = () => {
     );
 
     return(
-        <View style={{
-            backgroundColor:"white",
-            flex:1
-        }}>
-            <View style={{
-                backgroundColor: Colors.primary,
-                height:"28%",
-                borderBottomLeftRadius:30,
-                borderBottomRightRadius:30,
-                paddingHorizontal:20,
-                shadowColor: "#84A4FF",
-                shadowOffset: {
-                    width: 0,
-                    height:0,
-                },
-                shadowOpacity: 10,
-                shadowRadius: 20,
-                elevation: 2, // Android
-            }}>
-                <SafeAreaView>
-                <Back navigation={navigation} iconColor={"white"} />
-                <View style={{
-                    flexDirection:"row",
-                    alignItems:"center",
-                    marginTop:25,
-                    width:"100%"
-                }}>
-                    <View style={{width:"50%", flexDirection: "row"}}>
-                        <Ionicons name="location-outline" size={28} color="white" />
-                        <Text style={{
-                            fontSize:28,
-                            color:"#FFF",
-                            marginLeft: 5,
-                            fontFamily:"MS-Medium"
-                        }}>{StringUtils.capitalize(city)}</Text>
-                    </View>
-                    <View style={{width:"50%",alignItems:"flex-end"}}>
-                        <Image
-                            source={require('../assets/images/undraw.png')}
-                            style={{height:100,width:100}}
-                            resizeMode="contain"
-                        />
-                    </View>
-                </View>
-                </SafeAreaView>
-            </View>
-
-
+        <ListOutline
+            textHeader={StringUtils.capitalize(city)}
+            titleIcon={'location-outline'}
+            navigation={navigation}
+        >
             {!loading && !error && jobList && (
                 <FlatList
                     data={jobList?.data?.elements}
@@ -97,25 +57,14 @@ const Search = () => {
                 />
             )}
 
-            {loading && !error && (<ActivityIndicator style={{marginTop: 50}} color={Colors.primary} size="large"/>)}
-            {error && (<Text>Oops.. Qualcosa è andato storto!</Text>)}
-        </View>
+            {loading && !error && (<ActivityIndicator style={styles.spinner} color={Colors.primary} size="large"/>)}
+            {error && (<Error onPress={() => fetchData()} />)}
+
+        </ListOutline>
     )
 }
 export default Search;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 50,
-    },
-    item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
-    },
-    title: {
-        fontSize: 32,
-    },
+    spinner: {marginTop: 50}
 });

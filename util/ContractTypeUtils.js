@@ -4,7 +4,7 @@ export default class ContractTypeUtils {
             full_time: 'Full Time',
             part_time: 'Part Time',
             internship: 'Tirocinio',
-            construction_base: 'Apprendistato'
+            construction_base: 'Tirocinio'
         }
 
         return keys[contract];

@@ -6,7 +6,7 @@ import {
     StyleSheet,
     TextInput,
     ScrollView,
-    TouchableOpacity,
+    TouchableHighlight,
     SafeAreaView,
     ActivityIndicator
 } from "react-native";
@@ -15,7 +15,7 @@ import { Modalize } from 'react-native-modalize'
 import { Ionicons } from '@expo/vector-icons';
 import JobItem from "../components/JobItem";
 import JobItemHorizontal from "../components/JobItemHorizontal";
-import Hamburger from "../components/Hamburger";
+import Hamburger from "../components/nav/Hamburger";
 import {
     sPopularError,
     sPopularJobs,
@@ -25,6 +25,7 @@ import {
 import {loadPopularJobs, loadRecentJobs} from "../store/actions/AppAction";
 import Colors from "../constants/colors";
 import ShowAlert from "../components/Alert";
+import {sUserData} from "../store/selectors/UserSelector";
 
 class Home extends React.Component {
 
@@ -37,26 +38,23 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        console.log("componentDidMount home page");
         this.props.loadPopularJobs();
         this.props.loadRecentJobs();
     }
 
     render() {
-        const {navigation, popularJobs, popularLoading, popularError, recentJobs, recentLoading, recentError} = this.props;
-
-        console.log("render home page");
+        const {navigation, popularJobs, popularLoading, popularError, recentJobs, recentLoading, recentError,
+            user} = this.props;
 
         const isError = popularError || recentError;
         const isLoading = popularLoading || recentLoading;
 
         const searchInputHandler = (enteredText) => {
-            console.log(enteredText);
             this.setState({searchInput: enteredText});
         }
 
         const locationButtonHandler = () => {
-
+            console.log('location click');
         }
 
         const handleSearch = (event) => {
@@ -79,7 +77,7 @@ class Home extends React.Component {
                     <Hamburger navigation={navigation}/>
 
                     <Text style={styles.welcomeText}>
-                        Bentornato Enrico,
+                        Bentornato {user.name},
                     </Text>
 
                     <Text style={styles.welcomeWorkText}>
@@ -100,9 +98,9 @@ class Home extends React.Component {
                             />
                         </View>
 
-                        <TouchableOpacity style={styles.location} onPress={locationButtonHandler}>
+                        <TouchableHighlight style={styles.location} onPress={locationButtonHandler}>
                             <Ionicons name="location-outline" size={24} color="black" />
-                        </TouchableOpacity>
+                        </TouchableHighlight>
                     </View>
                 </SafeAreaView>
 
@@ -182,7 +180,8 @@ function mapStateToProps(state) {
         popularError: sPopularError(state),
         recentJobs: sRecentJobs(state),
         recentLoading: sRecentLoading(state),
-        recentError: sRecentError(state)
+        recentError: sRecentError(state),
+        user: sUserData(state)
     }
 }
 

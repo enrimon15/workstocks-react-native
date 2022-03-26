@@ -1,24 +1,23 @@
 import {NavigationContainer} from "@react-navigation/native";
 import Home from "../pages/HomePage";
-import JobDetail from "../pages/JobDetailsPage";
 import {createDrawerNavigator} from "@react-navigation/drawer";
-import CustomDrawer from "../components/CustomDrawer";
+import CustomDrawer from "../components/nav/CustomDrawer";
 import Colors from "../constants/colors";
 import { Ionicons } from '@expo/vector-icons';
 import {HomeNavigator} from "./HomeNavigator";
 import {AuthNavigator} from "./AuthNavigator";
 import {useSelector} from "react-redux";
-import {sUserData, sUserError, sUserLoading} from "../store/selectors/UserSelector";
+import {sUserData} from "../store/selectors/UserSelector";
 import {ObjectUtils} from "../util/ObjectUtils";
+import {FavoritesNavigator} from "./FavoritesNavigator";
+import {ApplicationsNavigator} from "./ApplicationsNavigator";
 
 const Drawer = createDrawerNavigator();
 
 const RootNavigator = () => {
     const userLogged = useSelector(sUserData);
-    const userLoading = useSelector(sUserLoading);
-    const userError = useSelector(sUserError);
 
-    const conditionAuthNavigation = (ObjectUtils.isEmpty(userLogged) || userLoading || userError);
+    const conditionAuthNavigation = (ObjectUtils.isEmpty(userLogged));
 
     return(
         <NavigationContainer>
@@ -44,12 +43,12 @@ const RootNavigator = () => {
                             <Ionicons name="home-outline" size={22} color={color} />
                         ),
                     }} />
-                    <Drawer.Screen name="Preferiti" component={Home} options={{
+                    <Drawer.Screen name="Preferiti" component={FavoritesNavigator} options={{
                         drawerIcon: ({color}) => (
                             <Ionicons name="ios-heart-outline" size={22} color={color} />
                         ),
                     }} />
-                    <Drawer.Screen name="Candidature" component={Home} options={{
+                    <Drawer.Screen name="Candidature" component={ApplicationsNavigator} options={{
                         drawerIcon: ({color}) => (
                             <Ionicons name="ios-briefcase-outline" size={22} color={color} />
                         ),

@@ -12,10 +12,10 @@ import {
 } from '@react-navigation/drawer';
 
 import { Ionicons, AntDesign } from '@expo/vector-icons';
-import Colors from "../constants/colors";
+import Colors from "../../constants/colors";
 import {useDispatch, useSelector} from "react-redux";
-import {sUserData} from "../store/selectors/UserSelector";
-import {logout} from "../store/actions/UserAction";
+import {sUserData} from "../../store/selectors/UserSelector";
+import {logout} from "../../store/actions/UserAction";
 
 const CustomDrawer = props => {
 
@@ -31,7 +31,7 @@ const CustomDrawer = props => {
                     style={{padding: 20}}>
                     <Image
                         resizeMode="contain"
-                        source={require('../assets/images/logo_con_testo.png')}
+                        source={require('../../assets/images/logo_con_testo.png')}
                         style={{width: "70%", marginBottom: 30}}
                     />
                     <View style={{flexDirection: "row", marginBottom: 5}}>

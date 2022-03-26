@@ -7,7 +7,7 @@ export default function Hamburger(props) {
     return (
         <Pressable onPress={() => navigation.toggleDrawer()}>
             <Image
-                source={require('../assets/images/menu.png')}
+                source={require('../../assets/images/menu.png')}
                 style={styles.menuImage}
             />
         </Pressable>

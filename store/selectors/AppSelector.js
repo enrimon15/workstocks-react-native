@@ -15,3 +15,11 @@ export function sJobDetailError(state) { return sApp(state).errorJob; }
 export function sSearch(state) { return sApp(state).searchJob; }
 export function sSearchLoading(state) { return sApp(state).loadingSearchJobs; }
 export function sSearchError(state) { return sApp(state).errorSearchJobs; }
+
+export function sFavorites(state) {return sApp(state).favorites}
+export function sFavoritesLoading(state) {return sApp(state).loadingFavorites}
+export function sFavoritesError(state) { return sApp(state).errorFavorites; }
+
+export function sApplications(state) {return sApp(state).applications}
+export function sApplicationsLoading(state) {return sApp(state).loadingApplications}
+export function sApplicationsError(state) { return sApp(state).errorApplications; }
