@@ -12,6 +12,7 @@ import {
 import {loadFavorites} from "../store/actions/AppAction";
 import {ListOutline} from "../components/ListOutline";
 import Error from "../components/Error";
+import NoData from "../components/NoData";
 
 const Favorites = () => {
     const navigation = useNavigation();
@@ -49,12 +50,16 @@ const Favorites = () => {
             textHeader={'Offerte Salvate'}
             navigation={navigation}
         >
-            {!loading && !error && favorites && (
+            {!loading && !error && favorites && favorites?.data?.elements?.length > 0 && (
                 <FlatList
                     data={favorites?.data?.elements}
                     renderItem={renderItem}
                     keyExtractor={item => item?.id}
                 />
+            )}
+
+            {!loading && !error && favorites && favorites?.data?.elements?.length <= 0 && (
+                <NoData />
             )}
 
             {loading && !error && (<ActivityIndicator style={styles.spinner} color={Colors.primary} size="large"/>)}

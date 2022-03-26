@@ -9,6 +9,7 @@ import {loadSearchJobs} from "../store/actions/AppAction";
 import {StringUtils} from "../util/StringUtils";
 import {ListOutline} from "../components/ListOutline";
 import Error from "../components/Error";
+import NoData from "../components/NoData";
 
 const Search = () => {
     const navigation = useNavigation();
@@ -49,12 +50,16 @@ const Search = () => {
             titleIcon={'location-outline'}
             navigation={navigation}
         >
-            {!loading && !error && jobList && (
+            {!loading && !error && jobList && jobList?.data?.elements?.length > 0 && (
                 <FlatList
                     data={jobList?.data?.elements}
                     renderItem={renderItem}
                     keyExtractor={item => item?.id}
                 />
+            )}
+
+            {!loading && !error && jobList && jobList?.data?.elements?.length <= 0 && (
+                <NoData />
             )}
 
             {loading && !error && (<ActivityIndicator style={styles.spinner} color={Colors.primary} size="large"/>)}

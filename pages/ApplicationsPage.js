@@ -10,6 +10,8 @@ import {
 import {loadApplications} from "../store/actions/AppAction";
 import {ListOutline} from "../components/ListOutline";
 import Error from "../components/Error";
+import NoData from "../components/NoData";
+
 
 const Applications = () => {
     const navigation = useNavigation();
@@ -47,12 +49,17 @@ const Applications = () => {
             textHeader={'Offerte Salvate'}
             navigation={navigation}
         >
-            {!loading && !error && applications && (
+
+            {!loading && !error && applications && applications?.data?.elements?.length > 0 && (
                 <FlatList
                     data={applications?.data?.elements}
                     renderItem={renderItem}
                     keyExtractor={item => item?.id}
                 />
+            )}
+
+            {!loading && !error && applications && applications?.data?.elements?.length <= 0 && (
+                <NoData />
             )}
 
             {loading && !error && (<ActivityIndicator style={styles.spinner} color={Colors.primary} size="large"/>)}
