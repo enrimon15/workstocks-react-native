@@ -4,14 +4,16 @@ import {
     Text,
     TouchableOpacity,
     Dimensions,
-    StyleSheet,
-    Image
+    StyleSheet
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../constants/colors";
+import {useNavigation} from "@react-navigation/native";
 
-const SplashScreen = ({navigation}) => {
+const SplashScreen = () => {
+
+    const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
@@ -35,13 +37,13 @@ const SplashScreen = ({navigation}) => {
                 }]}>Trova l'offerta di lavoro adatta a te!</Text>
                 <Text style={styles.text}>Accedi con il tuo account</Text>
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('SignInScreen')}>
-                        <TouchableOpacity
+                    <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
+                        <View
                             style={styles.signIn}
                         >
                             <Text style={styles.textSign}>Inizia</Text>
                             <MaterialIcons name="keyboard-arrow-right" size={20} color="white" />
-                        </TouchableOpacity>
+                        </View>
                     </TouchableOpacity>
                 </View>
             </Animatable.View>

@@ -1,4 +1,4 @@
-import {LOAD_JOB_BY_ID, LOAD_POPULAR_JOBS, LOAD_RECENT_JOBS, LOAD_SEARCH_JOBS} from "./ActionType";
+import {LOAD_JOB_BY_ID, LOAD_POPULAR_JOBS, LOAD_RECENT_JOBS, SEARCH_JOBS} from "./ActionType";
 import HttpApi from "../../util/HttpApi";
 
 export function loadPopularJobs() {
@@ -31,7 +31,7 @@ export function loadJobDetails(jobId) {
 export function loadSearchJobs(city) {
     return function(dispatch, getState) {
         dispatch({
-            type: LOAD_SEARCH_JOBS,
+            type: SEARCH_JOBS,
             payload: HttpApi.searchJobs(city)
         })
     };

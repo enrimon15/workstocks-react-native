@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import { FontAwesome, Feather } from '@expo/vector-icons';
 import {StringUtils} from "../util/StringUtils";
-import {useNavigation} from "@react-navigation/native";
 import AuthLayout from "../components/auth/AuthLayout";
 import InputForm from "../components/auth/InputForm";
+import {useDispatch, useSelector} from "react-redux";
+import {register} from "../store/actions/UserAction";
+import {sUserLoading} from "../store/selectors/UserSelector";
 
 const Register = () => {
 
-    const {navigation} = useNavigation();
+    const dispatch = useDispatch();
+    const loading = useSelector(sUserLoading);
 
     const [data, setData] = useState({
         email: '',
@@ -120,7 +123,7 @@ const Register = () => {
 
     const registerHandle = () => {
         console.log("register: " + data.email + " - " + data.password + " - " + data.confirmPassword + " - " + data.surname + " - " + data.name );
-        //signIn(foundUser);
+        dispatch(register(data.email, data.name, data.surname, data.password));
     }
 
     return (
@@ -128,6 +131,7 @@ const Register = () => {
             titleText={'Registrati!'}
             topButtonTitle={"Registrati"}
             topButtonHandler={registerHandle}
+            loading={loading}
         >
             <InputForm
                 title={'Email'}

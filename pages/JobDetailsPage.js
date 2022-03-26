@@ -15,7 +15,7 @@ import {
 import {loadJobDetails, loadPopularJobs, loadRecentJobs} from "../store/actions/AppAction";
 import {connect} from "react-redux";
 import CompanyAvatar from "../components/CompanyAvatar";
-import ContractTypeUtil from "../util/ContractTypeUtil";
+import ContractTypeUtils from "../util/ContractTypeUtils";
 import {StringUtils} from "../util/StringUtils";
 
 class JobDetail extends React.Component {
@@ -175,7 +175,7 @@ class JobDetail extends React.Component {
                                         <Text style={{
                                             fontFamily:"MS-Bold",
                                             paddingTop: 1
-                                        }}>{ContractTypeUtil.getContractType(jobDetailData?.contractType)}</Text>
+                                        }}>{ContractTypeUtils.getContractType(jobDetailData?.contractType)}</Text>
                                     </View>
 
                                     <View style={{

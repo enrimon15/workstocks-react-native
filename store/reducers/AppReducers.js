@@ -9,8 +9,8 @@ import {
     LOAD_RECENT_JOBS_ERROR,
     LOAD_RECENT_JOBS_LOADING,
     LOAD_RECENT_JOBS_SUCCESS,
-    LOAD_SEARCH_JOBS_ERROR, LOAD_SEARCH_JOBS_LOADING,
-    LOAD_SEARCH_JOBS_SUCCESS
+    SEARCH_JOBS_ERROR, SEARCH_JOBS_LOADING,
+    SEARCH_JOBS_SUCCESS
 } from "../actions/ActionType";
 
 export default function AppReducers(state = INITIAL_STATE, action) {
@@ -72,20 +72,20 @@ export default function AppReducers(state = INITIAL_STATE, action) {
                 loadingJob: false,
                 errorJob: true
             };
-        case LOAD_SEARCH_JOBS_LOADING:
+        case SEARCH_JOBS_LOADING:
             return {
                 ...state,
                 loadingSearchJobs: true,
                 errorSearchJob: false
             };
-        case LOAD_SEARCH_JOBS_SUCCESS:
+        case SEARCH_JOBS_SUCCESS:
             return {
                 ...state,
                 searchJob: action.payload,
                 loadingSearchJobs: false,
                 errorSearchJob: false
             };
-        case LOAD_SEARCH_JOBS_ERROR:
+        case SEARCH_JOBS_ERROR:
             return {
                 ...state,
                 loadingSearchJobs: false,

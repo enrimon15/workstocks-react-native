@@ -13,8 +13,15 @@ import {
 
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import Colors from "../constants/colors";
+import {useDispatch, useSelector} from "react-redux";
+import {sUserData} from "../store/selectors/UserSelector";
+import {logout} from "../store/actions/UserAction";
 
 const CustomDrawer = props => {
+
+    const user = useSelector(sUserData);
+    const dispatch = useDispatch();
+
     return (
         <View style={{flex: 1}}>
             <DrawerContentScrollView
@@ -36,7 +43,7 @@ const CustomDrawer = props => {
                                 fontFamily: 'MS-Medium',
                                 marginLeft: 5
                             }}>
-                            Enrico Monte
+                            {user.name + ' ' + user.surname}
                         </Text>
                     </View>
 
@@ -46,7 +53,10 @@ const CustomDrawer = props => {
                 </View>
             </DrawerContentScrollView>
             <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
-                <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
+                <TouchableOpacity
+                    onPress={() => {dispatch(logout())}}
+                    style={{paddingVertical: 15}}
+                >
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Ionicons name="exit-outline" size={22} />
                         <Text
@@ -55,7 +65,7 @@ const CustomDrawer = props => {
                                 fontFamily: 'MS-Medium',
                                 marginLeft: 5,
                             }}>
-                            Sign Out
+                            Logout
                         </Text>
                     </View>
                 </TouchableOpacity>

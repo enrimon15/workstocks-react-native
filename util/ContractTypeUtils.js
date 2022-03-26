@@ -1,4 +1,4 @@
-export default class ContractTypeUtil {
+export default class ContractTypeUtils {
     static getContractType(contract) {
         const keys = {
             full_time: 'Full Time',

@@ -1,3 +1,5 @@
 export const INITIAL_STATE = {
-    test: "test"
+    user: {},
+    loading: false,
+    error: false
 }

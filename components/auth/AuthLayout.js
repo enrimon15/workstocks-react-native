@@ -4,12 +4,14 @@ import {
     Text,
     TouchableOpacity,
     StyleSheet,
-    ScrollView
+    ScrollView,
+    ActivityIndicator
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Colors from "../../constants/colors";
 
-const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bottomButtonTitle, bottomButtonHandler}) => {
+const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bottomButtonTitle, bottomButtonHandler,
+                        loading}) => {
 
     return (
         <View style={styles.container}>
@@ -31,13 +33,17 @@ const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bott
                             backgroundColor: Colors.primary,
                             marginTop: 15
                         }]}
-                        onPress={topButtonHandler}
+                        onPress={!loading ? topButtonHandler: null}
                     >
-                        <View style={{color: Colors.primary}}>
-                            <Text style={[styles.textSign, {
-                                color:"white"
-                            }]}>{topButtonTitle}</Text>
-                        </View>
+                        {!loading ? (
+                            <View style={{color: Colors.primary}}>
+                                <Text style={[styles.textSign, {
+                                    color:"white"
+                                }]}>{topButtonTitle}</Text>
+                            </View>
+                        ) : (
+                            <ActivityIndicator color="white"/>
+                        )}
                     </TouchableOpacity>
 
                     {bottomButtonTitle && <TouchableOpacity
@@ -53,6 +59,7 @@ const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bott
                         }]}>{bottomButtonTitle}</Text>
                     </TouchableOpacity>}
                 </View>
+
                 </ScrollView>
             </Animatable.View>
         </View>

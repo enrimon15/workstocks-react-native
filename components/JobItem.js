@@ -2,7 +2,7 @@ import React from 'react'
 import {Text,TouchableOpacity, View,Image} from 'react-native'
 import CompanyAvatar from "./CompanyAvatar";
 import {Ionicons} from "@expo/vector-icons";
-import DateUtil from "../util/DateUtil";
+import DateUtils from "../util/DateUtils";
 
 
 export default class JobItem extends React.Component{
@@ -93,7 +93,7 @@ export default class JobItem extends React.Component{
                         fontSize:10,
                         marginTop: 3
                     }}>
-                        {DateUtil.formatDate(createdAt)}
+                        {DateUtils.formatDate(createdAt)}
                     </Text>
                 </View>
 

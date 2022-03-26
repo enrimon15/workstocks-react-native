@@ -4,10 +4,15 @@ import {StringUtils} from "../util/StringUtils";
 import {useNavigation} from "@react-navigation/native";
 import AuthLayout from "../components/auth/AuthLayout";
 import InputForm from "../components/auth/InputForm";
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "../store/actions/UserAction";
+import {sUserLoading} from "../store/selectors/UserSelector";
 
 const Login = () => {
 
     const navigation = useNavigation();
+    const dispatch = useDispatch();
+    const loading = useSelector(sUserLoading);
 
     const [data, setData] = useState({
         email: '',
@@ -47,8 +52,7 @@ const Login = () => {
     }
 
     const loginHandle = () => {
-        console.log("login: " + data.email + " - " + data.password);
-        //signIn(foundUser);
+        dispatch(login(data.email, data.password));
     }
 
     return (
@@ -58,6 +62,7 @@ const Login = () => {
             topButtonHandler={loginHandle}
             bottomButtonTitle={'Registrati'}
             bottomButtonHandler={() => navigation.navigate('Register')}
+            loading={loading}
         >
 
             <InputForm

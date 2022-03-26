@@ -1,20 +1,33 @@
 import {INITIAL_STATE} from "../state/UserState";
+import {USER_ERROR, USER_LOADING, USER_LOGOUT, USER_SUCCESS} from "../actions/ActionType";
 
 export default function UserReducers(state = INITIAL_STATE, action) {
-    return state
-    /*switch (action.type) {
-        case 'LOAD_CATEGORIES':
+    switch (action.type) {
+        case USER_LOADING:
             return {
                 ...state,
-                loadingCategories:true,
+                loading: true,
+                error: false
             }
-        case 'LOAD_NEW_RELEASES_SUCCESS':
+        case USER_SUCCESS:
             return {
                 ...state,
-                newReleases: action.payload,
-                loadingNewReleases: false
+                user: action.payload.data,
+                loading: false,
+                error: false,
+            };
+        case USER_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: true
+            };
+        case USER_LOGOUT:
+            return {
+                ...state,
+                user: {}
             };
         default:
             return state
-    }*/
+    }
 }
