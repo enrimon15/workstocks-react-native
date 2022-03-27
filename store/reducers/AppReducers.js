@@ -15,7 +15,7 @@ import {
     GET_APPLICATION_LOADING, GET_APPLICATION_SUCCESS,
     GET_FAVORITE_ERROR,
     GET_FAVORITE_LOADING,
-    GET_FAVORITE_SUCCESS,
+    GET_FAVORITE_SUCCESS, INIT_APP,
     LOAD_JOB_BY_ID_ERROR,
     LOAD_JOB_BY_ID_LOADING,
     LOAD_JOB_BY_ID_SUCCESS,
@@ -215,6 +215,9 @@ export default function AppReducers(state = INITIAL_STATE, action) {
                 errorPopularJobs: false,
                 errorRecentJobs: false
             };
+        // REINIT
+        case INIT_APP:
+            return INITIAL_STATE;
         default:
             return state
     }

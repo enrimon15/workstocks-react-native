@@ -43,3 +43,5 @@ export const USER_ERROR = `${USER}_${ActionType.Rejected}`;
 export const USER_LOGOUT = 'USER_LOGOUT';
 
 export const CLEAN_ERROR = 'CLEAN_ERROR';
+
+export const INIT_APP = 'INIT_APP';

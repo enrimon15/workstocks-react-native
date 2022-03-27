@@ -64,6 +64,8 @@ export function loadJobDetails(jobId) {
             const checkFavoriteRes = await HttpApi.checkFavorite(jobId);
             const checkApplicationRes = await HttpApi.checkApplication(jobId);
 
+            console.log(checkFavoriteRes.data, checkApplicationRes.data);
+
             let jobRes = await HttpApi.jobById(jobId);
             jobRes.data['isFavorite'] = checkFavoriteRes.data.result;
             jobRes.data['isApplicated'] = checkApplicationRes.data.result;
