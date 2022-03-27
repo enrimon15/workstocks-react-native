@@ -24,7 +24,7 @@ import {
     LOAD_POPULAR_JOBS_SUCCESS,
     LOAD_RECENT_JOBS_ERROR,
     LOAD_RECENT_JOBS_LOADING,
-    LOAD_RECENT_JOBS_SUCCESS,
+    LOAD_RECENT_JOBS_SUCCESS, REINIT_APP_STATE,
     REMOVE_APPLICATION_SUCCESS,
     REMOVE_FAVORITE_SUCCESS,
     SEARCH_JOBS_ERROR,
@@ -216,8 +216,11 @@ export default function AppReducers(state = INITIAL_STATE, action) {
                 errorRecentJobs: false
             };
         // REINIT
-        case INIT_APP:
-            return INITIAL_STATE;
+        case REINIT_APP_STATE:
+            return {
+                ...state,
+                ...INITIAL_STATE
+            };
         default:
             return state
     }

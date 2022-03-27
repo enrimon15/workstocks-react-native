@@ -1,14 +1,15 @@
 import axios from 'axios';
-import createStore from "../store";
 import {ObjectUtils} from "./ObjectUtils";
-const {store} = createStore();
+import {getStore} from "../store/CreateStore";
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:9100/workstocks/rest/v1'
 });
 
-axiosInstance.interceptors.request.use(async (req) => {
+axiosInstance.interceptors.request.use((req) => {
+    const store = getStore();
     const userLogged = store.getState().user.user;
+    console.log(userLogged);
     if (!ObjectUtils.isEmpty(userLogged) && userLogged.token) {
         req.headers.Authorization = `Bearer ${userLogged.token}`;
     }
@@ -17,6 +18,7 @@ axiosInstance.interceptors.request.use(async (req) => {
 })
 
 const userId = () => {
+    const store = getStore();
     return store.getState().user.user.id
 }
 

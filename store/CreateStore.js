@@ -5,6 +5,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistReducer, persistStore} from "redux-persist";
 // import { composeWithDevTools } from 'redux-devtools-extension';
 
+let store;
+
+export function getStore() {
+    return store;
+}
 
 export default (reducers) => {
     const middelware = [thunk, promise];
@@ -18,7 +23,7 @@ export default (reducers) => {
     };
     const persistedReducer = persistReducer(persistConfig, reducers);
 
-    const store = createStore(persistedReducer, composeEnhancers(...enhancer));
+    store = createStore(persistedReducer, composeEnhancers(...enhancer));
 
     const persistor = persistStore(store);
 

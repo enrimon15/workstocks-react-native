@@ -1,4 +1,4 @@
-import {USER, USER_ERROR, USER_LOADING, USER_LOGOUT, USER_SUCCESS} from "./ActionType";
+import {INIT_APP, REINIT_APP_STATE, USER, USER_ERROR, USER_LOADING, USER_LOGOUT, USER_SUCCESS} from "./ActionType";
 import HttpApi from "../../util/HttpApi";
 import LoginRequest from "../../model/LoginRequest";
 import RegisterRequest from "../../model/RegisterRequest";
@@ -42,7 +42,16 @@ export function register(email, name, surname, password, passwordConfirmation) {
 }
 
 export function logout() {
-    return {
+    /*return {
         type: USER_LOGOUT
+    }*/
+    return function(dispatch, getState) {
+        dispatch({
+            type: USER_LOGOUT
+        })
+
+        dispatch({
+            type: REINIT_APP_STATE
+        })
     };
 }
