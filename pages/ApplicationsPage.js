@@ -46,7 +46,7 @@ const Applications = () => {
 
     return(
         <ListOutline
-            textHeader={'Offerte Salvate'}
+            textHeader={'Candidature'}
             navigation={navigation}
         >
 

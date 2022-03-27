@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         width:"100%"
     },
     textHeaderContainer: {
-        width:"50%",
+        width:"70%",
         flexDirection: "row"
     },
     textTitle: {
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         fontFamily:"MS-Medium"
     },
     imageContainer: {
-        width:"50%",
+        width:"30%",
         alignItems:"flex-end"
     },
     imageHeader: {
