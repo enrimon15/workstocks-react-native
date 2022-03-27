@@ -25,7 +25,7 @@ import {
     LOAD_RECENT_JOBS_ERROR,
     LOAD_RECENT_JOBS_LOADING,
     LOAD_RECENT_JOBS_SUCCESS, REINIT_APP_STATE,
-    REMOVE_APPLICATION_SUCCESS,
+    REMOVE_APPLICATION_SUCCESS, REMOVE_FAVORITE_LIST, REMOVE_FAVORITE_LIST_SUCCESS,
     REMOVE_FAVORITE_SUCCESS,
     SEARCH_JOBS_ERROR,
     SEARCH_JOBS_LOADING,
@@ -34,6 +34,7 @@ import {
 
 export default function AppReducers(state = INITIAL_STATE, action) {
     switch (action.type) {
+        // POPULAR JOBS
         case LOAD_POPULAR_JOBS_LOADING:
             return {
                 ...state,
@@ -53,6 +54,7 @@ export default function AppReducers(state = INITIAL_STATE, action) {
                 loadingPopularJobs: false,
                 errorPopularJobs: true
             };
+        // RECENT JOBS
         case LOAD_RECENT_JOBS_LOADING:
             return {
                 ...state,
@@ -72,6 +74,7 @@ export default function AppReducers(state = INITIAL_STATE, action) {
                 loadingRecentJobs: false,
                 errorRecentJobs: true
             };
+        // JOB DETAILS
         case LOAD_JOB_BY_ID_LOADING:
             return {
                 ...state,
@@ -91,6 +94,7 @@ export default function AppReducers(state = INITIAL_STATE, action) {
                 loadingJob: false,
                 errorJob: true
             };
+        // SEARCH
         case SEARCH_JOBS_LOADING:
             return {
                 ...state,
@@ -135,6 +139,22 @@ export default function AppReducers(state = INITIAL_STATE, action) {
                 },
                 errorFavorites: false
             };
+        case REMOVE_FAVORITE_LIST:
+            let filteredFavorites = state.favorites.data.elements.filter((item) => {
+                return item.id !== action.payload;
+            });
+            return {
+                ...state,
+                favorites: {
+                    ...state.favorites,
+                    data: {
+                        ...state.favorites.data,
+                        elements: filteredFavorites
+                    }
+                },
+                loadingFavorites: false,
+                errorFavorites: false
+            };
         case GET_FAVORITE_LOADING: {
             return {
                 ...state,
@@ -171,15 +191,19 @@ export default function AppReducers(state = INITIAL_STATE, action) {
                 errorApplications: false
             };
         case REMOVE_APPLICATION_SUCCESS:
+            let filteredApplications = state.applications.data.elements.filter((item) => {
+                return item.id !== action.payload;
+            });
             return {
                 ...state,
-                job: {
-                    ...state.job,
+                applications: {
+                    ...state.applications,
                     data: {
-                        ...state.job.data,
-                        isApplicated: false
+                        ...state.applications.data,
+                        elements: filteredApplications
                     }
                 },
+                loadingApplications: false,
                 errorApplications: false
             };
         case GET_APPLICATION_LOADING: {

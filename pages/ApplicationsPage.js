@@ -1,16 +1,19 @@
 import React, {useEffect} from 'react';
 import {FlatList, ActivityIndicator, StyleSheet} from 'react-native';
 import Colors from "../constants/colors";
-import JobItem from "../components/JobItem";
+import JobItem, {jobItemContainer} from "../components/JobItem";
 import {useNavigation} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
 import {
     sApplications, sApplicationsError, sApplicationsLoading,
 } from "../store/selectors/AppSelector";
-import {loadApplications} from "../store/actions/AppAction";
+import {loadApplications, removeApplication} from "../store/actions/AppAction";
 import {ListOutline} from "../components/ListOutline";
 import Error from "../components/Error";
 import NoData from "../components/NoData";
+import SwipeButton from "../components/SwipeButton";
+import {SwipeRow} from "react-native-swipe-list-view";
+import ShowAlert from "../components/Alert";
 
 
 const Applications = () => {
@@ -24,24 +27,53 @@ const Applications = () => {
 
     useEffect(() => {
         fetchData();
+        // quando lo screen è onFocus
+        const navigationFocusListener = navigation.addListener('focus', () => {
+            fetchData();
+        });
+
+        // Ritorno la function per fare l'unsibscribe quando ho un unmount dello schermo
+        return navigationFocusListener;
     }, []);
 
     const fetchData = () => {
         dispatch(loadApplications());
     }
 
+    const deleteApplication = (jobId) => {
+        dispatch(removeApplication(jobId))
+    };
+
+    const handleButton = (jobId) => {
+        ShowAlert('Attenzione', 'Stai per eliminare una candidatura. Vuoi proseguire?',
+            'Annulla', () => console.log('delete canceled'), 'Ok',
+            () => deleteApplication(jobId))
+    }
 
     const renderItem = ({ item }) => (
-        <JobItem
-            img={item?.company?.photo}
-            title={item?.title}
-            address={item?.address}
-            companyName={item?.company?.name}
-            createdAt={item?.createdAt}
-            onPress={ () => navigation.navigate('JobDetails', {
-                jobId: item?.id
-            }) }
-        />
+        <SwipeRow
+            rightOpenValue={-75}
+            disableRightSwipe={true}
+            //preview={true}
+        >
+            <SwipeButton
+                containerStyle={jobItemContainer}
+                color={Colors.danger}
+                icon={'ios-trash-bin-sharp'}
+                onPress={() => handleButton(item?.id)}
+            />
+
+            <JobItem
+                img={item?.company?.photo}
+                title={item?.title}
+                address={item?.address}
+                companyName={item?.company?.name}
+                createdAt={item?.createdAt}
+                onPress={ () => navigation.navigate('JobDetails', {
+                    jobId: item?.id
+                }) }
+            />
+        </SwipeRow>
     );
 
     return(

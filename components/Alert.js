@@ -1,4 +1,4 @@
-import { View, StyleSheet, Button, Alert } from "react-native";
+import {Alert} from "react-native";
 
 const ShowAlert = (title, msg, leftButtonText, leftButtonHandler, rightButtonText, rightButtonHandler) => {
     const buttons = rightButtonText ? [
@@ -8,7 +8,7 @@ const ShowAlert = (title, msg, leftButtonText, leftButtonHandler, rightButtonTex
             style: "cancel"
         },
         {
-            text: "OK",
+            text: rightButtonText,
             onPress: rightButtonHandler
         }
     ] :

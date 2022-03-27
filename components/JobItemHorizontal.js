@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text,View,Image,TouchableOpacity,StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Pressable} from 'react-native';
 import CompanyAvatar from "./CompanyAvatar";
 import {Ionicons} from "@expo/vector-icons";
 
@@ -9,7 +9,7 @@ export default class JobItemHorizontal extends React.Component{
 
         return(
 
-            <TouchableOpacity
+            <Pressable
                 onPress={onPress}
                 style={styles.card}
             >
@@ -43,7 +43,7 @@ export default class JobItemHorizontal extends React.Component{
                     fontFamily:"MS-Bold"
                 }}>{companyName}</Text>
 
-            </TouchableOpacity>
+            </Pressable>
         );
     }
 }

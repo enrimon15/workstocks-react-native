@@ -23,6 +23,7 @@ export const LOAD_JOB_BY_ID_ERROR = `${LOAD_JOB_BY_ID}_${ActionType.Rejected}`;
 export const GET_FAVORITE = 'GET_FAVORITE';
 export const GET_FAVORITE_LOADING = `${GET_FAVORITE}_${ActionType.Pending}`;
 export const GET_FAVORITE_SUCCESS = `${GET_FAVORITE}_${ActionType.Fulfilled}`;
+export const REMOVE_FAVORITE_LIST = `REMOVE_FAVORITE_LIST_${ActionType.Fulfilled}`;
 export const FAVORITE_ERROR = `${GET_FAVORITE}_${ActionType.Rejected}`;
 
 export const GET_APPLICATION = 'GET_APPLICATION';

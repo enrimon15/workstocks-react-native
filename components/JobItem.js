@@ -1,8 +1,21 @@
 import React from 'react'
-import {Text,TouchableOpacity, View,Image} from 'react-native'
+import {Pressable, Text, View} from 'react-native'
 import CompanyAvatar from "./CompanyAvatar";
 import {Ionicons} from "@expo/vector-icons";
 import DateUtils from "../util/DateUtils";
+import Colors from "../constants/colors";
+
+export const jobItemContainer = {
+    flexDirection:"row",
+    backgroundColor:"white",
+    padding:20,
+    marginHorizontal:20,
+    borderRadius:15,
+    alignItems:"center",
+    justifyContent: "space-between",
+    marginTop:20,
+    flex: 1
+}
 
 
 export default class JobItem extends React.Component{
@@ -10,9 +23,9 @@ export default class JobItem extends React.Component{
         const {title, img, onPress, companyName, address, createdAt, isNew} = this.props;
 
         return(
-            <TouchableOpacity
+            <Pressable
                 onPress={onPress}
-                style={{
+                style={[{
                     shadowColor: "#84A4FF",
                     shadowOffset: {
                         width: 0,
@@ -21,15 +34,7 @@ export default class JobItem extends React.Component{
                     shadowOpacity: 0.2,
                     shadowRadius: 10,
                     elevation: 2, // Android
-                    flexDirection:"row",
-                    backgroundColor:"white",
-                    padding:20,
-                    marginHorizontal:20,
-                    borderRadius:15,
-                    alignItems:"center",
-                    justifyContent: "space-between",
-                    marginTop:20
-                }}
+                }, jobItemContainer]}
             >
                 <View style={{
                     width: "70%",
@@ -46,10 +51,10 @@ export default class JobItem extends React.Component{
                     }}>{title}</Text>
 
                     <View style={{flexDirection: "row", marginTop: 3}}>
-                        <Ionicons name="location-outline" size={11} color="#f58084" />
+                        <Ionicons name="location-outline" size={11} color={Colors.highlight} />
                         <Text style={{
                             fontSize:11,
-                            color:"#f58084",
+                            color: Colors.highlight,
                             fontFamily:"MS-Medium",
                             marginLeft: 4
                         }}>
@@ -97,7 +102,7 @@ export default class JobItem extends React.Component{
                     </Text>
                 </View>
 
-            </TouchableOpacity>
+            </Pressable>
         )
     }
 }

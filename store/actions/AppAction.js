@@ -16,7 +16,7 @@ import {
     LOAD_RECENT_JOBS_SUCCESS,
     REMOVE_APPLICATION,
     REMOVE_APPLICATION_SUCCESS,
-    REMOVE_FAVORITE,
+    REMOVE_FAVORITE, REMOVE_FAVORITE_LIST,
     REMOVE_FAVORITE_SUCCESS,
     SEARCH_JOBS,
     USER_ERROR,
@@ -63,8 +63,6 @@ export function loadJobDetails(jobId) {
         try{
             const checkFavoriteRes = await HttpApi.checkFavorite(jobId);
             const checkApplicationRes = await HttpApi.checkApplication(jobId);
-
-            console.log(checkFavoriteRes.data, checkApplicationRes.data);
 
             let jobRes = await HttpApi.jobById(jobId);
             jobRes.data['isFavorite'] = checkFavoriteRes.data.result;
@@ -118,6 +116,24 @@ export function removeFavorite(jobId) {
     };
 }
 
+export function removeFavoriteList(jobId) {
+    return async function(dispatch, getState) {
+        try{
+            await HttpApi.deleteFavorite(jobId)
+            dispatch({
+                type: REMOVE_FAVORITE_LIST,
+                payload: jobId
+            })
+        }
+        catch(e){
+            console.log(e)
+            dispatch( {
+                type: FAVORITE_ERROR,
+            })
+        }
+    };
+}
+
 export function loadFavorites() {
     return function(dispatch, getState) {
         dispatch( {
@@ -149,7 +165,8 @@ export function removeApplication(jobId) {
         try{
             await HttpApi.deleteApplication(jobId)
             dispatch({
-                type: REMOVE_APPLICATION_SUCCESS
+                type: REMOVE_APPLICATION_SUCCESS,
+                payload: jobId
             })
         }
         catch(e){

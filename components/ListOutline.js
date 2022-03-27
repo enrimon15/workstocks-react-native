@@ -1,4 +1,4 @@
-import {Image, SafeAreaView, Text, View, StyleSheet} from "react-native";
+import {Image, SafeAreaView, Text, View, StyleSheet, TouchableOpacity} from "react-native";
 import Colors from "../constants/colors";
 import Back from "./nav/Back";
 import {Ionicons} from "@expo/vector-icons";

@@ -9,7 +9,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use((req) => {
     const store = getStore();
     const userLogged = store.getState().user.user;
-    console.log(userLogged);
     if (!ObjectUtils.isEmpty(userLogged) && userLogged.token) {
         req.headers.Authorization = `Bearer ${userLogged.token}`;
     }

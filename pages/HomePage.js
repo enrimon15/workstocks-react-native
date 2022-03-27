@@ -26,6 +26,7 @@ import {loadPopularJobs, loadRecentJobs} from "../store/actions/AppAction";
 import Colors from "../constants/colors";
 import ShowAlert from "../components/Alert";
 import {sUserData} from "../store/selectors/UserSelector";
+import Error from "../components/Error";
 
 class Home extends React.Component {
 
@@ -38,6 +39,10 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
+        this.fetchData();
+    }
+
+    fetchData = () => {
         this.props.loadPopularJobs();
         this.props.loadRecentJobs();
     }
@@ -164,8 +169,9 @@ class Home extends React.Component {
                     )}
 
                     {isLoading && !isError && (<ActivityIndicator color={Colors.primary} size="large"/>)}
-                    {isError && (<Text>Oops.. Qualcosa è andato storto!</Text>)}
+                    {isError && (<Error onPress={() => this.fetchData()} />)}
                 </Modalize>
+
 
             </ImageBackground>
         )
