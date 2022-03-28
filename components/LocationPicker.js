@@ -29,7 +29,6 @@ const LocationPicker = ({navigation}) => {
             return;
         }
         const location = await  Location.getCurrentPositionAsync();
-        console.log(location.coords.latitude, location.coords.longitude);
 
         navigation.navigate('JobList', {
             lat: location.coords.latitude,

@@ -5,7 +5,8 @@ import {
     TouchableOpacity,
     StyleSheet,
     ScrollView,
-    ActivityIndicator
+    ActivityIndicator,
+    SafeAreaView
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Colors from "../../constants/colors";
@@ -19,9 +20,12 @@ const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bott
         <View style={styles.container}>
 
             <View style={styles.header}>
-                {nav && <Back navigation={nav} iconColor={"white"} />}
+                <SafeAreaView>
+                    {nav && <Back navigation={nav} iconColor={"white"} />}
+                </SafeAreaView>
 
                 <Text style={styles.text_header}>{titleText}</Text>
+
             </View>
 
             <Animatable.View
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 1,
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         paddingHorizontal: 20,
         paddingBottom: 50
     },

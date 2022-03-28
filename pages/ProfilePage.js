@@ -17,10 +17,9 @@ const Profile = () => {
     const navigation = useNavigation();
 
     const [data, setData] = useState({
-        email: '',
-        name: '',
-        surname: '',
-        password: '',
+        email: user.email,
+        name: user.name,
+        surname: user.surname,
         isValidEmail: null,
         isValidName: null,
         isValidSurname: null
@@ -66,7 +65,6 @@ const Profile = () => {
     }
 
     const updateProfileHandle = () => {
-        console.log("update profile: " + data.email + " - " + data.surname + " - " + data.name );
         dispatch(updateProfile(data.email, data.name, data.surname));
     }
 
@@ -88,7 +86,7 @@ const Profile = () => {
                 errorText={'Email non valida'}
                 isInputValid={data.isValidEmail}
                 changeTextHandler={emailChange}
-                initialValue={user.email}
+                initialValue={data.email}
             >
                 <FontAwesome
                     name="envelope-o"
@@ -106,7 +104,7 @@ const Profile = () => {
                 errorText={'Nome non valido'}
                 isInputValid={data.isValidName}
                 changeTextHandler={nameChange}
-                initialValue={user.name}
+                initialValue={data.name}
             >
                 <FontAwesome
                     name="user-o"
@@ -124,7 +122,7 @@ const Profile = () => {
                 errorText={'Cognome non valido'}
                 isInputValid={data.isValidSurname}
                 changeTextHandler={surnameChange}
-                initialValue={user.surname}
+                initialValue={data.surname}
             >
                 <FontAwesome
                     name="user-circle-o"

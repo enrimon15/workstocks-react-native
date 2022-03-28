@@ -1,4 +1,13 @@
-import {INIT_APP, REINIT_APP_STATE, USER, USER_ERROR, USER_LOADING, USER_LOGOUT, USER_SUCCESS} from "./ActionType";
+import {
+    INIT_APP,
+    REINIT_APP_STATE,
+    USER,
+    USER_ERROR,
+    USER_LOADING,
+    USER_LOGOUT,
+    USER_SUCCESS,
+    USER_UPDATE_SUCCESS
+} from "./ActionType";
 import HttpApi from "../../util/HttpApi";
 import LoginRequest from "../../model/LoginRequest";
 import RegisterRequest from "../../model/RegisterRequest";
@@ -53,7 +62,7 @@ export function updateProfile(email, name, surname) {
             await HttpApi.updateProfile(userRequest);
 
             dispatch({
-                type: USER_SUCCESS,
+                type: USER_UPDATE_SUCCESS,
                 payload: userRequest
             })
         }

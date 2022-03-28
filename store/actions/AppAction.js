@@ -63,7 +63,6 @@ export function loadSearchJobsByCoords(lat, lon) {
 
             const geoCodeResponse = await HttpApi.getCityByCoords(lat, lon);
             const city = geoCodeResponse.data.items[0].address.city;
-            console.log(city);
 
             const searchResponse = await HttpApi.searchJobs(city);
 
@@ -94,6 +93,11 @@ export function loadJobDetails(jobId) {
             let jobRes = await HttpApi.jobById(jobId);
             jobRes.data['isFavorite'] = checkFavoriteRes.data.result;
             jobRes.data['isApplicated'] = checkApplicationRes.data.result;
+
+            const coords = await HttpApi.getCoordsByCity(jobRes.data.address.city);
+            console.log('res',coords);
+            console.log(coords,coords.data.items[0].position)
+            jobRes.data['coords'] = coords.data.items[0].position;
 
             dispatch({
                 type: LOAD_JOB_BY_ID_SUCCESS,

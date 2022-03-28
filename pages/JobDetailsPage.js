@@ -25,6 +25,7 @@ import InfoDetail from "../components/jobDetails/InfoDetail";
 import ApplyButton from "../components/jobDetails/ApplyButton";
 import JobOfferHeader from "../components/jobDetails/JobOfferHeader";
 import Error from "../components/Error";
+import Map from "../components/jobDetails/Map";
 
 const {height} = Dimensions.get("screen");
 const height_banner = height * 0.25;
@@ -85,7 +86,6 @@ class JobDetail extends React.Component {
                                         companyPhoto={jobDetailData?.company?.photo}
                                         companyName={jobDetailData?.company?.name}
                                         companyWebsite={jobDetailData?.company?.website}
-
                                     />
 
                                     <View style={styles.jobDetailsContainer}>
@@ -111,6 +111,13 @@ class JobDetail extends React.Component {
                                             {StringUtils.htmlToText(jobDetailData?.description)}
                                         </Text>
                                     </CardDetail>
+
+                                    <Map
+                                        companyName={jobDetailData?.company?.name}
+                                        city={jobDetailData?.address?.city}
+                                        lat={jobDetailData?.coords?.lat}
+                                        lng={jobDetailData?.coords?.lng}
+                                    />
                                 </ScrollView>
 
                                 <ApplyButton
