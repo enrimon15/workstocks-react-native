@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistReducer, persistStore} from "redux-persist";
+import errorMiddleware from "./errorPromiseMiddelware";
 // import { composeWithDevTools } from 'redux-devtools-extension';
 
 let store;
@@ -12,7 +13,7 @@ export function getStore() {
 }
 
 export default (reducers) => {
-    const middelware = [thunk, promise];
+    const middelware = [thunk, errorMiddleware, promise];
     const enhancer = [applyMiddleware(...middelware)];
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
