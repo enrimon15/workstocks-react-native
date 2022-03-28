@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {ObjectUtils} from "./ObjectUtils";
+import {HERE_API_KEY} from "react-native-dotenv";
 import {getStore} from "../store/CreateStore";
 
 const axiosInstance = axios.create({
@@ -12,7 +13,6 @@ axiosInstance.interceptors.request.use((req) => {
     if (!ObjectUtils.isEmpty(userLogged) && userLogged.token) {
         req.headers.Authorization = `Bearer ${userLogged.token}`;
     }
-
     return req;
 })
 
@@ -44,4 +44,8 @@ export default class HttpApi {
     static updateProfile = (userRequest) => axiosInstance.patch(`applicants/${userId()}`, userRequest);
     static register = (registerRequestBody) => axiosInstance.post(`${authBaseHref}/register`, registerRequestBody);
     static login = (loginRequestBody) => axiosInstance.post(`${authBaseHref}/login`, loginRequestBody);
+
+    static getCityByCoords = (lat, lon) => axios.get(
+        `https://revgeocode.search.hereapi.com/v1/revgeocode?in=circle:42.471234,14.204727;r=7000&apiKey=${HERE_API_KEY}&limit=1`
+    )
 }

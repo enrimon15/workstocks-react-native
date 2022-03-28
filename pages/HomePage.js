@@ -27,6 +27,7 @@ import Colors from "../constants/colors";
 import ShowAlert from "../components/Alert";
 import {sUserData} from "../store/selectors/UserSelector";
 import Error from "../components/Error";
+import * as Location from 'expo-location';
 
 class Home extends React.Component {
 
@@ -58,8 +59,32 @@ class Home extends React.Component {
             this.setState({searchInput: enteredText});
         }
 
-        const locationButtonHandler = () => {
-            console.log('location click');
+        //const [locationPermissionInformation, requestPermission] = Location.useForegroundPermissions();
+        const verifyPermissions = async () => {
+            const locationPermissionInformation = await Location.getForegroundPermissionsAsync();
+            if (locationPermissionInformation.status === Location.PermissionStatus.UNDETERMINED) {
+                //const permissionResponse = await requestPermission();
+                const permissionResponse = await Location.requestForegroundPermissionsAsync();
+                return permissionResponse.granted;
+            }
+            if (locationPermissionInformation.status === Location.PermissionStatus.DENIED) {
+                ShowAlert('Attenzione',
+                    'Hai bisogno di fornire i permessi sulla localizzazione per utilizzare questa funzionalità',
+                    'Ok',
+                    () => console.log('Permission denied'));
+                return false;
+            }
+
+            return true;
+        }
+
+        const getPositionHandler = async () => {
+            const hasPermission = await verifyPermissions();
+            if (!hasPermission) {
+                return;
+            }
+            const location = await  Location.getCurrentPositionAsync();
+            console.log(location.coords.latitude, location.coords.longitude);
         }
 
         const handleSearch = (event) => {
@@ -103,7 +128,7 @@ class Home extends React.Component {
                             />
                         </View>
 
-                        <TouchableHighlight style={styles.location} onPress={locationButtonHandler}>
+                        <TouchableHighlight style={styles.location} onPress={getPositionHandler}>
                             <Ionicons name="location-outline" size={24} color="black" />
                         </TouchableHighlight>
                     </View>
