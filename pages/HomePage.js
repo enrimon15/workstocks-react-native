@@ -6,7 +6,6 @@ import {
     StyleSheet,
     TextInput,
     ScrollView,
-    TouchableHighlight,
     SafeAreaView,
     ActivityIndicator
 } from "react-native";
@@ -27,7 +26,7 @@ import Colors from "../constants/colors";
 import ShowAlert from "../components/Alert";
 import {sUserData} from "../store/selectors/UserSelector";
 import Error from "../components/Error";
-import * as Location from 'expo-location';
+import LocationPicker from "../components/LocationPicker";
 
 class Home extends React.Component {
 
@@ -57,34 +56,6 @@ class Home extends React.Component {
 
         const searchInputHandler = (enteredText) => {
             this.setState({searchInput: enteredText});
-        }
-
-        //const [locationPermissionInformation, requestPermission] = Location.useForegroundPermissions();
-        const verifyPermissions = async () => {
-            const locationPermissionInformation = await Location.getForegroundPermissionsAsync();
-            if (locationPermissionInformation.status === Location.PermissionStatus.UNDETERMINED) {
-                //const permissionResponse = await requestPermission();
-                const permissionResponse = await Location.requestForegroundPermissionsAsync();
-                return permissionResponse.granted;
-            }
-            if (locationPermissionInformation.status === Location.PermissionStatus.DENIED) {
-                ShowAlert('Attenzione',
-                    'Hai bisogno di fornire i permessi sulla localizzazione per utilizzare questa funzionalità',
-                    'Ok',
-                    () => console.log('Permission denied'));
-                return false;
-            }
-
-            return true;
-        }
-
-        const getPositionHandler = async () => {
-            const hasPermission = await verifyPermissions();
-            if (!hasPermission) {
-                return;
-            }
-            const location = await  Location.getCurrentPositionAsync();
-            console.log(location.coords.latitude, location.coords.longitude);
         }
 
         const handleSearch = (event) => {
@@ -128,9 +99,7 @@ class Home extends React.Component {
                             />
                         </View>
 
-                        <TouchableHighlight style={styles.location} onPress={getPositionHandler}>
-                            <Ionicons name="location-outline" size={24} color="black" />
-                        </TouchableHighlight>
+                        <LocationPicker navigation={navigation}/>
                     </View>
                 </SafeAreaView>
 
@@ -272,15 +241,6 @@ const styles = StyleSheet.create({
         fontFamily:"MS-Medium",
         paddingHorizontal:10,
         fontSize:12
-    },
-    location: {
-        alignItems:"center",
-        width:"15%",
-        backgroundColor:"white",
-        borderRadius:10,
-        marginLeft:5,
-        padding:10,
-        justifyContent:"center"
     },
     modalButton: {
         marginTop:30,

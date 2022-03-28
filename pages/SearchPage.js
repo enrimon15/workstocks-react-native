@@ -5,7 +5,7 @@ import JobItem from "../components/JobItem";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
 import {sSearch, sSearchError, sSearchLoading} from "../store/selectors/AppSelector";
-import {loadSearchJobs} from "../store/actions/AppAction";
+import {loadSearchJobs, loadSearchJobsByCoords} from "../store/actions/AppAction";
 import {StringUtils} from "../util/StringUtils";
 import {ListOutline} from "../components/ListOutline";
 import Error from "../components/Error";
@@ -14,7 +14,10 @@ import NoData from "../components/NoData";
 const Search = () => {
     const navigation = useNavigation();
     const route = useRoute();
+
     const city = route.params.city;
+    const lat = route.params.lat;
+    const lon = route.params.lon;
 
     const jobList = useSelector(state => sSearch(state));
     const loading = useSelector(state => sSearchLoading(state));
@@ -27,7 +30,11 @@ const Search = () => {
     }, []);
 
     const fetchData = () => {
-        dispatch(loadSearchJobs(city));
+        if (lat && lon) {
+            dispatch(loadSearchJobsByCoords(lat, lon));
+        } else {
+            dispatch(loadSearchJobs(city));
+        }
     }
 
 
@@ -46,7 +53,7 @@ const Search = () => {
 
     return(
         <ListOutline
-            textHeader={StringUtils.capitalize(city)}
+            textHeader={(lat && lon) ? 'Intorno a me' : StringUtils.capitalize(city)}
             titleIcon={'location-outline'}
             navigation={navigation}
         >

@@ -21,6 +21,8 @@ const userId = () => {
     return store.getState().user.user.id
 }
 
+const hereReverseBaseUrl = 'https://revgeocode.search.hereapi.com/v1';
+const hereBaseUrl = 'https://geocode.search.hereapi.com/v1';
 const jobBaseHref = '/job-offers';
 const authBaseHref = '/auth';
 const applicantsBaseHref = '/applicants';
@@ -46,6 +48,10 @@ export default class HttpApi {
     static login = (loginRequestBody) => axiosInstance.post(`${authBaseHref}/login`, loginRequestBody);
 
     static getCityByCoords = (lat, lon) => axios.get(
-        `https://revgeocode.search.hereapi.com/v1/revgeocode?in=circle:42.471234,14.204727;r=7000&apiKey=${HERE_API_KEY}&limit=1`
-    )
+        `${hereReverseBaseUrl}/revgeocode?in=circle:${lat},${lon};r=7000&apiKey=${HERE_API_KEY}&limit=1`
+    );
+
+    static getCoordsByCity = (city) => axios.get(
+        `${hereBaseUrl}/geocode?qq=city=${city}&apiKey=${HERE_API_KEY}&limit=1`
+    );
 }

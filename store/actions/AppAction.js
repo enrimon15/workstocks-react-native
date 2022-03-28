@@ -18,7 +18,7 @@ import {
     REMOVE_APPLICATION_SUCCESS,
     REMOVE_FAVORITE, REMOVE_FAVORITE_LIST,
     REMOVE_FAVORITE_SUCCESS,
-    SEARCH_JOBS,
+    SEARCH_JOBS, SEARCH_JOBS_LOADING, SEARCH_JOBS_SUCCESS,
     USER_ERROR,
     USER_LOADING,
     USER_SUCCESS
@@ -51,6 +51,33 @@ export function loadSearchJobs(city) {
             type: SEARCH_JOBS,
             payload: HttpApi.searchJobs(city)
         })
+    };
+}
+
+export function loadSearchJobsByCoords(lat, lon) {
+    return async function(dispatch, getState) {
+        try{
+            dispatch({
+                type: SEARCH_JOBS_LOADING,
+            });
+
+            const geoCodeResponse = await HttpApi.getCityByCoords(lat, lon);
+            const city = geoCodeResponse.data.items[0].address.city;
+            console.log(city);
+
+            const searchResponse = await HttpApi.searchJobs(city);
+
+            dispatch({
+                type: SEARCH_JOBS_SUCCESS,
+                payload: searchResponse
+            });
+        }
+        catch(e){
+            console.log(e)
+            dispatch( {
+                type: LOAD_JOB_BY_ID_ERROR,
+            });
+        }
     };
 }
 
