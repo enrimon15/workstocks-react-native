@@ -12,26 +12,38 @@ import LoginRequest from "../../model/LoginRequest";
 import RegisterRequest from "../../model/RegisterRequest";
 import User from "../../model/User";
 
-//let timerLogout;
+let timerLogout;
 
 export function login(email, password) {
     return async function(dispatch, getState) {
 
-        /*const loginRequest = new LoginRequest(email, password);
-        const loginResponse = await HttpApi.login(loginRequest);
-        dispatch(setLogoutTimer(loginResponse.data.expirationTime * 1000));
-
         dispatch({
-            type: USER_SUCCESS,
-            payload: loginResponse
-        })*/
+            type: USER_LOADING
+        })
 
-        const loginRequest = new LoginRequest(email, password);
+        try{
+            const loginRequest = new LoginRequest(email, password);
+            const loginResponse = await HttpApi.login(loginRequest);
+            dispatch(setLogoutTimer(loginResponse.data.expirationMillis * 1000));
+
+            dispatch({
+                type: USER_SUCCESS,
+                payload: loginResponse
+            })
+        }
+        catch(e){
+            console.log(e)
+            dispatch( {
+                type: USER_ERROR,
+            })
+        }
+
+        /*const loginRequest = new LoginRequest(email, password);
 
         dispatch({
             type: USER,
             payload: HttpApi.login(loginRequest)
-        })
+        })*/
     };
 }
 
@@ -45,18 +57,12 @@ export function register(email, name, surname, password, passwordConfirmation) {
             const registrationRequest = new RegisterRequest(email, name, surname, password, passwordConfirmation);
             await HttpApi.register(registrationRequest);
 
-            const loginRequest = new LoginRequest(email, password);
-            const loginRes = await HttpApi.login(loginRequest);
-
-            dispatch({
-                type: USER_SUCCESS,
-                payload: loginRes
-            })
+            dispatch(login(email, password));
         }
         catch(e){
             console.log(e)
             dispatch( {
-                type: USER_ERROR,
+                type: USER_ERROR
             })
         }
     };
@@ -88,7 +94,7 @@ export function updateProfile(email, name, surname) {
 
 export function logout() {
     return function(dispatch, getState) {
-        //clearLogoutTimer();
+        clearLogoutTimer();
 
         dispatch({
             type: USER_LOGOUT
@@ -100,7 +106,7 @@ export function logout() {
     };
 }
 
-/*function clearLogoutTimer() {
+function clearLogoutTimer() {
     if (timerLogout) {
         clearTimeout(timerLogout);
     }
@@ -112,4 +118,4 @@ function setLogoutTimer(expirationTime) {
             dispatch(logout());
         }, expirationTime);
     }
-}*/
+}

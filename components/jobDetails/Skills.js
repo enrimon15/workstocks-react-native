@@ -10,7 +10,7 @@ export default function Skills({skillList}) {
         <CardDetail>
             {skillList.map((item, index) => {
                 return (
-                    <View style={{flexDirection: "row", justifyContent: "flex-start", marginVertical: 10,}}>
+                    <View key={index} style={{flexDirection: "row", justifyContent: "flex-start", marginVertical: 10,}}>
                         <View style={{
                             height:4,
                             width:4,
@@ -21,7 +21,7 @@ export default function Skills({skillList}) {
                         }}>
 
                         </View>
-                        <Text key={index} style={styles.singleDetail}>
+                        <Text style={styles.singleDetail}>
                             {StringUtils.capitalize(item)}
                         </Text>
                     </View>
