@@ -1,5 +1,4 @@
 import {
-    INIT_APP,
     REINIT_APP_STATE,
     USER,
     USER_ERROR,
@@ -13,8 +12,20 @@ import LoginRequest from "../../model/LoginRequest";
 import RegisterRequest from "../../model/RegisterRequest";
 import User from "../../model/User";
 
+//let timerLogout;
+
 export function login(email, password) {
     return async function(dispatch, getState) {
+
+        /*const loginRequest = new LoginRequest(email, password);
+        const loginResponse = await HttpApi.login(loginRequest);
+        dispatch(setLogoutTimer(loginResponse.data.expirationTime * 1000));
+
+        dispatch({
+            type: USER_SUCCESS,
+            payload: loginResponse
+        })*/
+
         const loginRequest = new LoginRequest(email, password);
 
         dispatch({
@@ -77,6 +88,8 @@ export function updateProfile(email, name, surname) {
 
 export function logout() {
     return function(dispatch, getState) {
+        //clearLogoutTimer();
+
         dispatch({
             type: USER_LOGOUT
         })
@@ -86,3 +99,17 @@ export function logout() {
         })
     };
 }
+
+/*function clearLogoutTimer() {
+    if (timerLogout) {
+        clearTimeout(timerLogout);
+    }
+}
+
+function setLogoutTimer(expirationTime) {
+    return function(dispatch, getState) {
+        timerLogout = setTimeout(() => {
+            dispatch(logout());
+        }, expirationTime);
+    }
+}*/
