@@ -1,5 +1,5 @@
 import {INITIAL_STATE} from "../state/UserState";
-import {USER_ERROR, USER_LOADING, USER_LOGOUT, USER_SUCCESS} from "../actions/ActionType";
+import {USER_ERROR, USER_LOADING, USER_LOGOUT, USER_SUCCESS, USER_UPDATE_SUCCESS} from "../actions/ActionType";
 
 export default function UserReducers(state = INITIAL_STATE, action) {
     switch (action.type) {
@@ -28,6 +28,16 @@ export default function UserReducers(state = INITIAL_STATE, action) {
                 user: {},
                 error: false,
                 loading: false
+            };
+        case USER_UPDATE_SUCCESS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    ...action.payload
+                },
+                loading: false,
+                error: false,
             };
         default:
             return state

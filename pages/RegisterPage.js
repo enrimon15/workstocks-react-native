@@ -6,12 +6,14 @@ import InputForm from "../components/auth/InputForm";
 import {useDispatch, useSelector} from "react-redux";
 import {register} from "../store/actions/UserAction";
 import {sUserError, sUserLoading} from "../store/selectors/UserSelector";
+import {useNavigation} from "@react-navigation/native";
 
 const Register = () => {
 
     const dispatch = useDispatch();
     const loading = useSelector(sUserLoading);
     const error = useSelector(sUserError);
+    const navigation = useNavigation();
 
     const [data, setData] = useState({
         email: '',
@@ -29,83 +31,68 @@ const Register = () => {
     });
 
     const handleEmailChange = (val) => {
-        if( StringUtils.validateEmail(val)) {
-            setData({
-                ...data,
-                email: val,
-                isValidEmail: true
-            });
-        } else {
-            setData({
-                ...data,
-                email: val,
-                isValidEmail: false
-            });
+        let emailValid = false;
+        if(StringUtils.validateEmail(val)) {
+            emailValid = true;
         }
+
+        setData({
+            ...data,
+            email: val,
+            isValidEmail: emailValid
+        });
     }
 
     const handleNameChange = (val) => {
-        if( StringUtils.isLengthInRange(val, 2, 15)) {
-            setData({
-                ...data,
-                name: val,
-                isValidName: true
-            });
-        } else {
-            setData({
-                ...data,
-                name: val,
-                isValidName: false
-            });
+        let nameValid = false;
+        if(StringUtils.isLengthInRange(val, 2, 15)) {
+            nameValid = true;
         }
+
+        setData({
+            ...data,
+            name: val,
+            isValidName: nameValid
+        });
     }
 
     const handleSurnameChange = (val) => {
-        if( StringUtils.isLengthInRange(val, 2, 15)) {
-            setData({
-                ...data,
-                surname: val,
-                isValidSurname: true
-            });
-        } else {
-            setData({
-                ...data,
-                surname: val,
-                isValidSurname: false
-            });
+        let surnameValid = false;
+        if(StringUtils.isLengthInRange(val, 2, 15)) {
+            surnameValid = true;
         }
+
+        setData({
+            ...data,
+            surname: val,
+            isValidSurname: surnameValid
+        });
     }
 
     const handleConfirmPasswordChange = (val) => {
-        if( StringUtils.validateConfirmPassword(val, data.password)) {
-            setData({
-                ...data,
-                confirmPassword: val,
-                isValidConfirmPassword: true
-            });
-        } else {
-            setData({
-                ...data,
-                confirmPassword: val,
-                isValidConfirmPassword: false
-            });
+        let confirmPwValid = false;
+        if(StringUtils.validateConfirmPassword(val, data.password)) {
+            confirmPwValid = true;
         }
+
+        setData({
+            ...data,
+            confirmPassword: val,
+            isValidConfirmPassword: confirmPwValid
+        });
     }
 
     const handlePasswordChange = (val) => {
-        if (StringUtils.validatePassword(val)) {
-            setData({
-                ...data,
-                password: val,
-                isValidPassword: true
-            });
-        } else {
-            setData({
-                ...data,
-                password: val,
-                isValidPassword: false
-            });
+        let pwValid = false;
+        if(StringUtils.validatePassword(val)) {
+            pwValid = true;
         }
+
+        setData({
+            ...data,
+            password: val,
+            isValidPassword: pwValid
+        });
     }
 
     const updateSecureTextEntry = (type) => {
@@ -123,7 +110,6 @@ const Register = () => {
     }
 
     const registerHandle = () => {
-        console.log("register: " + data.email + " - " + data.password + " - " + data.confirmPassword + " - " + data.surname + " - " + data.name );
         dispatch(register(data.email, data.name, data.surname, data.password, data.confirmPassword));
     }
 
@@ -135,6 +121,7 @@ const Register = () => {
             loading={loading}
             error={error}
             errorText={'Registrazione non riuscita, riprova!'}
+            nav={navigation}
         >
             <InputForm
                 title={'Email'}

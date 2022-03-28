@@ -1,5 +1,4 @@
 import {NavigationContainer} from "@react-navigation/native";
-import Home from "../pages/HomePage";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import CustomDrawer from "../components/nav/CustomDrawer";
 import Colors from "../constants/colors";
@@ -11,6 +10,7 @@ import {sUserData} from "../store/selectors/UserSelector";
 import {ObjectUtils} from "../util/ObjectUtils";
 import {FavoritesNavigator} from "./FavoritesNavigator";
 import {ApplicationsNavigator} from "./ApplicationsNavigator";
+import Profile from "../pages/ProfilePage";
 
 const Drawer = createDrawerNavigator();
 
@@ -53,16 +53,13 @@ const RootNavigator = () => {
                             <Ionicons name="ios-briefcase-outline" size={22} color={color} />
                         ),
                     }} />
-                    <Drawer.Screen
-                        name="Profilo"
-                        component={Home}
-                        options={{
+                    <Drawer.Screen name="Profilo" component={Profile} options={{
                             drawerIcon: ({color}) => (
                                 <Ionicons name="person-outline" size={22} color={color} />
                             ),
                         }}
                     />
-                    <Drawer.Screen
+                    {/*<Drawer.Screen
                         name="Impostazioni"
                         component={Home}
                         options={{
@@ -70,7 +67,7 @@ const RootNavigator = () => {
                                 <Ionicons name="settings-outline" size={22} color={color} />
                             ),
                         }}
-                    />
+                    />*/}
                 </Drawer.Navigator>)
             }
         </NavigationContainer>

@@ -10,15 +10,20 @@ import {
 import * as Animatable from 'react-native-animatable';
 import Colors from "../../constants/colors";
 import ErrorForm from "./ErrorForm";
+import Back from "../nav/Back";
 
 const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bottomButtonTitle, bottomButtonHandler,
-                        loading, error, errorText}) => {
+                        loading, error, errorText, nav}) => {
 
     return (
         <View style={styles.container}>
+
             <View style={styles.header}>
+                {nav && <Back navigation={nav} iconColor={"white"} />}
+
                 <Text style={styles.text_header}>{titleText}</Text>
             </View>
+
             <Animatable.View
                 animation="fadeInUpBig"
                 style={[styles.footer, {

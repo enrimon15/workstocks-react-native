@@ -42,6 +42,7 @@ export const USER_LOADING = `${USER}_${ActionType.Pending}`;
 export const USER_SUCCESS = `${USER}_${ActionType.Fulfilled}`;
 export const USER_ERROR = `${USER}_${ActionType.Rejected}`;
 export const USER_LOGOUT = 'USER_LOGOUT';
+export const USER_UPDATE_SUCCESS = `${USER}_UPDATE_${ActionType.Fulfilled}`;
 
 export const CLEAN_ERROR = 'CLEAN_ERROR';
 

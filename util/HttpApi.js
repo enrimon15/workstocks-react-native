@@ -41,7 +41,7 @@ export default class HttpApi {
     static addApplication = (jobId) => axiosInstance.post(`${applicantsBaseHref}/${userId()}/applications/${jobId}`);
     static deleteApplication = (jobId) => axiosInstance.delete(`${applicantsBaseHref}/${userId()}/applications/${jobId}`);
 
-    static updateProfile = (userRequest) => axiosInstance.patch(`applicants/${userId()}`);
+    static updateProfile = (userRequest) => axiosInstance.patch(`applicants/${userId()}`, userRequest);
     static register = (registerRequestBody) => axiosInstance.post(`${authBaseHref}/register`, registerRequestBody);
     static login = (loginRequestBody) => axiosInstance.post(`${authBaseHref}/login`, loginRequestBody);
 }

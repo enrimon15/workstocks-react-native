@@ -5,7 +5,7 @@ import React from "react";
 import {Feather} from "@expo/vector-icons";
 
 const InputForm = ({containerStyle, children, title, placeholder, changeTextHandler, applyValidation, errorText,
-                       isInputValid, isPassword, secureTextEntry, updateSecureTextEntry}) => {
+                       isInputValid, isPassword, secureTextEntry, updateSecureTextEntry, initialValue}) => {
 
     return (
         <View style={containerStyle}>
@@ -22,6 +22,7 @@ const InputForm = ({containerStyle, children, title, placeholder, changeTextHand
                     autoCorrect={false}
                     onChangeText={(val) => changeTextHandler(val)}
                     secureTextEntry={isPassword ? secureTextEntry : false}
+                    value={initialValue ? initialValue : null}
                 />
 
                 {applyValidation && isInputValid &&
