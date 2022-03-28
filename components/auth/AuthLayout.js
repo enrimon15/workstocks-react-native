@@ -25,7 +25,6 @@ const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bott
                 </SafeAreaView>
 
                 <Text style={styles.text_header}>{titleText}</Text>
-
             </View>
 
             <Animatable.View

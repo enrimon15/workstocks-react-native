@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, ImageBackground, Text, SafeAreaView, ScrollView, ActivityIndicator,
-    Dimensions, StyleSheet} from 'react-native';
+    Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
 import Colors from '../constants/colors';
 import {StatusBar} from "expo-status-bar";
 import Back from "../components/nav/Back";
@@ -26,13 +26,19 @@ import ApplyButton from "../components/jobDetails/ApplyButton";
 import JobOfferHeader from "../components/jobDetails/JobOfferHeader";
 import Error from "../components/Error";
 import Map from "../components/jobDetails/Map";
+import * as Animatable from 'react-native-animatable';
+import TabDetails from "../components/jobDetails/Tabs";
+import Skills from "../components/jobDetails/Skills";
 
 const {height} = Dimensions.get("screen");
-const height_banner = height * 0.25;
+const height_banner = height * 0.2;
 
 class JobDetail extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            tabSelected: 'DESCRIPTION'
+        }
     }
 
     componentDidMount() {
@@ -43,6 +49,10 @@ class JobDetail extends React.Component {
         const { jobId } = this.props.route.params;
         this.props.loadJobDetail(jobId);
     };
+
+    onTabPressed = (tab) => {
+        this.setState({tabSelected: tab});
+    }
 
     render(){
         const {navigation, jobDetail, jobLoading, jobError, addApplication, addFavorite, removeFavorite,
@@ -76,48 +86,57 @@ class JobDetail extends React.Component {
                         </ImageBackground>
                         {!jobLoading && !isError && (
                             <>
+
+                                <JobOfferHeader
+                                    title={jobDetailData?.title}
+                                    address={jobDetailData?.address?.city + ', ' + jobDetailData?.address?.country}
+                                    handleFavorite={() => handleFavorite()}
+                                    isFavorite={(jobDetailData && jobDetailData?.isFavorite)}
+                                    companyPhoto={jobDetailData?.company?.photo}
+                                    companyName={jobDetailData?.company?.name}
+                                    companyWebsite={jobDetailData?.company?.website}
+                                />
+
+                                <TabDetails selectedTab={this.state.tabSelected} onTabPressed={this.onTabPressed}/>
+
                                 <ScrollView showsVerticalScrollIndicator={false}>
 
-                                    <JobOfferHeader
-                                        title={jobDetailData?.title}
-                                        address={jobDetailData?.address?.city + ', ' + jobDetailData?.address?.country}
-                                        handleFavorite={() => handleFavorite()}
-                                        isFavorite={(jobDetailData && jobDetailData?.isFavorite)}
-                                        companyPhoto={jobDetailData?.company?.photo}
-                                        companyName={jobDetailData?.company?.name}
-                                        companyWebsite={jobDetailData?.company?.website}
-                                    />
+                                    {this.state.tabSelected === 'DESCRIPTION' && <Animatable.View animation={'fadeIn'}>
+                                        <View style={styles.jobDetailsContainer}>
+                                            <InfoDetail
+                                                title={'Esperienza'}
+                                                text={jobDetailData?.experience + ' anni'}
+                                            />
+                                            <InfoDetail
+                                                title={'Contratto'}
+                                                text={ContractTypeUtils.getContractType(jobDetailData?.contractType)}
+                                            />
+                                            <InfoDetail
+                                                title={'Salario'}
+                                                text={jobDetailData?.minSalary + 'k - ' + jobDetailData?.maxSalary + 'k'}
+                                            />
+                                        </View>
 
-                                    <View style={styles.jobDetailsContainer}>
-                                        <InfoDetail
-                                            title={'Esperienza'}
-                                            text={jobDetailData?.experience + ' anni'}
+                                        <CardDetail>
+                                            <Text style={styles.jobDescription}>Descrizione Offerta</Text>
+                                            <Text style={styles.jobDescriptionText}>
+                                                {StringUtils.htmlToText(jobDetailData?.description)}
+                                            </Text>
+                                        </CardDetail>
+                                    </Animatable.View>}
+
+                                    {this.state.tabSelected === 'MAP' &&
+                                        <Map
+                                            companyName={jobDetailData?.company?.name}
+                                            city={jobDetailData?.address?.city}
+                                            lat={jobDetailData?.coords?.lat}
+                                            lng={jobDetailData?.coords?.lng}
                                         />
+                                    }
 
-                                        <InfoDetail
-                                            title={'Contratto'}
-                                            text={ContractTypeUtils.getContractType(jobDetailData?.contractType)}
-                                        />
-
-                                        <InfoDetail
-                                            title={'Salario'}
-                                            text={jobDetailData?.minSalary + 'k - ' + jobDetailData?.maxSalary + 'k'}
-                                        />
-                                    </View>
-
-                                    <CardDetail>
-                                        <Text style={styles.jobDescription}>Descrizione Offerta</Text>
-                                        <Text style={styles.jobDescriptionText}>
-                                            {StringUtils.htmlToText(jobDetailData?.description)}
-                                        </Text>
-                                    </CardDetail>
-
-                                    <Map
-                                        companyName={jobDetailData?.company?.name}
-                                        city={jobDetailData?.address?.city}
-                                        lat={jobDetailData?.coords?.lat}
-                                        lng={jobDetailData?.coords?.lng}
-                                    />
+                                    {this.state.tabSelected === 'SKILLS' &&
+                                        <Skills skillList={jobDetailData?.skills} />
+                                    }
                                 </ScrollView>
 
                                 <ApplyButton

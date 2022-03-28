@@ -95,8 +95,6 @@ export function loadJobDetails(jobId) {
             jobRes.data['isApplicated'] = checkApplicationRes.data.result;
 
             const coords = await HttpApi.getCoordsByCity(jobRes.data.address.city);
-            console.log('res',coords);
-            console.log(coords,coords.data.items[0].position)
             jobRes.data['coords'] = coords.data.items[0].position;
 
             dispatch({
