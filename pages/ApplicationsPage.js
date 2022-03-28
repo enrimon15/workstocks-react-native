@@ -84,6 +84,8 @@ const Applications = () => {
 
             {!loading && !error && applications && applications?.data?.elements?.length > 0 && (
                 <FlatList
+                    onRefresh={fetchData}
+                    refreshing={loading}
                     data={applications?.data?.elements}
                     renderItem={renderItem}
                     keyExtractor={item => item?.id}

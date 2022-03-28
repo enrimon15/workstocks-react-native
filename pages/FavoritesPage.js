@@ -86,6 +86,8 @@ const Favorites = () => {
 
             {!loading && !error && favorites && favorites?.data?.elements?.length > 0 && (
                 <FlatList
+                    onRefresh={fetchData}
+                    refreshing={loading}
                     data={favorites?.data?.elements}
                     renderItem={renderItem}
                     keyExtractor={item => item?.id}

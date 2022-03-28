@@ -59,6 +59,8 @@ const Search = () => {
         >
             {!loading && !error && jobList && jobList?.data?.elements?.length > 0 && (
                 <FlatList
+                    onRefresh={fetchData}
+                    refreshing={loading}
                     data={jobList?.data?.elements}
                     renderItem={renderItem}
                     keyExtractor={item => item?.id}
