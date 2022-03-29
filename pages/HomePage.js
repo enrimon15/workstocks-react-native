@@ -27,6 +27,7 @@ import ShowAlert from "../components/Alert";
 import {sUserData} from "../store/selectors/UserSelector";
 import Error from "../components/Error";
 import LocationPicker from "../components/LocationPicker";
+import {withTranslation} from "react-i18next";
 
 class Home extends React.Component {
 
@@ -89,7 +90,8 @@ class Home extends React.Component {
                         <View style={styles.searchInputBox}>
                             <Ionicons name="ios-search" size={24} color="grey" />
                             <TextInput
-                                placeholder="Cerca un nuovo lavoro..."
+                                //placeholder="Cerca un nuovo lavoro..."
+                                placeholder={this.props.t('Welcome to React')}
                                 placeholderTextColor="gray"
                                 style={styles.searchInput}
                                 maxLength={30}
@@ -198,7 +200,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 // componente che permette la connessione tra un componente react e redux
-const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(Home);
+const HomeTranslation = withTranslation()(Home)
+const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(HomeTranslation);
 export default HomeContainer;
 
 const styles = StyleSheet.create({

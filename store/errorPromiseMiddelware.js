@@ -1,13 +1,3 @@
-/*function isPromise(promise) {
-    const isP = promise &&
-        typeof promise === 'object' &&
-        typeof promise.then === 'function' &&
-        typeof promise.catch === 'function';
-
-    console.log(isP);
-    return isP;
-}*/
-
 // middelware per redux promise middelware (per evitare warn: possible unhandled rejected promise)
 import isPromise from "is-promise";
 

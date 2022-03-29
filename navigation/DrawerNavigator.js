@@ -11,6 +11,7 @@ import {ObjectUtils} from "../util/ObjectUtils";
 import {FavoritesNavigator} from "./FavoritesNavigator";
 import {ApplicationsNavigator} from "./ApplicationsNavigator";
 import Profile from "../pages/ProfilePage";
+import Settings from "../pages/Settings";
 
 const Drawer = createDrawerNavigator();
 
@@ -59,15 +60,12 @@ const RootNavigator = () => {
                             ),
                         }}
                     />
-                    {/*<Drawer.Screen
-                        name="Impostazioni"
-                        component={Home}
-                        options={{
+                    <Drawer.Screen name="Impostazioni" component={Settings} options={{
                             drawerIcon: ({color}) => (
                                 <Ionicons name="settings-outline" size={22} color={color} />
                             ),
                         }}
-                    />*/}
+                    />
                 </Drawer.Navigator>)
             }
         </NavigationContainer>

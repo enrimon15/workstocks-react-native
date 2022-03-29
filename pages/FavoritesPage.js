@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {FlatList, ActivityIndicator, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {FlatList, ActivityIndicator, StyleSheet, View, TouchableOpacity, Text, Pressable} from 'react-native';
 import Colors from "../constants/colors";
 import JobItem, {jobItemContainer} from "../components/JobItem";
 import {useNavigation} from "@react-navigation/native";
@@ -16,8 +16,18 @@ import NoData from "../components/NoData";
 import { SwipeRow } from 'react-native-swipe-list-view';
 import SwipeButton from "../components/SwipeButton";
 import ShowAlert from "../components/Alert";
+import {useTranslation} from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {LangStorage} from "../constants/lang";
 
-const Favorites = () => {
+const Favorites = (props) => {
+    const { t, i18n } = useTranslation();
+    const changeLanguage =  async (lng) => {
+        await AsyncStorage.setItem(LangStorage.KEY, lng);
+        await i18n.changeLanguage(lng);
+        i18n.language
+    };
+
     const navigation = useNavigation();
 
     const favorites = useSelector(state => sFavorites(state));
@@ -80,9 +90,17 @@ const Favorites = () => {
 
     return(
         <ListOutline
-            textHeader={'Offerte Salvate'}
+            //textHeader={'Offerte Salvate'}
+            textHeader={t('Welcome to React')}
             navigation={navigation}
         >
+            <Pressable onPress={() => changeLanguage('it')}>
+                <Text>IT</Text>
+            </Pressable>
+
+            <Pressable onPress={() => changeLanguage('en')}>
+                <Text>EN</Text>
+            </Pressable>
 
             {!loading && !error && favorites && favorites?.data?.elements?.length > 0 && (
                 <FlatList

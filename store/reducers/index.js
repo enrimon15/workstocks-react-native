@@ -3,8 +3,8 @@ import AppReducers from './AppReducers';
 import UserReducers from "./UserReducers";
 
 const rootReducer = combineReducers({
-    app : AppReducers,
-    user : UserReducers
+    app: AppReducers,
+    user: UserReducers
 });
 
 export default rootReducer;
