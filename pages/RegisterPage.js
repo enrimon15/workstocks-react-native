@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { FontAwesome, Feather } from '@expo/vector-icons';
 import {StringUtils} from "../util/StringUtils";
 import AuthLayout from "../components/auth/AuthLayout";
 import InputForm from "../components/auth/InputForm";
 import {useDispatch, useSelector} from "react-redux";
-import {register} from "../store/actions/UserAction";
+import {clearError, register} from "../store/actions/UserAction";
 import {sUserError, sUserLoading} from "../store/selectors/UserSelector";
 import {useNavigation} from "@react-navigation/native";
 
@@ -14,6 +14,18 @@ const Register = () => {
     const loading = useSelector(sUserLoading);
     const error = useSelector(sUserError);
     const navigation = useNavigation();
+
+    useEffect(() => {
+        // quando lo screen perde il focus
+        const navigationFocusListener = navigation.addListener('beforeRemove', () => {
+            if (error) {
+                dispatch(clearError());
+            }
+        });
+
+        // Ritorno la function per fare l'unsibscribe quando ho un unmount dello schermo
+        return navigationFocusListener;
+    }, []);
 
     const [data, setData] = useState({
         email: '',

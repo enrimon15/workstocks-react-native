@@ -1,4 +1,5 @@
 import {
+    CLEAN_ERROR,
     REINIT_APP_STATE,
     USER,
     USER_ERROR,
@@ -37,13 +38,6 @@ export function login(email, password) {
                 type: USER_ERROR,
             })
         }
-
-        /*const loginRequest = new LoginRequest(email, password);
-
-        dispatch({
-            type: USER,
-            payload: HttpApi.login(loginRequest)
-        })*/
     };
 }
 
@@ -118,4 +112,10 @@ function setLogoutTimer(expirationTime) {
             dispatch(logout());
         }, expirationTime);
     }
+}
+
+export function clearError() {
+    return {
+        type: CLEAN_ERROR
+    };
 }

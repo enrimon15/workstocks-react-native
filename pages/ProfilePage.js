@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import {StringUtils} from "../util/StringUtils";
 import AuthLayout from "../components/auth/AuthLayout";
 import InputForm from "../components/auth/InputForm";
 import {useDispatch, useSelector} from "react-redux";
-import {updateProfile} from "../store/actions/UserAction";
+import {clearError, updateProfile} from "../store/actions/UserAction";
 import {sUserData, sUserError, sUserLoading} from "../store/selectors/UserSelector";
 import {useNavigation} from "@react-navigation/native";
 
@@ -15,6 +15,18 @@ const Profile = () => {
     const error = useSelector(sUserError);
     const user = useSelector(sUserData);
     const navigation = useNavigation();
+
+    useEffect(() => {
+        // quando lo screen perde il focus
+        const navigationFocusListener = navigation.addListener('beforeRemove', () => {
+            if (error) {
+                dispatch(clearError());
+            }
+        });
+
+        // Ritorno la function per fare l'unsibscribe quando ho un unmount dello schermo
+        return navigationFocusListener;
+    }, []);
 
     const [data, setData] = useState({
         email: user.email,
