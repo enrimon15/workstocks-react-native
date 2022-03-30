@@ -108,7 +108,8 @@ const styles = StyleSheet.create({
         width:4,
         borderRadius:4,
         backgroundColor:Colors.danger,
-        marginHorizontal:4
+        marginHorizontal:4,
+        alignSelf: "center"
     },
     new: {
         color:Colors.danger,

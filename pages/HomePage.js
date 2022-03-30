@@ -86,7 +86,7 @@ class Home extends React.Component {
                     <Hamburger navigation={navigation}/>
 
                     <Text style={styles.welcomeText}>
-                        {t('home.welcome')  + user.name},
+                        {t('home.welcome')  + ' ' + user.name},
                     </Text>
 
                     <Text style={styles.welcomeWorkText}>
@@ -97,6 +97,7 @@ class Home extends React.Component {
                         <View style={styles.searchInputBox}>
                             <Ionicons name="ios-search" size={24} color="grey" />
                             <TextInput
+                                clearButtonMode={'while-editing'}
                                 placeholder={t('home.searchNewJob')}
                                 placeholderTextColor="gray"
                                 style={styles.searchInput}
@@ -243,6 +244,7 @@ const styles = StyleSheet.create({
         borderRadius:10,
     },
     searchInput: {
+        width: "95%",
         fontFamily:"MS-Medium",
         paddingHorizontal:10,
         fontSize:12

@@ -2,7 +2,6 @@
 import isPromise from "is-promise";
 
 export default function errorMiddleware() {
-    console.log('fire error middelware');
     return next => action => {
 
         // se il payload dell'action non è una promise continua

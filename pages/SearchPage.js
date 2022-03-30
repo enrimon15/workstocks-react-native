@@ -47,7 +47,7 @@ export default function Search() {
     };
 
     const footerLoading = () => {
-        return (<ActivityIndicator style={{marginVertical: 20}} color={Colors.primary}/>);
+        return (<ActivityIndicator style={styles.infiniteScroll} color={Colors.primary}/>);
     }
 
     const renderItem = ({ item }) => (
@@ -94,5 +94,6 @@ export default function Search() {
 }
 
 const styles = StyleSheet.create({
-    spinner: {marginTop: 50}
+    spinner: {marginTop: 50},
+    infiniteScroll: {marginVertical: 20}
 });

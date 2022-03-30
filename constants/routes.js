@@ -7,7 +7,9 @@ export const Routes = {
     jobList: 'JobList',
     favorites: 'Favorites',
     applications: 'Applications',
-    homePage: 'HomePage',
     profile: 'Profile',
-    settings: 'Settings'
+    settings: 'Settings',
+    homePage: 'HomePage',
+    favoritesPage: 'FavoritesPage',
+    applicationsPage: 'ApplicationsPage'
 };

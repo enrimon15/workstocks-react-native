@@ -4,7 +4,6 @@ import promise from 'redux-promise-middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistReducer, persistStore} from "redux-persist";
 import errorMiddleware from "./errorPromiseMiddelware";
-// import { composeWithDevTools } from 'redux-devtools-extension';
 
 let store;
 

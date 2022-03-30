@@ -5,7 +5,7 @@ import {Colors} from "../constants/colors";
 
 export default function SwipeButton({containerStyle, color, icon, onPress}) {
     return(
-        <View style={}>
+        <View style={styles.container}>
             <View style={[containerStyle, {backgroundColor: color}]}>
                 <TouchableOpacity
                     style={styles.backRightBtn}

@@ -38,7 +38,7 @@ export default function LocationPicker({navigation}) {
         }
         const location = await  Location.getCurrentPositionAsync();
 
-        navigation.navigate(Routes.jobDetails, {
+        navigation.navigate(Routes.jobList, {
             lat: location.coords.latitude,
             lon: location.coords.longitude
         });

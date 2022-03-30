@@ -1,7 +1,6 @@
 import {
     CLEAN_ERROR,
     REINIT_APP_STATE,
-    USER,
     USER_ERROR,
     USER_LOADING,
     USER_LOGOUT,
