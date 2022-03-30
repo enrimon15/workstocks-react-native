@@ -24,20 +24,31 @@ export default function Search() {
     const loading = useSelector(state => sSearchLoading(state));
     const error = useSelector(state => sSearchError(state));
 
+    const currentPage = jobList?.data?.response?.pageNumber;
+    const totalPages = jobList?.data?.response?.totalPages;
+
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetchData();
+        fetchData(1);
     }, []);
 
-    const fetchData = () => {
+    const fetchData = (page) => {
         if (lat && lon) {
-            dispatch(loadSearchJobsByCoords(lat, lon));
+            dispatch(loadSearchJobsByCoords(lat, lon, page));
         } else {
-            dispatch(loadSearchJobs(city));
+            dispatch(loadSearchJobs(city, page));
         }
     }
 
+    const loadMoreJobs = () => {
+        const newPage = currentPage + 1;
+        fetchData(newPage);
+    };
+
+    const footerLoading = () => {
+        return (<ActivityIndicator style={{marginVertical: 20}} color={Colors.primary}/>);
+    }
 
     const renderItem = ({ item }) => (
         <JobItem
@@ -60,11 +71,14 @@ export default function Search() {
         >
             {!loading && !error && jobList && jobList?.data?.elements?.length > 0 && (
                 <FlatList
-                    onRefresh={fetchData}
+                    onRefresh={() => fetchData(1)}
                     refreshing={loading}
                     data={jobList?.data?.elements}
                     renderItem={renderItem}
                     keyExtractor={item => item?.id}
+                    onEndReachedThreshold={0.2}
+                    onEndReached={currentPage !== totalPages ? loadMoreJobs : null}
+                    ListFooterComponent={currentPage !== totalPages ? footerLoading : null}
                 />
             )}
 
@@ -73,7 +87,7 @@ export default function Search() {
             )}
 
             {loading && !error && (<ActivityIndicator style={styles.spinner} color={Colors.primary} size="large"/>)}
-            {error && (<Error onPress={() => fetchData()} />)}
+            {error && (<Error onPress={() => fetchData(1)} />)}
 
         </ListOutline>
     )

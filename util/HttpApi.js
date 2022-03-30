@@ -31,7 +31,7 @@ export default class HttpApi {
     static popularJobs = () => axiosInstance.get(`${jobBaseHref}/popular?limit=5`);
     static recentJobs = () => axiosInstance.get(`${jobBaseHref}/search?page=1&limit=10`);
     static jobById = (jobId) => axiosInstance.get(`${jobBaseHref}/${jobId}`);
-    static searchJobs = (city) => axiosInstance.get(`${jobBaseHref}/search?address=${city}&page=1&limit=10`);
+    static searchJobs = (city, page) => axiosInstance.get(`${jobBaseHref}/search?address=${city}&page=${page}&limit=10`);
 
     static favoriteJobs = () => axiosInstance.get(`${applicantsBaseHref}/${userId()}/favourites?page=1&limit=10`);
     static checkFavorite = (jobId) => axiosInstance.get(`${applicantsBaseHref}/${userId()}/favourites/${jobId}`);

@@ -1,31 +1,22 @@
 import {
-    ADD_APPLICATION,
     ADD_APPLICATION_SUCCESS,
-    ADD_FAVORITE,
     ADD_FAVORITE_SUCCESS,
     APPLICATION_ERROR,
     CLEAN_ERROR,
-    CLEAN_FAVORITE_ERROR,
-    FAVORITE_ERROR, GET_APPLICATION, GET_FAVORITE,
-    LOAD_JOB_BY_ID,
+    FAVORITE_ERROR,
+    GET_APPLICATION,
+    GET_FAVORITE,
     LOAD_JOB_BY_ID_ERROR,
     LOAD_JOB_BY_ID_LOADING,
     LOAD_JOB_BY_ID_SUCCESS,
     LOAD_POPULAR_JOBS,
     LOAD_RECENT_JOBS,
-    LOAD_RECENT_JOBS_SUCCESS,
-    REMOVE_APPLICATION,
     REMOVE_APPLICATION_SUCCESS,
-    REMOVE_FAVORITE, REMOVE_FAVORITE_LIST,
+    REMOVE_FAVORITE_LIST,
     REMOVE_FAVORITE_SUCCESS,
-    SEARCH_JOBS, SEARCH_JOBS_LOADING, SEARCH_JOBS_SUCCESS,
-    USER_ERROR,
-    USER_LOADING,
-    USER_SUCCESS
+    SEARCH_JOBS, SEARCH_JOBS_LOADING, SEARCH_JOBS_SUCCESS
 } from "./ActionType";
 import HttpApi from "../../util/HttpApi";
-import RegisterRequest from "../../model/RegisterRequest";
-import LoginRequest from "../../model/LoginRequest";
 
 export function loadPopularJobs() {
     return function(dispatch, getState) {
@@ -45,29 +36,32 @@ export function loadRecentJobs() {
     };
 }
 
-export function loadSearchJobs(city) {
+export function loadSearchJobs(city, page) {
     return function(dispatch, getState) {
         dispatch({
             type: SEARCH_JOBS,
-            payload: HttpApi.searchJobs(city)
+            meta: { page: page },
+            payload: HttpApi.searchJobs(city, page)
         })
     };
 }
 
-export function loadSearchJobsByCoords(lat, lon) {
+export function loadSearchJobsByCoords(lat, lon, page) {
     return async function(dispatch, getState) {
         try{
             dispatch({
                 type: SEARCH_JOBS_LOADING,
+                meta: { page: page }
             });
 
             const geoCodeResponse = await HttpApi.getCityByCoords(lat, lon);
             const city = geoCodeResponse.data.items[0].address.city;
 
-            const searchResponse = await HttpApi.searchJobs(city);
+            const searchResponse = await HttpApi.searchJobs(city, page);
 
             dispatch({
                 type: SEARCH_JOBS_SUCCESS,
+                meta: { page: page },
                 payload: searchResponse
             });
         }
@@ -164,7 +158,7 @@ export function removeFavoriteList(jobId) {
 }
 
 export function loadFavorites() {
-    return function(dispatch, getState) {
+    return async function(dispatch, getState) {
         dispatch( {
             type: GET_FAVORITE,
             payload: HttpApi.favoriteJobs()

@@ -1,21 +1,14 @@
 import {INITIAL_STATE} from "../state/AppState"
 import {
-    ADD_APPLICATION_ERROR,
-    ADD_APPLICATION_LOADING,
     ADD_APPLICATION_SUCCESS,
-    ADD_FAVORITE,
-    ADD_FAVORITE_ERROR,
-    ADD_FAVORITE_LOADING,
     ADD_FAVORITE_SUCCESS,
     APPLICATION_ERROR,
-    CLEAN_APPLICATION_ERROR,
     CLEAN_ERROR,
-    CLEAN_FAVORITE_ERROR,
-    FAVORITE_ERROR, GET_APPLICATION_ERROR,
-    GET_APPLICATION_LOADING, GET_APPLICATION_SUCCESS,
-    GET_FAVORITE_ERROR,
+    FAVORITE_ERROR,
+    GET_APPLICATION_LOADING,
+    GET_APPLICATION_SUCCESS,
     GET_FAVORITE_LOADING,
-    GET_FAVORITE_SUCCESS, INIT_APP,
+    GET_FAVORITE_SUCCESS,
     LOAD_JOB_BY_ID_ERROR,
     LOAD_JOB_BY_ID_LOADING,
     LOAD_JOB_BY_ID_SUCCESS,
@@ -24,8 +17,10 @@ import {
     LOAD_POPULAR_JOBS_SUCCESS,
     LOAD_RECENT_JOBS_ERROR,
     LOAD_RECENT_JOBS_LOADING,
-    LOAD_RECENT_JOBS_SUCCESS, REINIT_APP_STATE,
-    REMOVE_APPLICATION_SUCCESS, REMOVE_FAVORITE_LIST, REMOVE_FAVORITE_LIST_SUCCESS,
+    LOAD_RECENT_JOBS_SUCCESS,
+    REINIT_APP_STATE,
+    REMOVE_APPLICATION_SUCCESS,
+    REMOVE_FAVORITE_LIST,
     REMOVE_FAVORITE_SUCCESS,
     SEARCH_JOBS_ERROR,
     SEARCH_JOBS_LOADING,
@@ -96,15 +91,28 @@ export default function AppReducers(state = INITIAL_STATE, action) {
             };
         // SEARCH
         case SEARCH_JOBS_LOADING:
+            const isLoading = action.meta.page === 1; // controllo infinite scroll
             return {
                 ...state,
-                loadingSearchJobs: true,
+                loadingSearchJobs: isLoading,
                 errorSearchJobs: false
             };
         case SEARCH_JOBS_SUCCESS:
+            // controllo infinite scroll
+            const newJobState = action.meta.page === 1 ? action.payload : {
+                    ...state.searchJob,
+                    data: {
+                        ...state.searchJob.data,
+                        elements: [
+                            ...state.searchJob.data.elements,
+                            ...action.payload.data.elements
+                        ],
+                        response: action.payload.data.response
+                    }
+                }
             return {
                 ...state,
-                searchJob: action.payload,
+                searchJob: newJobState,
                 loadingSearchJobs: false,
                 errorSearchJobs: false
             };
