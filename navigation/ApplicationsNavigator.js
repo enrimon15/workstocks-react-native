@@ -7,8 +7,8 @@ const ApplicationsStack = createNativeStackNavigator();
 
 const ApplicationsNavigator = () => {
     return (
-        <ApplicationsStack.Navigator screenOptions={{ headerShown: false }} initialRouteName={Routes.applications}>
-            <ApplicationsStack.Screen name={Routes.applications} component={Applications}  />
+        <ApplicationsStack.Navigator screenOptions={{ headerShown: false }} initialRouteName={Routes.applicationsPage}>
+            <ApplicationsStack.Screen name={Routes.applicationsPage} component={Applications}  />
             <ApplicationsStack.Screen name={Routes.jobDetails} component={JobDetail}  />
         </ApplicationsStack.Navigator>
     )

@@ -7,8 +7,8 @@ const FavoritesStack = createNativeStackNavigator();
 
 const FavoritesNavigator = () => {
     return (
-        <FavoritesStack.Navigator screenOptions={{ headerShown: false }} initialRouteName={Routes.favorites}>
-            <FavoritesStack.Screen name={Routes.favorites} component={Favorites}  />
+        <FavoritesStack.Navigator screenOptions={{ headerShown: false }} initialRouteName={Routes.favoritesPage}>
+            <FavoritesStack.Screen name={Routes.favoritesPage} component={Favorites}  />
             <FavoritesStack.Screen name={Routes.jobDetails} component={JobDetail}  />
         </FavoritesStack.Navigator>
     )
