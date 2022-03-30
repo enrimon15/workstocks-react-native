@@ -1,11 +1,12 @@
-import * as Animatable from "react-native-animatable";
+import React from "react";
 import {
     Text,
     StyleSheet
 } from 'react-native';
-import React from "react";
+import * as Animatable from "react-native-animatable";
+import {Colors} from "../../constants/colors";
 
-const ErrorForm = ({text}) => {
+export default function ErrorForm({text}) {
     return (
         <Animatable.View animation="fadeInLeft" duration={500}>
             <Text style={styles.errorMsg}>{text}</Text>
@@ -13,12 +14,10 @@ const ErrorForm = ({text}) => {
     )
 }
 
-export default ErrorForm;
-
 const styles = StyleSheet.create({
     errorMsg: {
-        color: '#FF0000',
+        color: Colors.danger,
         fontSize: 12,
         fontFamily: "MS-Regular"
     }
-})
+});

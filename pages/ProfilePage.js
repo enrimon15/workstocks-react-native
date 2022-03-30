@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import {StringUtils} from "../util/StringUtils";
-import AuthLayout from "../components/auth/AuthLayout";
-import InputForm from "../components/auth/InputForm";
+import {useNavigation} from "@react-navigation/native";
+import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {clearError, updateProfile} from "../store/actions/UserAction";
 import {sUserData, sUserError, sUserLoading} from "../store/selectors/UserSelector";
-import {useNavigation} from "@react-navigation/native";
+import AuthLayout from "../components/auth/AuthLayout";
+import InputForm from "../components/auth/InputForm";
+import {StringUtils} from "../util/StringUtils";
+import {Colors} from "../constants/colors";
 
-const Profile = () => {
-
+export default function Profile() {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const loading = useSelector(sUserLoading);
     const error = useSelector(sUserError);
@@ -17,14 +19,14 @@ const Profile = () => {
     const navigation = useNavigation();
 
     useEffect(() => {
-        // quando lo screen perde il focus
+        // quando lo screen perde il focus rimuovo l'errore
         const navigationFocusListener = navigation.addListener('beforeRemove', () => {
             if (error) {
                 dispatch(clearError());
             }
         });
 
-        // Ritorno la function per fare l'unsibscribe quando ho un unmount dello schermo
+        // Ritorno la function per fare l'unsubscribe quando ho un unmount dello schermo
         return navigationFocusListener;
     }, []);
 
@@ -38,11 +40,7 @@ const Profile = () => {
     });
 
     const emailChange = (val) => {
-        let emailValid = false;
-        if(StringUtils.validateEmail(val)) {
-            emailValid = true;
-        }
-
+        const emailValid = StringUtils.validateEmail(val);
         setData({
             ...data,
             email: val,
@@ -51,11 +49,7 @@ const Profile = () => {
     }
 
     const nameChange = (val) => {
-        let nameValid = false;
-        if(StringUtils.isLengthInRange(val, 2, 15)) {
-            nameValid = true;
-        }
-
+        const nameValid = StringUtils.isLengthInRange(val, 2, 15);
         setData({
             ...data,
             name: val,
@@ -64,11 +58,7 @@ const Profile = () => {
     }
 
     const surnameChange = (val) => {
-        let surnameValid = false;
-        if(StringUtils.isLengthInRange(val, 2, 15)) {
-            surnameValid = true;
-        }
-
+        const surnameValid = StringUtils.isLengthInRange(val, 2, 15);
         setData({
             ...data,
             surname: val,
@@ -82,69 +72,56 @@ const Profile = () => {
 
     return (
         <AuthLayout
-            titleText={'Profilo'}
-            topButtonTitle={"Salva"}
+            titleText={t('auth.profile')}
+            topButtonTitle={t('auth.save')}
             topButtonHandler={updateProfileHandle}
             loading={loading}
             error={error}
-            errorText={'Modifica non riuscita, riprova!'}
+            errorText={t('auth.errorUpdate')}
             nav={navigation}
         >
+
             <InputForm
-                title={'Email'}
-                placeholder={'Email..'}
+                title={t('auth.email')}
+                placeholder={t('auth.email') + '..'}
                 applyValidation={true}
                 isPassword={false}
-                errorText={'Email non valida'}
+                errorText={t('auth.emailError')}
                 isInputValid={data.isValidEmail}
                 changeTextHandler={emailChange}
                 initialValue={data.email}
             >
-                <FontAwesome
-                    name="envelope-o"
-                    color="#4f4a4a"
-                    size={20}
-                />
+                <FontAwesome name="envelope-o" color={Colors.darkGray} size={20}/>
             </InputForm>
 
             <InputForm
                 containerStyle={{marginTop: 25}}
-                title={'Nome'}
-                placeholder={'Nome..'}
+                title={t('auth.name')}
+                placeholder={t('auth.name') + '..'}
                 applyValidation={true}
                 isPassword={false}
-                errorText={'Nome non valido'}
+                errorText={t('auth.nameError')}
                 isInputValid={data.isValidName}
                 changeTextHandler={nameChange}
                 initialValue={data.name}
             >
-                <FontAwesome
-                    name="user-o"
-                    color="#4f4a4a"
-                    size={20}
-                />
+                <FontAwesome name="user-o" color={Colors.darkGray} size={20}/>
             </InputForm>
 
             <InputForm
                 containerStyle={{marginTop: 25}}
-                title={'Cognome'}
-                placeholder={'Cognome..'}
+                title={t('auth.surname')}
+                placeholder={t('auth.surname') + '..'}
                 applyValidation={true}
                 isPassword={false}
-                errorText={'Cognome non valido'}
+                errorText={t('auth.surnameError')}
                 isInputValid={data.isValidSurname}
                 changeTextHandler={surnameChange}
                 initialValue={data.surname}
             >
-                <FontAwesome
-                    name="user-circle-o"
-                    color="#4f4a4a"
-                    size={20}
-                />
+                <FontAwesome name="user-circle-o" color={Colors.darkGray} size={20}/>
             </InputForm>
 
         </AuthLayout>
     );
 };
-
-export default Profile;

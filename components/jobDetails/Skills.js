@@ -1,7 +1,7 @@
-import {StyleSheet, Text, View} from "react-native";
 import React from "react";
-import CardDetail from "./CardDetail";
-import Colors from "../../constants/colors";
+import {StyleSheet, Text, View} from "react-native";
+import CardDetail from "../CardDetail";
+import {Colors} from "../../constants/colors";
 import {StringUtils} from "../../util/StringUtils";
 
 export default function Skills({skillList}) {
@@ -10,17 +10,8 @@ export default function Skills({skillList}) {
         <CardDetail>
             {skillList.map((item, index) => {
                 return (
-                    <View key={index} style={{flexDirection: "row", justifyContent: "flex-start", marginVertical: 10,}}>
-                        <View style={{
-                            height:4,
-                            width:4,
-                            borderRadius:4,
-                            backgroundColor: Colors.accent,
-                            marginHorizontal:8,
-                            alignSelf: "center"
-                        }}>
-
-                        </View>
+                    <View key={index} style={styles.itemContainer}>
+                        <View style={styles.dot} />
                         <Text style={styles.singleDetail}>
                             {StringUtils.capitalize(item)}
                         </Text>
@@ -32,19 +23,21 @@ export default function Skills({skillList}) {
 }
 
 const styles = StyleSheet.create({
-    jobDetailsInfo: {
-        padding:10,
-        borderRadius:8,
-        width:110,
-        marginTop: 0,
-        marginHorizontal:0,
+    itemContainer: {
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        marginVertical: 10
     },
     singleDetail: {
         fontFamily:"MS-Bold",
-        color:"black"
+        color: Colors.dark
     },
-    detailInfo: {
-        fontFamily:"MS-Bold",
-        paddingTop: 1
+    dot: {
+        height:4,
+        width:4,
+        borderRadius:4,
+        backgroundColor: Colors.accent,
+        marginHorizontal:8,
+        alignSelf: "center"
     }
-})
+});

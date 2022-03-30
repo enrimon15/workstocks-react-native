@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {FlatList, ActivityIndicator, StyleSheet} from 'react-native';
-import Colors from "../constants/colors";
+import {SwipeRow} from "react-native-swipe-list-view";
 import JobItem, {jobItemContainer} from "../components/JobItem";
 import {useNavigation} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
@@ -8,15 +8,18 @@ import {
     sApplications, sApplicationsError, sApplicationsLoading,
 } from "../store/selectors/AppSelector";
 import {loadApplications, removeApplication} from "../store/actions/AppAction";
-import {ListOutline} from "../components/ListOutline";
+import ListOutline from "../components/ListOutline";
 import Error from "../components/Error";
 import NoData from "../components/NoData";
 import SwipeButton from "../components/SwipeButton";
-import {SwipeRow} from "react-native-swipe-list-view";
 import ShowAlert from "../components/Alert";
+import {Colors} from "../constants/colors";
+import {useTranslation} from "react-i18next";
+import {Routes} from "../constants/routes";
 
 
 const Applications = () => {
+    const {t} = useTranslation();
     const navigation = useNavigation();
 
     const applications = useSelector(state => sApplications(state));
@@ -27,12 +30,12 @@ const Applications = () => {
 
     useEffect(() => {
         fetchData();
-        // quando lo screen è onFocus
+        // quando lo screen è onFocus reload
         const navigationFocusListener = navigation.addListener('focus', () => {
             fetchData();
         });
 
-        // Ritorno la function per fare l'unsibscribe quando ho un unmount dello schermo
+        // Ritorno la function per fare l'unsubscribe quando ho un unmount dello schermo
         return navigationFocusListener;
     }, []);
 
@@ -45,8 +48,8 @@ const Applications = () => {
     };
 
     const handleButton = (jobId) => {
-        ShowAlert('Attenzione', 'Stai per eliminare una candidatura. Vuoi proseguire?',
-            'Annulla', () => console.log('delete canceled'), 'Ok',
+        ShowAlert(t('alert.warning'), t('alert.confirmTextApplication'),
+            t('alert.cancel'), () => console.log('delete canceled'), t('alert.ok'),
             () => deleteApplication(jobId))
     }
 
@@ -69,7 +72,7 @@ const Applications = () => {
                 address={item?.address}
                 companyName={item?.company?.name}
                 createdAt={item?.createdAt}
-                onPress={ () => navigation.navigate('JobDetails', {
+                onPress={ () => navigation.navigate(Routes.jobDetails, {
                     jobId: item?.id
                 }) }
             />
@@ -78,7 +81,7 @@ const Applications = () => {
 
     return(
         <ListOutline
-            textHeader={'Candidature'}
+            textHeader={t('application.title')}
             navigation={navigation}
         >
 

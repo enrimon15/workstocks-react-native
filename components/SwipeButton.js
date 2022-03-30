@@ -1,27 +1,28 @@
+import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import Colors from "../constants/colors";
 import { Ionicons } from '@expo/vector-icons';
+import {Colors} from "../constants/colors";
 
-const SwipeButton = ({containerStyle, color, icon, onPress}) => {
-
-
-
+export default function SwipeButton({containerStyle, color, icon, onPress}) {
     return(
-        <View style={{marginVertical: 1, flex: 1}}>
+        <View style={}>
             <View style={[containerStyle, {backgroundColor: color}]}>
                 <TouchableOpacity
-                    style={[styles.backRightBtn, styles.backRightBtnRight]}
+                    style={styles.backRightBtn}
                     onPress={onPress}
                 >
-                    <Ionicons name={icon} size={24} color="white" />
+                    <Ionicons name={icon} size={24} color={Colors.light} />
                 </TouchableOpacity>
             </View>
         </View>
     )
 }
-export default SwipeButton;
 
 const styles = StyleSheet.create({
+    container: {
+        marginVertical: 1,
+        flex: 1
+    },
     rowBack: {
         flexDirection:"row",
         backgroundColor: Colors.danger,
@@ -36,9 +37,7 @@ const styles = StyleSheet.create({
     backRightBtn: {
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'absolute'
-    },
-    backRightBtnRight: {
-        right: 20,
+        position: 'absolute',
+        right: 20
     }
 });

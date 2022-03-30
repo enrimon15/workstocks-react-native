@@ -1,6 +1,6 @@
 import {Alert} from "react-native";
 
-const ShowAlert = (title, msg, leftButtonText, leftButtonHandler, rightButtonText, rightButtonHandler) => {
+export default function ShowAlert(title, msg, leftButtonText, leftButtonHandler, rightButtonText, rightButtonHandler) {
     const buttons = rightButtonText ? [
         {
             text: leftButtonText,
@@ -25,5 +25,3 @@ const ShowAlert = (title, msg, leftButtonText, leftButtonHandler, rightButtonTex
         buttons
     );
 }
-
-export default ShowAlert;

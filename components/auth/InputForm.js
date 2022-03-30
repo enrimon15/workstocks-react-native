@@ -4,8 +4,9 @@ import ErrorForm from "./ErrorForm";
 import React from "react";
 import {Feather} from "@expo/vector-icons";
 
-const InputForm = ({containerStyle, children, title, placeholder, changeTextHandler, applyValidation, errorText,
-                       isInputValid, isPassword, secureTextEntry, updateSecureTextEntry, initialValue}) => {
+export default function InputForm({containerStyle, children, title, placeholder, changeTextHandler, applyValidation,
+                                      errorText, isInputValid, isPassword, secureTextEntry, updateSecureTextEntry,
+                                      initialValue}) {
 
     return (
         <View style={containerStyle}>
@@ -54,9 +55,7 @@ const InputForm = ({containerStyle, children, title, placeholder, changeTextHand
             }
         </View>
     )
-};
-
-export default InputForm;
+}
 
 const styles = StyleSheet.create({
     text_footer: {

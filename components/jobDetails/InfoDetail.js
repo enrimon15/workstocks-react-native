@@ -1,7 +1,7 @@
-import {View, StyleSheet, Text} from "react-native";
 import React from "react";
-import CardDetail from "./CardDetail";
-import Colors from "../../constants/colors";
+import {StyleSheet, Text} from "react-native";
+import CardDetail from "../CardDetail";
+import {Colors} from "../../constants/colors";
 
 export default function InfoDetail({title, text}) {
 

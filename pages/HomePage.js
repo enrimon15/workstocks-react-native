@@ -10,24 +10,25 @@ import {
     ActivityIndicator
 } from "react-native";
 import {connect} from "react-redux";
+import {withTranslation} from "react-i18next";
 import { Modalize } from 'react-native-modalize'
 import { Ionicons } from '@expo/vector-icons';
-import JobItem from "../components/JobItem";
-import JobItemHorizontal from "../components/JobItemHorizontal";
-import Hamburger from "../components/nav/Hamburger";
 import {
     sPopularError,
     sPopularJobs,
     sPopularLoading, sRecentError, sRecentJobs,
     sRecentLoading
 } from "../store/selectors/AppSelector";
-import {loadPopularJobs, loadRecentJobs} from "../store/actions/AppAction";
-import Colors from "../constants/colors";
-import ShowAlert from "../components/Alert";
 import {sUserData} from "../store/selectors/UserSelector";
+import {loadPopularJobs, loadRecentJobs} from "../store/actions/AppAction";
+import JobItem from "../components/JobItem";
+import JobItemHorizontal from "../components/JobItemHorizontal";
+import Hamburger from "../components/nav/Hamburger";
+import ShowAlert from "../components/Alert";
 import Error from "../components/Error";
 import LocationPicker from "../components/LocationPicker";
-import {withTranslation} from "react-i18next";
+import {Colors} from "../constants/colors";
+import {Routes} from "../constants/routes";
 
 class Home extends React.Component {
 
@@ -50,7 +51,7 @@ class Home extends React.Component {
 
     render() {
         const {navigation, popularJobs, popularLoading, popularError, recentJobs, recentLoading, recentError,
-            user} = this.props;
+            user, t} = this.props;
 
         const isError = popularError || recentError;
         const isLoading = popularLoading || recentLoading;
@@ -61,14 +62,20 @@ class Home extends React.Component {
 
         const handleSearch = (event) => {
             if (this.state.searchInput) {
-                navigation.navigate('JobList', {
+                navigation.navigate(Routes.jobList, {
                     city: this.state.searchInput
                 });
             } else {
-                ShowAlert('Attenzione', 'Ricerca non valida. Inserire un testo valido!', 'Ok',
+                ShowAlert(t('error.warning'), t('error.search'), t('error.ok'),
                     () => console.log('wrong search'));
             }
         };
+
+        const goToDetails = (jobId) => {
+            navigation.navigate(Routes.jobDetails, {
+                jobId: jobId
+            })
+        }
 
         return (
                 <ImageBackground
@@ -79,19 +86,18 @@ class Home extends React.Component {
                     <Hamburger navigation={navigation}/>
 
                     <Text style={styles.welcomeText}>
-                        Bentornato {user.name},
+                        {t('home.welcome')  + user.name},
                     </Text>
 
                     <Text style={styles.welcomeWorkText}>
-                        Trova il lavoro perfetto
+                        {t('home.title')}
                     </Text>
 
                     <View style={styles.searchBox}>
                         <View style={styles.searchInputBox}>
                             <Ionicons name="ios-search" size={24} color="grey" />
                             <TextInput
-                                //placeholder="Cerca un nuovo lavoro..."
-                                placeholder={this.props.t('Welcome to React')}
+                                placeholder={t('home.searchNewJob')}
                                 placeholderTextColor="gray"
                                 style={styles.searchInput}
                                 maxLength={30}
@@ -117,7 +123,7 @@ class Home extends React.Component {
                     {!isLoading && !isError && (
                         <>
                             <Text style={styles.textList}>
-                                Popolari
+                                {t('home.popular')}
                             </Text>
 
                             <ScrollView
@@ -132,9 +138,7 @@ class Home extends React.Component {
                                         title={job.title}
                                         address={job.address}
                                         companyName={job.company.name}
-                                        onPress={ () => navigation.navigate('JobDetails', {
-                                            jobId: job.id
-                                        }) }
+                                        onPress={() => goToDetails(job.id)}
 
                                     />
                                 ))}
@@ -142,7 +146,7 @@ class Home extends React.Component {
 
                             <View style={styles.recentJob}>
                                 <Text style={styles.textList}>
-                                    Recenti
+                                    {t('home.recent')}
                                 </Text>
 
                                 {recentJobs && recentJobs?.data?.elements?.map((job, i) => (
@@ -154,9 +158,7 @@ class Home extends React.Component {
                                         companyName={job.company.name}
                                         createdAt={job.createdAt}
                                         isNew={true}
-                                        onPress={ () => navigation.navigate('JobDetails', {
-                                            jobId: job.id
-                                        }) }
+                                        onPress={() => goToDetails(job.id)}
                                     />
                                 ))}
                             </View>
@@ -167,7 +169,6 @@ class Home extends React.Component {
                     {isLoading && !isError && (<ActivityIndicator color={Colors.primary} size="large"/>)}
                     {isError && (<Error onPress={() => this.fetchData()} />)}
                 </Modalize>
-
 
             </ImageBackground>
         )
@@ -199,8 +200,9 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
+// componente che permette la connessione tra un componente react e i18n
+const HomeTranslation = withTranslation()(Home);
 // componente che permette la connessione tra un componente react e redux
-const HomeTranslation = withTranslation()(Home)
 const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(HomeTranslation);
 export default HomeContainer;
 
@@ -214,14 +216,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginTop: 30,
         fontFamily: 'MS-Medium',
-        color: 'white'
+        color: Colors.light
     },
     welcomeWorkText: {
         paddingHorizontal: 20,
         fontSize: 25,
         marginTop: 10,
         fontFamily: 'MS-Bold',
-        color: 'white'
+        color: Colors.light
     },
     searchBox: {
         flexDirection:"row",
@@ -236,7 +238,7 @@ const styles = StyleSheet.create({
         width:"85%",
         fontFamily: 'MS-Regular',
         padding:10,
-        backgroundColor:"white",
+        backgroundColor:Colors.light,
         paddingHorizontal:20,
         borderRadius:10,
     },
@@ -258,9 +260,9 @@ const styles = StyleSheet.create({
     textList: {
         fontFamily:"MS-Bold",
         fontSize:18,
-        color:"#4f4a4a",
+        color: Colors.darkGray,
         paddingLeft:22,
     },
     popularJob: {paddingLeft:20},
     recentJob: {marginTop:25}
-})
+});

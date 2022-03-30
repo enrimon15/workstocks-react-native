@@ -2,23 +2,22 @@ import React from 'react';
 import {
     View,
     Text,
-    ImageBackground,
     Image,
-    TouchableOpacity,
+    TouchableOpacity, StyleSheet,
 } from 'react-native';
 import {
     DrawerContentScrollView,
     DrawerItemList,
 } from '@react-navigation/drawer';
-
 import { Ionicons, AntDesign } from '@expo/vector-icons';
-import Colors from "../../constants/colors";
+import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {sUserData} from "../../store/selectors/UserSelector";
 import {logout} from "../../store/actions/UserAction";
+import {Colors} from "../../constants/colors";
 
-const CustomDrawer = props => {
-
+export default function CustomDrawer(props) {
+    const {t} = useTranslation();
     const user = useSelector(sUserData);
     const dispatch = useDispatch();
 
@@ -26,52 +25,86 @@ const CustomDrawer = props => {
         <View style={{flex: 1}}>
             <DrawerContentScrollView
                 {...props}
-                contentContainerStyle={{backgroundColor: Colors.primary}}>
+                contentContainerStyle={styles.container}>
                 <View
-                    style={{padding: 20}}>
+                    style={styles.outline}>
                     <Image
                         resizeMode="contain"
                         source={require('../../assets/images/logo_con_testo.png')}
-                        style={{width: "70%", marginBottom: 30}}
+                        style={styles.logo}
                     />
-                    <View style={{flexDirection: "row", marginBottom: 5}}>
-                        <AntDesign name="user" size={22} color="white" />
+                    <View style={styles.user}>
+                        <AntDesign name="user" size={22} color={Colors.light} />
                         <Text
-                            style={{
-                                color: '#fff',
-                                fontSize: 18,
-                                fontFamily: 'MS-Medium',
-                                marginLeft: 5
-                            }}>
+                            style={styles.userText}>
                             {user.name + ' ' + user.surname}
                         </Text>
                     </View>
 
                 </View>
-                <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 30}}>
+                <View style={styles.drawerList}>
                     <DrawerItemList {...props} />
                 </View>
             </DrawerContentScrollView>
-            <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
+            <View style={styles.logoutContainer}>
                 <TouchableOpacity
                     onPress={() => {dispatch(logout())}}
-                    style={{paddingVertical: 15}}
+                    style={styles.logoutButton}
                 >
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Ionicons name="exit-outline" size={22} />
+                    <View style={styles.logoutTextHeader}>
+                        <Ionicons name="exit-outline" size={22} color={Colors.dark} />
                         <Text
-                            style={{
-                                fontSize: 15,
-                                fontFamily: 'MS-Medium',
-                                marginLeft: 5,
-                            }}>
-                            Logout
+                            style={styles.logoutText}>
+                            {t('auth.logout')}
                         </Text>
                     </View>
                 </TouchableOpacity>
             </View>
         </View>
     );
-};
+}
 
-export default CustomDrawer;
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: Colors.primary
+    },
+    outline: {
+        padding: 20
+    },
+    logo: {
+        width: "70%",
+        marginBottom: 30
+    },
+    user: {
+        flexDirection: "row",
+        marginBottom: 5
+    },
+    userText: {
+        color: Colors.light,
+        fontSize: 18,
+        fontFamily: 'MS-Medium',
+        marginLeft: 5
+    },
+    drawerList: {
+        flex: 1,
+        backgroundColor: Colors.light,
+        paddingTop: 30
+    },
+    logoutContainer: {
+        padding: 20,
+        borderTopWidth: 1,
+        borderTopColor: '#ccc'
+    },
+    logoutButton: {
+        paddingVertical: 15
+    },
+    logoutTextHeader: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    logoutText: {
+        fontSize: 15,
+        fontFamily: 'MS-Medium',
+        marginLeft: 5,
+    }
+});

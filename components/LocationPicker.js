@@ -1,11 +1,22 @@
+import React from "react";
 import {StyleSheet, TouchableHighlight} from 'react-native';
 import * as Location from 'expo-location';
 import {Ionicons} from "@expo/vector-icons";
-import React from "react";
 import ShowAlert from "./Alert";
+import {useTranslation} from "react-i18next";
+import {Routes} from "../constants/routes";
+import {Colors} from "../constants/colors";
 
-const LocationPicker = ({navigation}) => {
+export default function LocationPicker({navigation}) {
+    const {t} = useTranslation();
     const [locationPermissionInformation, requestPermission] = Location.useForegroundPermissions();
+
+    const showErrorLocation = () => {
+        ShowAlert(t('error.warning'),
+            t('error.localization'),
+            t('error.ok'),
+            () => console.log('Permission denied'));
+    }
 
     const verifyPermissions = async () => {
         if (locationPermissionInformation.status === Location.PermissionStatus.UNDETERMINED) {
@@ -13,10 +24,6 @@ const LocationPicker = ({navigation}) => {
             return permissionResponse.granted;
         }
         if (locationPermissionInformation.status === Location.PermissionStatus.DENIED) {
-            ShowAlert('Attenzione',
-                'Hai bisogno di fornire i permessi sulla localizzazione per utilizzare questa funzionalità',
-                'Ok',
-                () => console.log('Permission denied'));
             return false;
         }
 
@@ -26,11 +33,12 @@ const LocationPicker = ({navigation}) => {
     const getPositionHandler = async () => {
         const hasPermission = await verifyPermissions();
         if (!hasPermission) {
+            showErrorLocation();
             return;
         }
         const location = await  Location.getCurrentPositionAsync();
 
-        navigation.navigate('JobList', {
+        navigation.navigate(Routes.jobDetails, {
             lat: location.coords.latitude,
             lon: location.coords.longitude
         });
@@ -38,17 +46,16 @@ const LocationPicker = ({navigation}) => {
 
     return(
         <TouchableHighlight style={styles.location} onPress={getPositionHandler}>
-            <Ionicons name="location-outline" size={24} color="black" />
+            <Ionicons name="location-outline" size={24} color={Colors.dark} />
         </TouchableHighlight>
     )
 }
-export default LocationPicker;
 
 const styles = StyleSheet.create({
     location: {
         alignItems:"center",
         width:"15%",
-        backgroundColor:"white",
+        backgroundColor:Colors.light,
         borderRadius:10,
         marginLeft:5,
         padding:10,

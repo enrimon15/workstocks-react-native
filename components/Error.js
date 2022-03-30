@@ -1,12 +1,14 @@
-import {StyleSheet, Text, Pressable, View} from "react-native";
 import React from "react";
-import Colors from "../constants/colors";
+import {StyleSheet, Text, Pressable, View} from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import {useDispatch} from "react-redux";
 import {cleanError} from "../store/actions/AppAction";
+import {Colors} from "../constants/colors";
+import {useTranslation} from "react-i18next";
 
 export default function Error({onPress}) {
     const dispatch = useDispatch();
+    const {t} = useTranslation();
 
     const clearErrorHandler = () => {
         dispatch(cleanError);
@@ -16,12 +18,12 @@ export default function Error({onPress}) {
     return (
         <View style={styles.errorContainer}>
             <MaterialIcons name="error-outline" size={30} color={Colors.primary} />
-            <Text style={styles.textError}>Oops.. Qualcosa è andato storto!</Text>
+            <Text style={styles.textError}>{t('error.generic')}</Text>
             <Pressable
                 onPress={clearErrorHandler}
                 style={styles.button}
             >
-                <Text style={styles.textButtonError}>Riprova</Text>
+                <Text style={styles.textButtonError}>{t('error.retry')}</Text>
             </Pressable>
         </View>
     )
@@ -51,4 +53,4 @@ const styles = StyleSheet.create({
         fontFamily: "MS-Medium",
         color: "white"
     }
-})
+});

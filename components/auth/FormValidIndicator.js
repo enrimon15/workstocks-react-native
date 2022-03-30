@@ -2,7 +2,7 @@ import React from 'react';
 import {Feather} from "@expo/vector-icons";
 import * as Animatable from 'react-native-animatable';
 
-const FormValidIndicator = () => {
+export default function FormValidIndicator() {
     return (
         <Animatable.View
             animation="bounceIn"
@@ -14,6 +14,4 @@ const FormValidIndicator = () => {
             />
         </Animatable.View>
     )
-};
-
-export default FormValidIndicator;
+}

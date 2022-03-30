@@ -1,19 +1,18 @@
-import {Image, SafeAreaView, Text, View, StyleSheet, TouchableOpacity} from "react-native";
-import Colors from "../constants/colors";
-import Back from "./nav/Back";
-import {Ionicons} from "@expo/vector-icons";
 import React from "react";
+import {Image, SafeAreaView, Text, View, StyleSheet} from "react-native";
+import {Ionicons} from "@expo/vector-icons";
+import {Colors} from "../constants/colors";
+import Back from "./nav/Back";
 
-export const ListOutline = ({navigation, textHeader, children, titleIcon}) => {
-
+export default function ListOutline({navigation, textHeader, children, titleIcon}) {
     return (
         <View style={styles.background}>
             <View style={styles.headerContainer}>
                 <SafeAreaView>
-                    <Back navigation={navigation} iconColor={"white"} />
+                    <Back navigation={navigation} iconColor={Colors.light} />
                     <View style={styles.header}>
                         <View style={styles.textHeaderContainer}>
-                            {titleIcon && <Ionicons style={styles.icon} name={titleIcon} size={28} color="white" />}
+                            {titleIcon && <Ionicons style={styles.icon} name={titleIcon} size={28} color={Colors.light} />}
                             <Text style={styles.textTitle}>{textHeader}</Text>
                         </View>
                         <View style={styles.imageContainer}>
@@ -35,7 +34,7 @@ export const ListOutline = ({navigation, textHeader, children, titleIcon}) => {
 
 const styles = StyleSheet.create({
     background: {
-        backgroundColor:"white",
+        backgroundColor: Colors.light,
         flex:1
     },
     headerContainer: {
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius:30,
         borderBottomRightRadius:30,
         paddingHorizontal:20,
-        shadowColor: "#84A4FF",
+        shadowColor: Colors.shadow,
         shadowOffset: {
             width: 0,
             height:0,
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     },
     textTitle: {
         fontSize:28,
-        color:"#FFF",
+        color: Colors.light,
         marginLeft: 10,
         fontFamily:"MS-Medium"
     },
@@ -78,4 +77,4 @@ const styles = StyleSheet.create({
         width:100
     },
     icon: {alignSelf: "center"}
-})
+});

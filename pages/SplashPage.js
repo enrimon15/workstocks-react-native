@@ -7,12 +7,14 @@ import {
     StyleSheet
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { MaterialIcons } from '@expo/vector-icons';
-import Colors from "../constants/colors";
+import {MaterialIcons} from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/native";
+import {Colors} from "../constants/colors";
+import {Routes} from "../constants/routes";
+import {useTranslation} from "react-i18next";
 
-const SplashScreen = () => {
-
+export default function SplashScreen() {
+    const { t } = useTranslation();
     const navigation = useNavigation();
 
     return (
@@ -27,22 +29,18 @@ const SplashScreen = () => {
                 />
             </View>
             <Animatable.View
-                style={[styles.footer, {
-                    backgroundColor: "white"
-                }]}
+                style={styles.footer}
                 animation="fadeInUpBig"
             >
-                <Text style={[styles.title, {
-                    color: "black"
-                }]}>Trova l'offerta di lavoro adatta a te!</Text>
-                <Text style={styles.text}>Accedi con il tuo account</Text>
+                <Text style={styles.title}>{t('splash.overview')}</Text>
+                <Text style={styles.text}>{t('splash.signIn')}</Text>
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
+                    <TouchableOpacity onPress={() => navigation.navigate(Routes.login)}>
                         <View
                             style={styles.signIn}
                         >
-                            <Text style={styles.textSign}>Inizia</Text>
-                            <MaterialIcons name="keyboard-arrow-right" size={20} color="white" />
+                            <Text style={styles.textSign}>{t('splash.start')}</Text>
+                            <MaterialIcons name="keyboard-arrow-right" size={20} color={Colors.light}/>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -50,8 +48,6 @@ const SplashScreen = () => {
         </View>
     );
 };
-
-export default SplashScreen;
 
 const {height} = Dimensions.get("screen");
 const height_logo = height * 0.2;
@@ -68,7 +64,7 @@ const styles = StyleSheet.create({
     },
     footer: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.light,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingVertical: 50,
@@ -79,22 +75,20 @@ const styles = StyleSheet.create({
         height: height_logo
     },
     title: {
-        color: '#05375a',
+        color: Colors.dark,
         fontSize: 30,
         fontFamily: 'MS-Bold'
     },
     text: {
         color: 'grey',
-        marginTop:5,
+        marginTop: 5,
         fontFamily: "MS-Regular",
         marginVertical: 4
     },
     button: {
         position: 'absolute',
-        bottom:80,
+        bottom: 80,
         right: 30
-        //alignItems: 'flex-end',
-        //marginTop: 30
     },
     signIn: {
         width: 150,
@@ -106,7 +100,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary
     },
     textSign: {
-        color: 'white',
+        color: Colors.light,
         fontFamily: 'MS-Medium',
         fontSize: 16
     }

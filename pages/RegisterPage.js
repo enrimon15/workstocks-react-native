@@ -1,29 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import { FontAwesome, Feather } from '@expo/vector-icons';
-import {StringUtils} from "../util/StringUtils";
-import AuthLayout from "../components/auth/AuthLayout";
-import InputForm from "../components/auth/InputForm";
+import {useNavigation} from "@react-navigation/native";
+import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {clearError, register} from "../store/actions/UserAction";
 import {sUserError, sUserLoading} from "../store/selectors/UserSelector";
-import {useNavigation} from "@react-navigation/native";
+import AuthLayout from "../components/auth/AuthLayout";
+import InputForm from "../components/auth/InputForm";
+import {StringUtils} from "../util/StringUtils";
+import {Colors} from "../constants/colors";
 
-const Register = () => {
-
+export default function Register() {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const loading = useSelector(sUserLoading);
     const error = useSelector(sUserError);
     const navigation = useNavigation();
 
     useEffect(() => {
-        // quando lo screen perde il focus
+        // quando lo screen perde il focus rimuovo l'errore
         const navigationFocusListener = navigation.addListener('beforeRemove', () => {
             if (error) {
                 dispatch(clearError());
             }
         });
 
-        // Ritorno la function per fare l'unsibscribe quando ho un unmount dello schermo
+        // Ritorno la function per fare l'unsubscribe quando ho un unmount dello schermo
         return navigationFocusListener;
     }, []);
 
@@ -43,11 +45,7 @@ const Register = () => {
     });
 
     const handleEmailChange = (val) => {
-        let emailValid = false;
-        if(StringUtils.validateEmail(val)) {
-            emailValid = true;
-        }
-
+        const emailValid = StringUtils.validateEmail(val);
         setData({
             ...data,
             email: val,
@@ -56,11 +54,7 @@ const Register = () => {
     }
 
     const handleNameChange = (val) => {
-        let nameValid = false;
-        if(StringUtils.isLengthInRange(val, 2, 15)) {
-            nameValid = true;
-        }
-
+        const nameValid = StringUtils.isLengthInRange(val, 2, 15);
         setData({
             ...data,
             name: val,
@@ -69,11 +63,7 @@ const Register = () => {
     }
 
     const handleSurnameChange = (val) => {
-        let surnameValid = false;
-        if(StringUtils.isLengthInRange(val, 2, 15)) {
-            surnameValid = true;
-        }
-
+        const surnameValid = StringUtils.isLengthInRange(val, 2, 15);
         setData({
             ...data,
             surname: val,
@@ -82,11 +72,7 @@ const Register = () => {
     }
 
     const handleConfirmPasswordChange = (val) => {
-        let confirmPwValid = false;
-        if(StringUtils.validateConfirmPassword(val, data.password)) {
-            confirmPwValid = true;
-        }
-
+        const confirmPwValid = StringUtils.validateConfirmPassword(val, data.password);
         setData({
             ...data,
             confirmPassword: val,
@@ -95,11 +81,7 @@ const Register = () => {
     }
 
     const handlePasswordChange = (val) => {
-        let pwValid = false;
-        if(StringUtils.validatePassword(val)) {
-            pwValid = true;
-        }
-
+        const pwValid = StringUtils.validatePassword(val);
         setData({
             ...data,
             password: val,
@@ -127,104 +109,82 @@ const Register = () => {
 
     return (
         <AuthLayout
-            titleText={'Registrati!'}
-            topButtonTitle={"Registrati"}
+            titleText={t('auth.register') + '!'}
+            topButtonTitle={t('auth.register')}
             topButtonHandler={registerHandle}
             loading={loading}
             error={error}
-            errorText={'Registrazione non riuscita, riprova!'}
+            errorText={t('auth.errorRegister')}
             nav={navigation}
         >
             <InputForm
-                title={'Email'}
-                placeholder={'Email..'}
+                title={t('auth.email')}
+                placeholder={t('auth.email') + '..'}
                 applyValidation={true}
                 isPassword={false}
-                errorText={'Email non valida'}
+                errorText={t('auth.emailError')}
                 isInputValid={data.isValidEmail}
                 changeTextHandler={handleEmailChange}
             >
-                <FontAwesome
-                    name="envelope-o"
-                    color="#4f4a4a"
-                    size={20}
-                />
+                <FontAwesome name="envelope-o" color={Colors.darkGray} size={20}/>
             </InputForm>
 
             <InputForm
                 containerStyle={{marginTop: 25}}
-                title={'Nome'}
-                placeholder={'Nome..'}
+                title={t('auth.name')}
+                placeholder={t('auth.name') + '..'}
                 applyValidation={true}
                 isPassword={false}
-                errorText={'Nome non valido'}
+                errorText={t('auth.nameError')}
                 isInputValid={data.isValidName}
                 changeTextHandler={handleNameChange}
             >
-                <FontAwesome
-                    name="user-o"
-                    color="#4f4a4a"
-                    size={20}
-                />
+                <FontAwesome name="user-o" color={Colors.darkGray} size={20}/>
             </InputForm>
 
             <InputForm
                 containerStyle={{marginTop: 25}}
-                title={'Cognome'}
-                placeholder={'Cognome..'}
+                title={t('auth.surname')}
+                placeholder={t('auth.surname') + '..'}
                 applyValidation={true}
                 isPassword={false}
-                errorText={'Cognome non valido'}
+                errorText={t('auth.surnameError')}
                 isInputValid={data.isValidSurname}
                 changeTextHandler={handleSurnameChange}
             >
-                <FontAwesome
-                    name="user-circle-o"
-                    color="#4f4a4a"
-                    size={20}
-                />
+                <FontAwesome name="user-circle-o" color={Colors.darkGray} size={20}/>
             </InputForm>
 
             <InputForm
                 containerStyle={{marginTop: 25}}
-                title={'Password'}
-                placeholder={'Password..'}
+                title={t('auth.password')}
+                placeholder={t('auth.password') + '..'}
                 applyValidation={true}
-                errorText={'Password non valida'}
+                errorText={t('auth.passwordError')}
                 isInputValid={data.isValidPassword}
                 changeTextHandler={handlePasswordChange}
                 isPassword={true}
                 secureTextEntry={data.secureTextEntry}
                 updateSecureTextEntry={() => updateSecureTextEntry('PASSWORD')}
             >
-                <Feather
-                    name="lock"
-                    color="#4f4a4a"
-                    size={20}
-                />
+                <Feather name="lock" color={Colors.darkGray} size={20}/>
             </InputForm>
 
             <InputForm
                 containerStyle={{marginTop: 25}}
-                title={'Conferma Password'}
-                placeholder={'Conferma Password..'}
+                title={t('auth.passwordConfirm')}
+                placeholder={t('auth.passwordConfirm') + '..'}
                 applyValidation={true}
-                errorText={'La password non coincide'}
+                errorText={t('auth.passwordConfirmError')}
                 isInputValid={data.isValidConfirmPassword}
                 changeTextHandler={handleConfirmPasswordChange}
                 isPassword={true}
                 secureTextEntry={data.secureTextEntryConfirm}
                 updateSecureTextEntry={() => updateSecureTextEntry('CONFIRM_PASSWORD')}
             >
-                <Feather
-                    name="lock"
-                    color="#4f4a4a"
-                    size={20}
-                />
+                <Feather name="lock" color={Colors.darkGray} size={20}/>
             </InputForm>
 
         </AuthLayout>
     );
 };
-
-export default Register;

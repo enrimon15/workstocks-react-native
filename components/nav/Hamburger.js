@@ -1,5 +1,5 @@
-import {Image, Pressable, StyleSheet} from "react-native";
 import React from "react";
+import {Image, Pressable, StyleSheet} from "react-native";
 
 export default function Hamburger(props) {
     const {navigation} = props;
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
         width:20,
         marginLeft: 25
     }
-})
+});

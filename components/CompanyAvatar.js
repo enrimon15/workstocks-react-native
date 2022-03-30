@@ -1,9 +1,7 @@
-import {Image, StyleSheet} from "react-native";
 import React from "react";
+import {Image, StyleSheet} from "react-native";
 
-export default function CompanyAvatar(props) {
-    const {img} = props;
-
+export default function CompanyAvatar({img}) {
     return (
         <Image
             source={{uri: `data:image/jpeg;base64,${img}`}}
@@ -14,5 +12,8 @@ export default function CompanyAvatar(props) {
 }
 
 const styles = StyleSheet.create({
-    avatar: {width:40, height:40}
-})
+    avatar: {
+        width:40,
+        height:40
+    }
+});

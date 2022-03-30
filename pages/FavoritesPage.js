@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
-import {FlatList, ActivityIndicator, StyleSheet, View, TouchableOpacity, Text, Pressable} from 'react-native';
-import Colors from "../constants/colors";
-import JobItem, {jobItemContainer} from "../components/JobItem";
+import {FlatList, ActivityIndicator, StyleSheet} from 'react-native';
+import { SwipeRow } from 'react-native-swipe-list-view';
+import {useTranslation} from "react-i18next";
 import {useNavigation} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -10,24 +10,17 @@ import {
     sFavoritesLoading
 } from "../store/selectors/AppSelector";
 import {loadFavorites, removeFavoriteList} from "../store/actions/AppAction";
-import {ListOutline} from "../components/ListOutline";
+import ListOutline from "../components/ListOutline";
 import Error from "../components/Error";
 import NoData from "../components/NoData";
-import { SwipeRow } from 'react-native-swipe-list-view';
 import SwipeButton from "../components/SwipeButton";
 import ShowAlert from "../components/Alert";
-import {useTranslation} from "react-i18next";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {LangStorage} from "../constants/lang";
+import JobItem, {jobItemContainer} from "../components/JobItem";
+import {Colors} from "../constants/colors";
+import {Routes} from "../constants/routes";
 
-const Favorites = (props) => {
-    const { t, i18n } = useTranslation();
-    const changeLanguage =  async (lng) => {
-        await AsyncStorage.setItem(LangStorage.KEY, lng);
-        await i18n.changeLanguage(lng);
-        i18n.language
-    };
-
+export default function Favorites() {
+    const { t } = useTranslation();
     const navigation = useNavigation();
 
     const favorites = useSelector(state => sFavorites(state));
@@ -38,12 +31,12 @@ const Favorites = (props) => {
 
     useEffect(() => {
         fetchData();
-        // quando lo screen è onFocus
+        // quando lo screen è onFocus reload
         const navigationFocusListener = navigation.addListener('focus', () => {
             fetchData();
         });
 
-        // Ritorno la function per fare l'unsibscribe quando ho un unmount dello schermo
+        // Ritorno la function per fare l'unsubscribe quando ho un unmount dello schermo
         return navigationFocusListener;
     }, []);
 
@@ -56,8 +49,8 @@ const Favorites = (props) => {
     };
 
     const handleButton = (jobId) => {
-        ShowAlert('Attenzione', 'Stai per rimuovere un\'offerta salvata. Vuoi proseguire?',
-            'Annulla', () => console.log('delete canceled'), 'Ok',
+        ShowAlert(t('alert.warning'), t('alert.confirmTextFavorite'),
+            t('alert.cancel'), () => console.log('delete canceled'), t('alert.ok'),
             () => deleteFavorite(jobId))
     }
 
@@ -81,7 +74,7 @@ const Favorites = (props) => {
                 address={item?.address}
                 companyName={item?.company?.name}
                 createdAt={item?.createdAt}
-                onPress={ () => navigation.navigate('JobDetails', {
+                onPress={ () => navigation.navigate(Routes.jobDetails, {
                     jobId: item?.id
                 }) }
             />
@@ -90,18 +83,9 @@ const Favorites = (props) => {
 
     return(
         <ListOutline
-            //textHeader={'Offerte Salvate'}
-            textHeader={t('Welcome to React')}
+            textHeader={t('favorite.title')}
             navigation={navigation}
         >
-            <Pressable onPress={() => changeLanguage('it')}>
-                <Text>IT</Text>
-            </Pressable>
-
-            <Pressable onPress={() => changeLanguage('en')}>
-                <Text>EN</Text>
-            </Pressable>
-
             {!loading && !error && favorites && favorites?.data?.elements?.length > 0 && (
                 <FlatList
                     onRefresh={fetchData}
@@ -124,11 +108,10 @@ const Favorites = (props) => {
         </ListOutline>
     )
 }
-export default Favorites;
 
 const styles = StyleSheet.create({
     spinner: {marginTop: 50},
     deleteContainer: {
-        backgroundColor: "red"
+        backgroundColor: Colors.danger
     }
 });

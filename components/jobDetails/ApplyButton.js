@@ -1,7 +1,7 @@
-import {StyleSheet, Text, Pressable} from "react-native";
 import React from "react";
-import Colors from "../../constants/colors";
+import {StyleSheet, Text, Pressable} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
+import {Colors} from "../../constants/colors";
 
 export default function ApplyButton({text, isApplicated, onPress}) {
 
@@ -11,7 +11,7 @@ export default function ApplyButton({text, isApplicated, onPress}) {
             onPress={onPress}
             disabled={isApplicated}
         >
-            <Ionicons name={isApplicated ? 'ios-briefcase-sharp' : 'ios-briefcase-outline'} size={28} color="white" />
+            <Ionicons name={isApplicated ? 'ios-briefcase-sharp' : 'ios-briefcase-outline'} size={28} color={Colors.light} />
             <Text style={styles.textButton}>{text}</Text>
         </Pressable>
     )
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
         borderRadius:10
     },
     textButton: {
-        color:"white",
+        color: Colors.light,
         fontFamily:"MS-Regular",
         marginHorizontal: 10
     }
-})
+});

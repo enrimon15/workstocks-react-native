@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, ImageBackground, Text, SafeAreaView, ScrollView, ActivityIndicator,
-    Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
-import Colors from '../constants/colors';
+    Dimensions, StyleSheet} from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import {StatusBar} from "expo-status-bar";
-import Back from "../components/nav/Back";
+import {connect} from "react-redux";
 import {
     sApplicationsError,
     sFavoritesError,
@@ -17,18 +17,18 @@ import {
     loadJobDetails,
     removeFavorite
 } from "../store/actions/AppAction";
-import {connect} from "react-redux";
-import ContractTypeUtils from "../util/ContractTypeUtils";
-import {StringUtils} from "../util/StringUtils";
-import CardDetail from "../components/jobDetails/CardDetail";
+import CardDetail from "../components/CardDetail";
 import InfoDetail from "../components/jobDetails/InfoDetail";
 import ApplyButton from "../components/jobDetails/ApplyButton";
 import JobOfferHeader from "../components/jobDetails/JobOfferHeader";
 import Error from "../components/Error";
 import Map from "../components/jobDetails/Map";
-import * as Animatable from 'react-native-animatable';
-import TabDetails from "../components/jobDetails/Tabs";
+import Back from "../components/nav/Back";
+import TabDetails, {DESCRIPTION, MAP, SKILLS} from "../components/jobDetails/Tabs";
 import Skills from "../components/jobDetails/Skills";
+import {Colors} from '../constants/colors';
+import {StringUtils} from "../util/StringUtils";
+import {withTranslation} from "react-i18next";
 
 const {height} = Dimensions.get("screen");
 const height_banner = height * 0.2;
@@ -37,7 +37,7 @@ class JobDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tabSelected: 'DESCRIPTION'
+            tabSelected: DESCRIPTION
         }
     }
 
@@ -56,7 +56,7 @@ class JobDetail extends React.Component {
 
     render(){
         const {navigation, jobDetail, jobLoading, jobError, addApplication, addFavorite, removeFavorite,
-            applicationsError, favoritesError} = this.props;
+            applicationsError, favoritesError, t} = this.props;
 
         const jobDetailData = jobDetail?.data;
         const isError = (jobError || favoritesError || applicationsError);
@@ -80,13 +80,14 @@ class JobDetail extends React.Component {
                 <StatusBar style="dark"/>
                 <View style={styles.container}>
                     <SafeAreaView style={styles.safeContainer}>
-                        <ImageBackground source={require('../assets/images/detail.png')}
-                                         style={styles.banner}>
-                            <Back navigation={navigation} iconColor={"black"} />
+                        <ImageBackground
+                            source={require('../assets/images/detail.png')}
+                            style={styles.banner}
+                        >
+                            <Back navigation={navigation} iconColor={Colors.dark}/>
                         </ImageBackground>
                         {!jobLoading && !isError && (
                             <>
-
                                 <JobOfferHeader
                                     title={jobDetailData?.title}
                                     address={jobDetailData?.address?.city + ', ' + jobDetailData?.address?.country}
@@ -100,32 +101,31 @@ class JobDetail extends React.Component {
                                 <TabDetails selectedTab={this.state.tabSelected} onTabPressed={this.onTabPressed}/>
 
                                 <ScrollView showsVerticalScrollIndicator={false}>
-
-                                    {this.state.tabSelected === 'DESCRIPTION' && <Animatable.View animation={'fadeIn'}>
+                                    {this.state.tabSelected === DESCRIPTION && <Animatable.View animation={'fadeIn'}>
                                         <View style={styles.jobDetailsContainer}>
                                             <InfoDetail
-                                                title={'Esperienza'}
-                                                text={jobDetailData?.experience + ' anni'}
+                                                title={t('detail.experience')}
+                                                text={jobDetailData?.experience + ' ' + t('detail.years')}
                                             />
                                             <InfoDetail
-                                                title={'Contratto'}
-                                                text={ContractTypeUtils.getContractType(jobDetailData?.contractType)}
+                                                title={t('detail.contract')}
+                                                text={t('detail.' + jobDetailData?.contractType)}
                                             />
                                             <InfoDetail
-                                                title={'Salario'}
+                                                title={t('detail.salary')}
                                                 text={jobDetailData?.minSalary + 'k - ' + jobDetailData?.maxSalary + 'k'}
                                             />
                                         </View>
 
                                         <CardDetail>
-                                            <Text style={styles.jobDescription}>Descrizione Offerta</Text>
+                                            <Text style={styles.jobDescription}>{t('detail.descriptionJob')}</Text>
                                             <Text style={styles.jobDescriptionText}>
                                                 {StringUtils.htmlToText(jobDetailData?.description)}
                                             </Text>
                                         </CardDetail>
                                     </Animatable.View>}
 
-                                    {this.state.tabSelected === 'MAP' &&
+                                    {this.state.tabSelected === MAP &&
                                         <Map
                                             companyName={jobDetailData?.company?.name}
                                             city={jobDetailData?.address?.city}
@@ -134,24 +134,25 @@ class JobDetail extends React.Component {
                                         />
                                     }
 
-                                    {this.state.tabSelected === 'SKILLS' &&
-                                        <Skills skillList={jobDetailData?.skills} />
+                                    {this.state.tabSelected === SKILLS &&
+                                        <Skills skillList={jobDetailData?.skills}/>
                                     }
                                 </ScrollView>
 
                                 <ApplyButton
                                     isApplicated={jobDetailData?.isApplicated}
                                     text={jobDetailData && jobDetailData?.isApplicated ?
-                                        'Candidatura Effettuata'
-                                        : 'Candidati'
+                                        t('detail.applied')
+                                        : t('detail.apply')
                                     }
                                     onPress={handleApplication}
                                 />
                             </>
                         )}
 
-                        {jobLoading && !isError && (<ActivityIndicator style={{marginTop: 50}} color={Colors.primary} size="large"/>)}
-                        {isError && (<Error onPress={() => this.fetchData()} />)}
+                        {jobLoading && !isError && (
+                            <ActivityIndicator style={{marginTop: 50}} color={Colors.primary} size="large"/>)}
+                        {isError && (<Error onPress={() => this.fetchData()}/>)}
                     </SafeAreaView>
                 </View>
             </>
@@ -188,13 +189,15 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
+// componente che permette la connessione tra un componente react e i18n
+const JobDetailsTranslation = withTranslation()(JobDetail);
 // componente che permette la connessione tra un componente react e redux
-const JobDetailsContainer = connect(mapStateToProps, mapDispatchToProps)(JobDetail);
+const JobDetailsContainer = connect(mapStateToProps, mapDispatchToProps)(JobDetailsTranslation);
 export default JobDetailsContainer;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor:"white",
+        backgroundColor: Colors.light,
         height:"100%",
         paddingHorizontal:10
     },

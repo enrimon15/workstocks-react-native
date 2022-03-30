@@ -1,10 +1,12 @@
 import {StyleSheet, Image, View, Text, Dimensions} from 'react-native';
-import Colors from "../constants/colors";
+import {Colors} from "../constants/colors";
+import {useTranslation} from "react-i18next";
 
 const {height} = Dimensions.get("screen");
 const height_no_Data = height * 0.3;
 
-const NoData = () => {
+export default function NoData() {
+    const {t} = useTranslation();
 
     return(
         <View style={styles.container}>
@@ -13,11 +15,10 @@ const NoData = () => {
                 style={styles.image}
                 resizeMode="contain"
             />
-            <Text style={styles.text}>Dati non trovati!</Text>
+            <Text style={styles.text}>{t('error.noData')}</Text>
         </View>
     )
 }
-export default NoData;
 
 const styles = StyleSheet.create({
     container: {

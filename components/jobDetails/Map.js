@@ -1,6 +1,8 @@
+import React from 'react';
 import MapView, {Marker} from "react-native-maps";
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import {Colors} from "../../constants/colors";
 
 export default function Map({lat, lng, city, companyName}) {
 
@@ -32,7 +34,7 @@ export default function Map({lat, lng, city, companyName}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.light,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 30,

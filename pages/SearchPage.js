@@ -1,23 +1,24 @@
 import React, {useEffect} from 'react';
 import {FlatList, ActivityIndicator, StyleSheet} from 'react-native';
-import Colors from "../constants/colors";
-import JobItem from "../components/JobItem";
+import {useTranslation} from "react-i18next";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
 import {sSearch, sSearchError, sSearchLoading} from "../store/selectors/AppSelector";
 import {loadSearchJobs, loadSearchJobsByCoords} from "../store/actions/AppAction";
-import {StringUtils} from "../util/StringUtils";
-import {ListOutline} from "../components/ListOutline";
+import JobItem from "../components/JobItem";
+import ListOutline from "../components/ListOutline";
 import Error from "../components/Error";
 import NoData from "../components/NoData";
+import {StringUtils} from "../util/StringUtils";
+import {Colors} from "../constants/colors";
+import {Routes} from "../constants/routes";
 
-const Search = () => {
+export default function Search() {
+    const {t} = useTranslation();
     const navigation = useNavigation();
     const route = useRoute();
 
-    const city = route.params.city;
-    const lat = route.params.lat;
-    const lon = route.params.lon;
+    const {city, lat, lon} = route.params;
 
     const jobList = useSelector(state => sSearch(state));
     const loading = useSelector(state => sSearchLoading(state));
@@ -45,7 +46,7 @@ const Search = () => {
             address={item?.address}
             companyName={item?.company?.name}
             createdAt={item?.createdAt}
-            onPress={ () => navigation.navigate('JobDetails', {
+            onPress={ () => navigation.navigate(Routes.jobDetails, {
                 jobId: item?.id
             }) }
         />
@@ -53,7 +54,7 @@ const Search = () => {
 
     return(
         <ListOutline
-            textHeader={(lat && lon) ? 'Intorno a me' : StringUtils.capitalize(city)}
+            textHeader={(lat && lon) ? t('search.aroundMe') : StringUtils.capitalize(city)}
             titleIcon={'location-outline'}
             navigation={navigation}
         >
@@ -77,7 +78,6 @@ const Search = () => {
         </ListOutline>
     )
 }
-export default Search;
 
 const styles = StyleSheet.create({
     spinner: {marginTop: 50}

@@ -1,47 +1,32 @@
 import React from 'react';
 import {Text, View, StyleSheet, Pressable} from 'react-native';
-import CompanyAvatar from "./CompanyAvatar";
 import {Ionicons} from "@expo/vector-icons";
+import CompanyAvatar from "./CompanyAvatar";
+import {Colors} from "../constants/colors";
 
 export default class JobItemHorizontal extends React.Component{
     render(){
         const {title, img, onPress, companyName, address} = this.props;
 
         return(
-
             <Pressable
                 onPress={onPress}
                 style={styles.card}
             >
                 <CompanyAvatar img={img} />
 
-                <Text style={{
-                    fontFamily:"MS-Bold",
-                    color:"#4f4a4a",
-                    fontSize:13,
-                    marginVertical: 5
-                }}>
+                <Text style={styles.title}>
                     {title}
                 </Text>
 
-                <View style={{flexDirection: "row"}}>
-                    <Ionicons name="location-outline" size={11} color="#4f4a4a" />
-                    <Text style={{
-                        fontSize:11,
-                        color:"#4f4a4a",
-                        fontFamily:"MS-Regular",
-                        marginLeft: 4
-                    }}>
+                <View style={styles.addressContainer}>
+                    <Ionicons name="location-outline" size={11} color={Colors.darkGray} />
+                    <Text style={styles.address}>
                         {address.city + ', ' + address.country}
                     </Text>
                 </View>
 
-
-                <Text style={{
-                    fontSize:15,
-                    marginTop: 5,
-                    fontFamily:"MS-Bold"
-                }}>{companyName}</Text>
+                <Text style={styles.companyName}>{companyName}</Text>
 
             </Pressable>
         );
@@ -51,9 +36,9 @@ export default class JobItemHorizontal extends React.Component{
 const styles = StyleSheet.create({
     card: {
         marginTop:20,
-        backgroundColor:"#FFF",
+        backgroundColor: Colors.light,
         width:200,
-        shadowColor: "#84A4FF",
+        shadowColor: Colors.shadow,
         shadowOffset: {
             width: 0,
             height: 0,
@@ -66,5 +51,25 @@ const styles = StyleSheet.create({
         marginRight:30,
         marginLeft:2,
         marginBottom:15
+    },
+    title: {
+        fontFamily:"MS-Bold",
+        color: Colors.darkGray,
+        fontSize:13,
+        marginVertical: 5
+    },
+    addressContainer: {
+        flexDirection: "row"
+    },
+    address: {
+        fontSize:11,
+        color:Colors.darkGray,
+        fontFamily:"MS-Regular",
+        marginLeft: 4
+    },
+    companyName: {
+        fontSize:15,
+        marginTop: 5,
+        fontFamily:"MS-Bold"
     }
-})
+});

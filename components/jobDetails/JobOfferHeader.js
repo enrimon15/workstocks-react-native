@@ -1,9 +1,9 @@
-import {StyleSheet, Text, Pressable, View} from "react-native";
 import React from "react";
-import Colors from "../../constants/colors";
+import {StyleSheet, Text, Pressable, View} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 import CompanyAvatar from "../CompanyAvatar";
-import CardDetail from "./CardDetail";
+import CardDetail from "../CardDetail";
+import {Colors} from "../../constants/colors";
 
 export default function JobOfferHeader({title, address, handleFavorite, isFavorite, companyPhoto, companyName,
                                            companyWebsite}) {
@@ -16,7 +16,7 @@ export default function JobOfferHeader({title, address, handleFavorite, isFavori
                     </Text>
 
                     <View style={styles.jobLocationContainer}>
-                        <Ionicons name="location-outline" size={18} color="#B8B8B8" />
+                        <Ionicons name="location-outline" size={18} color={Colors.grayLight} />
                         <Text style={styles.location}>
                             {address}
                         </Text>
@@ -29,7 +29,7 @@ export default function JobOfferHeader({title, address, handleFavorite, isFavori
                     <Ionicons name={isFavorite ?
                         "ios-heart-sharp"
                         : "ios-heart-outline"}
-                              size={24} color="white" />
+                              size={24} color={Colors.light} />
                 </Pressable>
             </View>
 
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     },
     website: {
         fontFamily:"MS-Regular",
-        color:"#B8B8B8",
+        color:Colors.grayLight,
         fontSize: 12,
         marginTop: 3
     }
-})
+});

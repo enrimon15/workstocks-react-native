@@ -1,8 +1,8 @@
-import {View, StyleSheet} from "react-native";
 import React from "react";
+import {View, StyleSheet} from "react-native";
+import {Colors} from "../constants/colors";
 
 export default function CardDetail({children, style}) {
-
     return (
         <View style={[styles.jobInfoContainer, style]}>
             {children}
@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
     jobInfoContainer: {
         marginTop: 15,
         marginHorizontal:10,
-        backgroundColor:"white",
-        shadowColor: "#84A4FF",
+        backgroundColor: Colors.light,
+        shadowColor: Colors.shadow,
         shadowOffset: {
             width: 0,
             height: 0,
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
         padding:15,
         borderRadius:15
     },
-})
+});

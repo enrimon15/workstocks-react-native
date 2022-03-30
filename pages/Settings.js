@@ -1,22 +1,21 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
-import {ListOutline} from "../components/ListOutline";
 import {useTranslation} from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {LangStorage, Languages} from "../constants/lang";
 import { Ionicons } from '@expo/vector-icons';
 import SwitchSelector from "react-native-switch-selector";
-import Colors from "../constants/colors";
+import {LangStorage, Languages} from "../constants/lang";
+import ListOutline from "../components/ListOutline";
+import {Colors} from "../constants/colors";
 
 const switchOptions = [
     { label: "IT", value: Languages.it},
     { label: "EN", value: Languages.en}
 ];
 
-const Settings = () => {
+export default function Settings() {
     const navigation = useNavigation();
-
     const { t, i18n } = useTranslation();
 
     const changeLanguage =  async (lng) => {
@@ -30,13 +29,13 @@ const Settings = () => {
 
     return(
         <ListOutline
-            textHeader={'Impostazioni'}
+            textHeader={t('settings.title')}
             titleIcon={'settings-outline'}
             navigation={navigation}
         >
             <View style={styles.settings}>
                 <View style={styles.settingsLang}>
-                    <Ionicons name="language" size={20} color="black" />
+                    <Ionicons name="language" size={20} color={Colors.dark} />
                     <Text style={styles.title}>Lingua</Text>
                 </View>
                 <SwitchSelector
@@ -44,7 +43,7 @@ const Settings = () => {
                     initial={getInitialValue()}
                     onPress={value => changeLanguage(value)}
                     textColor={Colors.primary}
-                    selectedColor="white"
+                    selectedColor={Colors.light}
                     buttonColor={Colors.primary}
                     borderColor={Colors.primary}
                     hasPadding
@@ -57,7 +56,6 @@ const Settings = () => {
         </ListOutline>
     )
 }
-export default Settings;
 
 const styles = StyleSheet.create({
     settings: {

@@ -9,19 +9,19 @@ import {
     SafeAreaView
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import Colors from "../../constants/colors";
 import ErrorForm from "./ErrorForm";
 import Back from "../nav/Back";
+import {Colors} from "../../constants/colors";
 
-const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bottomButtonTitle, bottomButtonHandler,
-                        loading, error, errorText, nav}) => {
+export default function AuthLayout({titleText, children, topButtonTitle, topButtonHandler, bottomButtonTitle,
+                                       bottomButtonHandler, loading, error, errorText, nav}) {
 
     return (
         <View style={styles.container}>
 
             <View style={styles.header}>
                 <SafeAreaView>
-                    {nav && <Back navigation={nav} iconColor={"white"} />}
+                    {nav && <Back navigation={nav} iconColor={"white"}/>}
                 </SafeAreaView>
 
                 <Text style={styles.text_header}>{titleText}</Text>
@@ -29,46 +29,33 @@ const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bott
 
             <Animatable.View
                 animation="fadeInUpBig"
-                style={[styles.footer, {
-                    backgroundColor: "white"
-                }]}
+                style={styles.footer}
             >
                 <ScrollView showsVerticalScrollIndicator={false}>
 
-                    {error && <ErrorForm text={errorText} />}
+                    {error && <ErrorForm text={errorText}/>}
 
                     {children}
 
                     <View style={styles.button}>
                         <TouchableOpacity
-                            style={[styles.signIn, {
-                                backgroundColor: Colors.primary,
-                                marginTop: 15
-                            }]}
-                            onPress={!loading ? topButtonHandler: null}
+                            style={styles.signIn}
+                            onPress={!loading ? topButtonHandler : null}
                         >
                             {!loading ? (
-                                <View style={{color: Colors.primary}}>
-                                    <Text style={[styles.textSign, {
-                                        color:"white"
-                                    }]}>{topButtonTitle}</Text>
+                                <View style={styles.colorPrimary}>
+                                    <Text style={styles.textSign}>{topButtonTitle}</Text>
                                 </View>
                             ) : (
-                                <ActivityIndicator color="white"/>
+                                <ActivityIndicator color={Colors.light}/>
                             )}
                         </TouchableOpacity>
 
                         {bottomButtonTitle && <TouchableOpacity
                             onPress={bottomButtonHandler}
-                            style={[styles.signIn, {
-                                borderColor: Colors.primary,
-                                borderWidth: 1,
-                                marginTop: 15
-                            }]}
+                            style={[styles.signIn, styles.secondSignIn]}
                         >
-                            <Text style={[styles.textSign, {
-                                color: Colors.primary
-                            }]}>{bottomButtonTitle}</Text>
+                            <Text style={[styles.textSign, styles.colorPrimary]}>{bottomButtonTitle}</Text>
                         </TouchableOpacity>}
                     </View>
 
@@ -76,9 +63,7 @@ const AuthLayout = ({titleText, children, topButtonTitle, topButtonHandler, bott
             </Animatable.View>
         </View>
     );
-};
-
-export default AuthLayout;
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -93,14 +78,14 @@ const styles = StyleSheet.create({
     },
     footer: {
         flex: 3,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.light,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingHorizontal: 20,
         paddingVertical: 30
     },
     text_header: {
-        color: 'white',
+        color: Colors.light,
         fontFamily: 'MS-Bold',
         fontSize: 30,
         marginLeft: 5
@@ -115,10 +100,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        color: Colors.primary
+        color: Colors.primary,
+        marginTop: 15
+    },
+    secondSignIn: {
+        borderColor: Colors.primary,
+        borderWidth: 1
     },
     textSign: {
         fontSize: 18,
-        fontFamily: 'MS-Medium'
-    }
+        fontFamily: 'MS-Medium',
+        color: Colors.light
+    },
+    colorPrimary: {color: Colors.primary}
 });
