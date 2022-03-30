@@ -7,7 +7,7 @@ import {clearError, updateProfile} from "../store/actions/UserAction";
 import {sUserData, sUserError, sUserLoading} from "../store/selectors/UserSelector";
 import AuthLayout from "../components/auth/AuthLayout";
 import InputForm from "../components/auth/InputForm";
-import {StringUtils} from "../util/StringUtils";
+import * as StringUtils from "../util/StringUtils";
 import {Colors} from "../constants/colors";
 
 export default function Profile() {

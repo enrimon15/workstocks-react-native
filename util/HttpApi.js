@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ObjectUtils} from "./ObjectUtils";
+import * as ObjectUtils from "./ObjectUtils";
 import {HERE_API_KEY} from "react-native-dotenv";
 import {getStore} from "../store/CreateStore";
 

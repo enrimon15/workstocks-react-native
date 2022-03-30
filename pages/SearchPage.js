@@ -9,7 +9,7 @@ import JobItem from "../components/JobItem";
 import ListOutline from "../components/ListOutline";
 import Error from "../components/Error";
 import NoData from "../components/NoData";
-import {StringUtils} from "../util/StringUtils";
+import * as StringUtils from "../util/StringUtils";
 import {Colors} from "../constants/colors";
 import {Routes} from "../constants/routes";
 

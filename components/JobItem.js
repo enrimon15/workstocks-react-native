@@ -3,7 +3,7 @@ import {Pressable, Text, View, StyleSheet} from 'react-native'
 import {withTranslation} from "react-i18next";
 import {Ionicons} from "@expo/vector-icons";
 import CompanyAvatar from "./CompanyAvatar";
-import DateUtils from "../util/DateUtils";
+import * as DateUtils from "../util/DateUtils";
 import {Colors} from "../constants/colors";
 
 class JobItem extends React.Component{

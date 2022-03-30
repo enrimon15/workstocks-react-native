@@ -1,27 +1,26 @@
-export class StringUtils {
-    static htmlToText(htmlText) {
-        if (!htmlText) return;
-        let resultText = htmlText.replaceAll('<br>', '\n').replace(/<[^>]+>/g, '');
-        return resultText;
-    }
 
-    static capitalize(word) {
-        return word[0].toUpperCase() + word.slice(1).toLowerCase();
-    }
+export function htmlToText(htmlText) {
+    if (!htmlText) return;
+    let resultText = htmlText.replaceAll('<br>', '\n').replace(/<[^>]+>/g, '');
+    return resultText;
+}
 
-    static validateEmail(email) {
-        return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email));
-    }
+export function capitalize(word) {
+    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+}
 
-    static validatePassword(pw) {
-        return (/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/.test(pw));
-    }
+export function validateEmail(email) {
+    return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email));
+}
 
-    static isLengthInRange(text, min, max) {
-        return (text.length >= min && text.length <= max);
-    }
+export function validatePassword(pw) {
+    return (/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/.test(pw));
+}
 
-    static validateConfirmPassword(pw, pwToMatch) {
-        return (pw === pwToMatch);
-    }
+export function isLengthInRange(text, min, max) {
+    return (text.length >= min && text.length <= max);
+}
+
+export function validateConfirmPassword(pw, pwToMatch) {
+    return (pw === pwToMatch);
 }

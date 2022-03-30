@@ -2,7 +2,7 @@ import React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import CardDetail from "../CardDetail";
 import {Colors} from "../../constants/colors";
-import {StringUtils} from "../../util/StringUtils";
+import * as StringUtils from "../../util/StringUtils";
 
 export default function Skills({skillList}) {
 

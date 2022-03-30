@@ -7,7 +7,7 @@ import {clearError, login} from "../store/actions/UserAction";
 import {sUserError, sUserLoading} from "../store/selectors/UserSelector";
 import AuthLayout from "../components/auth/AuthLayout";
 import InputForm from "../components/auth/InputForm";
-import {StringUtils} from "../util/StringUtils";
+import * as StringUtils from "../util/StringUtils";
 import {Routes} from "../constants/routes";
 import {Colors} from "../constants/colors";
 

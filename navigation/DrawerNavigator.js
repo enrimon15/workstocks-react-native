@@ -13,7 +13,7 @@ import Profile from "../pages/ProfilePage";
 import Settings from "../pages/Settings";
 import {Colors} from "../constants/colors";
 import {Routes} from "../constants/routes";
-import {ObjectUtils} from "../util/ObjectUtils";
+import * as ObjectUtils from "../util/ObjectUtils";
 
 const Drawer = createDrawerNavigator();
 

@@ -27,7 +27,7 @@ import Back from "../components/nav/Back";
 import TabDetails, {DESCRIPTION, MAP, SKILLS} from "../components/jobDetails/Tabs";
 import Skills from "../components/jobDetails/Skills";
 import {Colors} from '../constants/colors';
-import {StringUtils} from "../util/StringUtils";
+import * as StringUtils from "../util/StringUtils";
 import {withTranslation} from "react-i18next";
 
 const {height} = Dimensions.get("screen");
