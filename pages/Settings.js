@@ -36,7 +36,7 @@ export default function Settings() {
             <View style={styles.settings}>
                 <View style={styles.settingsLang}>
                     <Ionicons name="language" size={20} color={Colors.dark} />
-                    <Text style={styles.title}>Lingua</Text>
+                    <Text style={styles.title}>{t('settings.lang')}</Text>
                 </View>
                 <SwitchSelector
                     style={styles.switch}

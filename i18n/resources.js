@@ -75,7 +75,8 @@ export const resources = {
                 aroundMe: "Around me"
             },
             settings: {
-                title: "Settings"
+                title: "Settings",
+                lang: "Language"
             },
             error: {
                 warning: "Warning",
@@ -164,7 +165,8 @@ export const resources = {
                 aroundMe: "Intorno a me"
             },
             settings: {
-                title: "Impostazioni"
+                title: "Impostazioni",
+                lang: "Lingua"
             },
             error: {
                 warning: "Attenzione",
