@@ -1,75 +1,75 @@
 import {NavigationContainer} from "@react-navigation/native";
 import {createDrawerNavigator} from "@react-navigation/drawer";
-import CustomDrawer from "../components/nav/CustomDrawer";
-import Colors from "../constants/colors";
-import { Ionicons } from '@expo/vector-icons';
-import {HomeNavigator} from "./HomeNavigator";
-import {AuthNavigator} from "./AuthNavigator";
+import {Ionicons} from '@expo/vector-icons';
 import {useSelector} from "react-redux";
 import {sUserData} from "../store/selectors/UserSelector";
-import {ObjectUtils} from "../util/ObjectUtils";
-import {FavoritesNavigator} from "./FavoritesNavigator";
-import {ApplicationsNavigator} from "./ApplicationsNavigator";
+import HomeNavigator from "./HomeNavigator";
+import AuthNavigator from "./AuthNavigator";
+import FavoritesNavigator from "./FavoritesNavigator";
+import ApplicationsNavigator from "./ApplicationsNavigator";
+import CustomDrawer from "../components/nav/CustomDrawer";
 import Profile from "../pages/ProfilePage";
 import Settings from "../pages/Settings";
+import {Colors} from "../constants/colors";
+import {Routes} from "../constants/routes";
+import {ObjectUtils} from "../util/ObjectUtils";
 
 const Drawer = createDrawerNavigator();
 
 const RootNavigator = () => {
     const userLogged = useSelector(sUserData);
-
     const conditionAuthNavigation = (ObjectUtils.isEmpty(userLogged));
 
-    return(
+    return (
         <NavigationContainer>
-            {conditionAuthNavigation  ? (
+            {conditionAuthNavigation ? (
                     <AuthNavigator/>
                 ) :
                 (<Drawer.Navigator
-                    initialRouteName="Home"
+                    initialRouteName={Routes.home}
                     drawerContent={props => <CustomDrawer {...props} />}
                     screenOptions={{
                         headerShown: false,
                         drawerActiveBackgroundColor: Colors.primary,
-                        drawerActiveTintColor: 'white',
-                        drawerInactiveTintColor: 'black',
+                        drawerActiveTintColor: Colors.light,
+                        drawerInactiveTintColor: Colors.dark,
                         drawerLabelStyle: {
                             fontFamily: 'MS-Medium',
                             fontSize: 15,
                         },
                     }}
-                    >
-                    <Drawer.Screen name="Home" component={HomeNavigator} options={{
+                >
+                    <Drawer.Screen name={Routes.home} component={HomeNavigator} options={{
                         drawerIcon: ({color}) => (
-                            <Ionicons name="home-outline" size={22} color={color} />
+                            <Ionicons name="home-outline" size={22} color={color}/>
                         ),
-                    }} />
-                    <Drawer.Screen name="Preferiti" component={FavoritesNavigator} options={{
+                    }}/>
+                    <Drawer.Screen name={Routes.favorites} component={FavoritesNavigator} options={{
                         drawerIcon: ({color}) => (
-                            <Ionicons name="ios-heart-outline" size={22} color={color} />
+                            <Ionicons name="ios-heart-outline" size={22} color={color}/>
                         ),
-                    }} />
-                    <Drawer.Screen name="Candidature" component={ApplicationsNavigator} options={{
+                    }}/>
+                    <Drawer.Screen name={Routes.applications} component={ApplicationsNavigator} options={{
                         drawerIcon: ({color}) => (
-                            <Ionicons name="ios-briefcase-outline" size={22} color={color} />
+                            <Ionicons name="ios-briefcase-outline" size={22} color={color}/>
                         ),
-                    }} />
-                    <Drawer.Screen name="Profilo" component={Profile} options={{
-                            drawerIcon: ({color}) => (
-                                <Ionicons name="person-outline" size={22} color={color} />
-                            ),
-                        }}
+                    }}/>
+                    <Drawer.Screen name={Routes.profile} component={Profile} options={{
+                        drawerIcon: ({color}) => (
+                            <Ionicons name="person-outline" size={22} color={color}/>
+                        ),
+                    }}
                     />
-                    <Drawer.Screen name="Impostazioni" component={Settings} options={{
-                            drawerIcon: ({color}) => (
-                                <Ionicons name="settings-outline" size={22} color={color} />
-                            ),
-                        }}
+                    <Drawer.Screen name={Routes.settings} component={Settings} options={{
+                        drawerIcon: ({color}) => (
+                            <Ionicons name="settings-outline" size={22} color={color}/>
+                        ),
+                    }}
                     />
                 </Drawer.Navigator>)
             }
         </NavigationContainer>
     )
-}
+};
 
 export default RootNavigator;

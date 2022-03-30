@@ -1,14 +1,17 @@
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import JobDetail from "../pages/JobDetailsPage";
 import Applications from "../pages/ApplicationsPage";
+import {Routes} from "../constants/routes";
 
 const ApplicationsStack = createNativeStackNavigator();
 
-export const ApplicationsNavigator = () => {
+const ApplicationsNavigator = () => {
     return (
-        <ApplicationsStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Applications">
-            <ApplicationsStack.Screen name="Applications" component={Applications}  />
-            <ApplicationsStack.Screen name="JobDetails" component={JobDetail}  />
+        <ApplicationsStack.Navigator screenOptions={{ headerShown: false }} initialRouteName={Routes.applications}>
+            <ApplicationsStack.Screen name={Routes.applications} component={Applications}  />
+            <ApplicationsStack.Screen name={Routes.jobDetails} component={JobDetail}  />
         </ApplicationsStack.Navigator>
     )
-}
+};
+
+export default ApplicationsNavigator;
