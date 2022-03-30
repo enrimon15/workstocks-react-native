@@ -19,8 +19,8 @@ export default function Login() {
     const error = useSelector(sUserError);
 
     useEffect(() => {
-        // quando lo screen perde il focus rimuovo l'errore
-        const navigationFocusListener = navigation.addListener('beforeRemove', () => {
+        // quando lo screen prende il focus rimuovo l'errore
+        const navigationFocusListener = navigation.addListener('focus', () => {
             if (error) {
                 dispatch(clearError());
             }

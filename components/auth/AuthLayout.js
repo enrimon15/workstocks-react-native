@@ -100,10 +100,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        color: Colors.primary,
+        backgroundColor: Colors.primary,
         marginTop: 15
     },
     secondSignIn: {
+        backgroundColor: Colors.light,
         borderColor: Colors.primary,
         borderWidth: 1
     },
@@ -112,5 +113,7 @@ const styles = StyleSheet.create({
         fontFamily: 'MS-Medium',
         color: Colors.light
     },
-    colorPrimary: {color: Colors.primary}
+    colorPrimary: {
+        color: Colors.primary
+    }
 });

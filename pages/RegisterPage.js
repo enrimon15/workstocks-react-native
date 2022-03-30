@@ -18,8 +18,8 @@ export default function Register() {
     const navigation = useNavigation();
 
     useEffect(() => {
-        // quando lo screen perde il focus rimuovo l'errore
-        const navigationFocusListener = navigation.addListener('beforeRemove', () => {
+        // quando lo screen prende il focus rimuovo l'errore
+        const navigationFocusListener = navigation.addListener('focus', () => {
             if (error) {
                 dispatch(clearError());
             }
