@@ -9,7 +9,6 @@ I candidati possono ricercare offerte in base ai propri interessi e in base alla
 <br/>
  
 ### Immagini
-#### ![Demo_Image](<https://github.com/enrimon15/workstocks-react-native/blob/main/demo_img/1.png>)
+#### ![Demo_Image_1](<https://github.com/enrimon15/workstocks-react-native/blob/main/demo_img/1.png>)
 
-
-[Vedi altre immagini](https://github.com/enrimon15/workstocks-react-native/tree/main/demo_img)
+#### ![Demo_Image_2](<https://github.com/enrimon15/workstocks-react-native/blob/main/demo_img/2.png>)
