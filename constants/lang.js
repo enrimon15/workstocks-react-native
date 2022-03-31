@@ -1,5 +1,5 @@
 export const LangStorage = {
-    KEY: '#0078ff'
+    KEY: 'lang_app'
 }
 
 export const Languages = {
