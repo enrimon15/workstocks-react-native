@@ -6,12 +6,13 @@ import {
     Dimensions,
     StyleSheet
 } from 'react-native';
+import {useTranslation} from "react-i18next";
 import * as Animatable from 'react-native-animatable';
 import {MaterialIcons} from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/native";
 import {Colors} from "../constants/colors";
 import {Routes} from "../constants/routes";
-import {useTranslation} from "react-i18next";
+import {LogoTesto} from '../constants/images';
 
 export default function SplashScreen() {
     const { t } = useTranslation();
@@ -23,7 +24,7 @@ export default function SplashScreen() {
                 <Animatable.Image
                     animation="bounceIn"
                     duraton="1500"
-                    source={require('../assets/images/logo_con_testo.png')}
+                    source={LogoTesto}
                     style={styles.logo}
                     resizeMode="contain"
                 />

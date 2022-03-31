@@ -1,6 +1,7 @@
 import {StyleSheet, Image, View, Text, Dimensions} from 'react-native';
-import {Colors} from "../constants/colors";
 import {useTranslation} from "react-i18next";
+import {Colors} from "../constants/colors";
+import {NoDataImg} from '../constants/images';
 
 const {height} = Dimensions.get("screen");
 const height_no_Data = height * 0.3;
@@ -11,7 +12,7 @@ export default function NoData() {
     return(
         <View style={styles.container}>
             <Image
-                source={require('../assets/images/nodata.png')}
+                source={NoDataImg}
                 style={styles.image}
                 resizeMode="contain"
             />

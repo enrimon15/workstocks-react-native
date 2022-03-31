@@ -15,6 +15,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {sUserData} from "../../store/selectors/UserSelector";
 import {logout} from "../../store/actions/UserAction";
 import {Colors} from "../../constants/colors";
+import {MenuLogo} from '../../constants/images';
 
 export default function CustomDrawer(props) {
     const {t} = useTranslation();
@@ -30,7 +31,7 @@ export default function CustomDrawer(props) {
                     style={styles.outline}>
                     <Image
                         resizeMode="contain"
-                        source={require('../../assets/images/logo_con_testo.png')}
+                        source={MenuLogo}
                         style={styles.logo}
                     />
                     <View style={styles.user}>

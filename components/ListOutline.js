@@ -3,6 +3,7 @@ import {Image, SafeAreaView, Text, View, StyleSheet} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 import {Colors} from "../constants/colors";
 import Back from "./nav/Back";
+import {ListIcon} from '../constants/images';
 
 export default function ListOutline({navigation, textHeader, children, titleIcon}) {
     return (
@@ -17,7 +18,7 @@ export default function ListOutline({navigation, textHeader, children, titleIcon
                         </View>
                         <View style={styles.imageContainer}>
                             <Image
-                                source={require('../assets/images/undraw.png')}
+                                source={ListIcon}
                                 style={styles.imageHeader}
                                 resizeMode="contain"
                             />

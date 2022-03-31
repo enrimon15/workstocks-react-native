@@ -1,5 +1,6 @@
 import React from "react";
 import {Image, Pressable, StyleSheet} from "react-native";
+import {MenuImage} from '../../constants/images';
 
 export default function Hamburger(props) {
     const {navigation} = props;
@@ -7,7 +8,7 @@ export default function Hamburger(props) {
     return (
         <Pressable onPress={() => navigation.toggleDrawer()}>
             <Image
-                source={require('../../assets/images/menu.png')}
+                source={MenuImage}
                 style={styles.menuImage}
             />
         </Pressable>

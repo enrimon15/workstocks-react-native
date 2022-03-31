@@ -4,6 +4,7 @@ import {View, ImageBackground, Text, SafeAreaView, ScrollView, ActivityIndicator
 import * as Animatable from 'react-native-animatable';
 import {StatusBar} from "expo-status-bar";
 import {connect} from "react-redux";
+import {withTranslation} from "react-i18next";
 import {
     sApplicationsError,
     sFavoritesError,
@@ -28,7 +29,7 @@ import TabDetails, {DESCRIPTION, MAP, SKILLS} from "../components/jobDetails/Tab
 import Skills from "../components/jobDetails/Skills";
 import {Colors} from '../constants/colors';
 import * as StringUtils from "../util/StringUtils";
-import {withTranslation} from "react-i18next";
+import {DetailBanner} from '../constants/images';
 
 const {height} = Dimensions.get("screen");
 const height_banner = height * 0.2;
@@ -81,7 +82,7 @@ class JobDetail extends React.Component {
                 <View style={styles.container}>
                     <SafeAreaView style={styles.safeContainer}>
                         <ImageBackground
-                            source={require('../assets/images/detail.png')}
+                            source={DetailBanner}
                             style={styles.banner}
                         >
                             <Back navigation={navigation} iconColor={Colors.dark}/>

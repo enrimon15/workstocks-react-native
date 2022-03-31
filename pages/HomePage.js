@@ -29,6 +29,7 @@ import Error from "../components/Error";
 import LocationPicker from "../components/LocationPicker";
 import {Colors} from "../constants/colors";
 import {Routes} from "../constants/routes";
+import {HomeBanner} from '../constants/images';
 
 class Home extends React.Component {
 
@@ -79,7 +80,7 @@ class Home extends React.Component {
 
         return (
                 <ImageBackground
-                    source={require('../assets/images/banner.png')}
+                    source={HomeBanner}
                     style={styles.imageBackground}
                 >
                 <SafeAreaView>
